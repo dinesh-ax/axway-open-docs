@@ -1,9 +1,9 @@
 {
-    "title": "Monitor APIs and applications in API Manager",
-    "linkTitle": "Monitor APIs and applications",
-    "weight": "80",
-    "date": "2019-09-17",
-    "description": "View metrics on all invoked APIs and client applications in the system."
+"title": "Monitor APIs and applications in API Manager",
+  "linkTitle": "Monitor APIs and applications",
+  "weight": "80",
+  "date": "2019-09-17",
+  "description": "View metrics on all invoked APIs and client applications in the system."
 }
 
 API administrators and organization administrators can use the **Monitoring** tab in API Manager to view metrics on all invoked APIs and client applications in the system.
@@ -67,6 +67,12 @@ The following shows the metrics displayed for a selected client application:
 ![Create an application specific quota plan](/Images/docbook/images/api_mgmt/api_mgmt_monitor_app.png)
 
 ## Monitoring metrics
+
+In API Gateway, messages are processed by policies. The status of the policy execution can be one of:
+
+* **Success** or **Passed**: The policy is successfully executed and returns `true`. For example, a happy path execution.
+* **Failure** or **Blocked**: The policy is successfully executed and returns `false`. For example, a handled error condition happened.
+* **Exception** or **Aborted**: The policy is not executed as planned and aborts execution. For example, an unhandled error happened.
 
 You can monitor the following metrics in both the **API Usage** and **Application Usage** views:
 
