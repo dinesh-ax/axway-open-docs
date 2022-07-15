@@ -25,7 +25,7 @@ You must have a Google user name and password to add reCaptcha. For more details
 ### Add reCaptcha plugin
 
 1. Log in to the Joomla! Administrator Interface (JAI) (`https://<API Portal_host>/administrator`).
-2. Select **Extensions > Plugins**.
+2. Select **System > Plugins**.
 3. Click **Captcha - ReCaptcha**.
 4. Enter the respective reCaptcha keys to the **Site key** and **Secret key** fields.
 5. Set the **Status** of the plugin to `Enabled`, and click **Save & Close**.
@@ -96,7 +96,7 @@ You can add a customized message to the API Portal login page. You can use this 
 
 To enable this feature follow these steps:
 
-1. In JAI, click **Extensions > Modules**.
+1. In JAI, click **System > Site Modules**.
 2. Click **New** to create a new module.
 3. From the list of module types click **Custom**.
 4. Enter a title for the message.
@@ -143,7 +143,7 @@ To change the settings:
 3. Click the **Applications** tab.
 4. Change the settings as required and click **Save & Close**.
 
-![Customize application settings](/Images/APIPortal/jai_customize_apps.png)
+![Customize application settings](/Images/APIPortal/jai_customize_apps_j4.png)
 
 ## Customize monitoring
 
@@ -225,9 +225,10 @@ You can configure your API Portal to show an Intercom chat support. After you en
 
 To start using Intercom Chat:
 
-1. In JAI, click **Extensions > Modules > Intercom**.
-2. Enter your `Application Id` taken from Intercom.
-3. To enable the chat only for logged users, select `No` from `Show chat for non-logged in users`.
+1. In JAI, click **System > Site Modules**.
+2. Search for **Intercom**
+3. Enter your `Application Id` taken from Intercom.
+4. To enable the chat only for logged users, select `No` from `Show chat for non-logged in users`.
 
 After you configure this module, the Intercom chat icon is displayed on all pages of your API Portal.
 

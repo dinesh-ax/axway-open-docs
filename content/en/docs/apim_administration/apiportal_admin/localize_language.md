@@ -14,13 +14,12 @@ You can change the API Portal UI texts from the default English to another lang
 
 User interface strings are stored in language-specific resource files. To add these resource files for a new language, you must install the language.
 
-1. In the Joomla! Admin Interface (JAI) top navigation bar, click **Extensions > Language(s)**.
-2. Click **Install Languages**.
-3. Find and select the language to install, and click **Install**.
-4. After the installation is finished, click **Extensions > Language(s) > Installed** and ensure that **Site** is selected at the top of the page.
-5. To set the installed language as the default language of your API Portal, click the star button in the row for that language.
+1. In the Joomla! Admin Interface (JAI) left menu, click **System > Languages** in the **Install** card.
+2. Find and select the language to install, and click **Install**.
+3. After the installation is finished, click **System > Languages** in the **Manage** card and ensure that **Site** is selected at the top of the page.
+4. To set the installed language as the default language of your API Portal, click the star button in the row for that language.
 
-   ![Install language](/Images/APIPortal/joomla_install_lang.png)
+   ![Install language](/Images/APIPortal/joomla_install_lang_j4.png)
 
    {{< alert title="Tip" color="primary" >}}You can change the default language of JAI independently from your API Portal. Select **Administrator** on the **Languages: Installed** page and click the star button in the row for the required language. You can also select any of the installed languages when you log in to JAI.{{< /alert >}}
 
@@ -68,7 +67,7 @@ To add a new content language and main menu, follow these steps:
 4. Enter the Joomla! **Language Tag**. Ensure that you enter the tag in the correct format. You must use "`-`" instead of "`_`" (for example, `fr-FR`).
 5. In **URL Language Code**, enter the language identifier to use in the language-specific URL (for example, `fr`). The identifier must be unique for each language.
 6. Set **Status** to **Unpublished**, and click **Save & Close**. For more details on the parameters, see the tutorial for [Joomla! Language Switcher](https://docs.joomla.org/J3.x:Setup_a_Multilingual_Site/Language_Switcher).
-7. In the JAI top navigation bar, click **Menus > Manage > Add New Menu**.
+7. In the JAI left menu, click **Menus > Manage > New**.
 8. In **Title**, enter the title to be shown in drop-down lists (for example, `Main menu (fr)`).
 9. On the **Menu Details** tab, in **Menu Type**, enter a system identifier for the new main menu (for example, `mainmenufr`).
 10. Click **Save & Close**.
@@ -77,13 +76,13 @@ To add a new content language and main menu, follow these steps:
 
 You must duplicate the API Portal main menu for each language.
 
-1. In the JAI top navigation bar, click **Menus** and select the main menu to clone.
+1. In the JAI left menu, click **Menus** and select the main menu to clone.
 2. To clone all the menu items at once, click the Check All Items check box and click **Batch**.
 3. In **Set Language**, select the correct content language.
 4. In **To Move or Copy**, locate the correct main menu for the language and select **Add to this menu**.
 5. Select **Copy** to make a copy of the menu items.
 6. Click **Process**.
-7. In the JAI top navigation bar, click **Menus** and select the main menu you cloned the menu items to.
+7. In the JAI left menu, click **Menus** and select the main menu you cloned the menu items to.
 8. To set the default home page, click the star in the row for the **Home** menu item.
 9. To rename the cloned menu items, click each menu item to edit it, and change **Menu Title** to the correct translation (for example, `Home(2)` to `Accueil`).
 10. Click **Save & Close**.
@@ -118,7 +117,7 @@ You must also duplicate your homepage template style for each language.
 
 On the Home page layout there are available positions where you can add modules. When installing a new language, it is a common practice to duplicate the **Home Page Banner** and the **Home tiles** modules, and translate them for the new language. To create a new module:
 
-1. In the JAI top navigation bar, click **Extensions > Modules** and click **New**.
+1. In the JAI left menu, click **System > Site Modules** and click **New**.
 2. Select module type (for example, **Home Page Banner**).
 3. Select **Position**  (for example, **api-home-banner**).
 4. For the **Language**, select the new installed language.
@@ -131,7 +130,7 @@ On the Home page layout there are available positions where you can add modules.
 1. Ensure that you have completed all the steps described in [Change API Portal language](#change-api-portal-language) for each language you want to publish.
 2. In the JAI left navigation bar, click **Language(s) > Content Languages**.
 3. Ensure that the **Status** for all the languages you want to publish is set to **Publish**.
-4. In the JAI top navigation bar, click **Extensions > Plugins**, and ensure the **System - Language Filter** plugin is enabled.
+4. In the JAI left menu, click **System > Plugins**, and ensure the **System - Language Filter** plugin is enabled.
 5. Open your API Portal home page in a browser, and change the language code in the URL to one of the languages you have published. For example, change `https://<your API Portal URL>/en/` to `https://<your API Portal URL>/fr/`. You are redirected to the API Portal home page in that language.
 
 ## Provide a language switcher
@@ -144,11 +143,10 @@ To enable a language switcher, you need to have a main menu for each language yo
 
 To install new languages, follow these steps:
 
-1. In the JAI top navigation bar, click **Extensions > Language(s)**.
-2. Click **Install Languages**.
-3. Find and select the language to install, and click **Install**.
-4. In the JAI left navigation bar, click **Language(s) > Content Languages**.
-5. Set the **Status** of the new language to **Published**.
+1. In the JAI left menu, click **System > Languages** in the **Install** card.
+2. Find and select the language to install, and click **Install**.
+3. In the JAI left navigation bar, click **Language(s) > Content Languages**.
+4. Set the **Status** of the new language to **Published**.
 
 ### Create main menus
 
@@ -164,48 +162,48 @@ After following this process you will have the following main menus:
 
 First, create a main menu that will be the default main menu for all languages. This main menu will have only one menu item.
 
-1. In the JAI top navigation bar, click **Menus > Manage > Add New Menu**.
-2. In **Title**, enter the title to be shown in drop-down lists (for example, `Main menu - All`).
-3. On the **Menu Details** tab, in **Menu Type**, enter a system identifier for the new main menu (for example, `mainmenuall`).
+1. In the JAI left menu, click **Menus > Manage > New**.
+2. In **Title**, enter the title to be shown in drop-down lists (for example, `All Menu Items`).
+3. On the **Details** tab, in **Menu Item Type**, enter a system identifier for the new main menu (for example, `mainmenuall`).
 4. Click **Save & Close**.
-5. To add a menu item to this main menu, click **Menus > Main menu - All > Add New Menu Item**.
-6. Click **Save & Close**.
+5. To add a menu item to this main menu, click **Menus > All Menu Items > New**.
+6. Follow steps **2** to **4**.
 
-   ![Add menu item for Main menu -All](/Images/APIPortal/jai_mainmenuall_home.png)
+   ![Add menu item for All Menu Items](/Images/APIPortal/jai_mainmenuall_home_j4.png)
 
 #### Change the language of the original main menu to English
 
 Next, change the language of the original main menu items from All to English:
 
-1. In the JAI top navigation bar, click **Menus** and select `Main Menu`.
+1. In the JAI left menu, click **Menus** and select `Main Menu`.
 2. To change the language of all the menu items at once, click the Check All Items check box and click **Batch**.
 3. In **Set Language**, select `English`.
 4. Click **Process**.
-5. In the JAI top navigation bar, click **Menus** and select `Main Menu`.
+5. In the JAI left menu, click **Menus** and select `Main Menu`.
 6. To set the default home page, click the star in the row for the **Home** menu item.
 
 #### Create a main menu for the new language
 
 Next, create a main menu for each new language and clone the menu items from the main menu. Follow these steps:
 
-1. In the JAI top navigation bar, click **Menus > Manage > Add New Menu**.
+1. In the JAI left menu, click **Menus > Manage > New**.
 2. In **Title**, enter the title to be shown in drop-down lists (for example, `Main menu - FR`).
-3. On the **Menu Details** tab, in **Menu Type**, enter a system identifier for the new main menu (for example, `mainmenufr`).
+3. On the **Details** tab, in **Menu Item Type**, enter a system identifier for the new main menu (for example, `mainmenufr`).
 4. Click **Save & Close**.
-5. In the JAI top navigation bar, click **Menus** and select `Main Menu`.
-6. To clone all the menu items at once, click the Check All Items check box and click **Batch**.
+5. In the JAI left menu, click **Menus** and select `Main Menu`.
+6. To clone all the menu items at once, click the Check All Items check box and click **Actions > Batch** from the **Actions** dropdown list.
 7. In **Set Language**, select the correct content language (for example, `French (FR)`).
 8. In **To Move or Copy**, locate the correct main menu for the language and select **Add to this menu**.
 9. Select **Copy** to make a copy of the menu items.
 10. Click **Process**.
-11. In the JAI top navigation bar, click **Menus** and select the main menu you cloned the menu items to (for example, `Main menu - FR`).
+11. In the JAI left menu, click **Menus** and select the main menu you cloned the menu items to (for example, `Main menu - FR`).
 12. To set the default home page, click the star in the row for the **Home** menu item.
 
 #### Rename the original main menu
 
 Finally, rename the original main menu:
 
-1. In the JAI top navigation bar, click **Menus > Manage**.
+1. In the JAI left menu, click **Menus > Manage**.
 2. Select the row for the main menu and click **Edit**.
 3. Change the **Title** to `Main menu - EN`.
 4. Click **Save & Close**.
@@ -222,7 +220,7 @@ By default, API Portal uses the Purity III template style. After following this
 
 #### Duplicate the template style for the new language
 
-1. In the JAI left navigation bar, click **Templates > Styles**.
+1. In the JAI left navigation bar, click **System > Site Templates Styles**.
 2. Click your template style (for example, `purity_III - Default`) to open it.
 3. Click the arrow next to the **Save** button at the top left of the window, and select **Save as Copy**.
 4. Edit the **Style Name** to indicate the language (for example, `purity_III - Default - French`).
@@ -250,11 +248,11 @@ Finally, edit the original template style for the English language:
 
 To enable the language switcher, complete the following steps:
 
-1. In the JAI top navigation bar, click **Extensions > Modules** and click **New**.
+1. In the JAI left menu, click **System > Site Modules** and click **New**.
 2. Click **Language Switcher**.
 3. Enter a **Title** and for **Position** select `Purity iii > Footer 1`.
 4. Click **Save & Close**.
-5. In the JAI top navigation bar, click **Extensions > Plugins**, and ensure the **System - Language Filter** plugin is enabled.
+5. In the JAI left menu, click **System > Plugins**, and ensure the **System - Language Filter** plugin is enabled.
 6. Click the **System - Language Filter** plugin to open it.
 7. Set **Automatic Language Change** to `No`.
 8. Click **Save & Close**.

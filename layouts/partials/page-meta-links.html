@@ -5,8 +5,8 @@
 {{ if $gh_repo }}
 <div class="td-page-meta ml-2 pb-1 pt-2 mb-0">
 {{ $gh_branch := "master" }}   
-{{ if in (.Site.BaseURL | string) "developmay22" }}
-{{ $gh_branch = "developmay22"}}
+{{ if in (.Site.BaseURL | string) "developaug22" }}
+{{ $gh_branch = "developaug22"}}
 {{ end }} <!-- end of if develop -->
 {{ $editURL := printf "%s/edit/%s/content/%s" $gh_repo $gh_branch .Path }}
 {{ if and ($gh_subdir) (.Site.Language.Lang) }}

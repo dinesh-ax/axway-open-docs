@@ -42,7 +42,7 @@ The table consists of five columns: **Roles**, **Org. Admin**, **Developer**, **
 **Email Pattern**
 : Allows you to map all users with a given text in their email domain to a Joomla! user group. You can add, edit, and delete email domains. This field supports `" "` (blank space), `?` and `*` wildcards. For example, `*@mail.com` will map all users whose email domain is `mail`.
 
-![User groups mapping table](/Images/APIPortal/role_mapping_expanded.png)
+![User groups mapping table](/Images/APIPortal/role_mapping_expanded_j4.png)
 
 The **Search** searches for a given term and automatically expands the rows with the matches.
 

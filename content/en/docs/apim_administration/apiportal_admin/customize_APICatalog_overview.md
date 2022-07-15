@@ -27,7 +27,7 @@ You can customize the following in the API Catalog view of API Portal:
 * Show or hide `externalDocs` along with its description.
 * Choose colors for the different methods.
 
-![Customize API catalog](/Images/APIPortal/api-catalog.png)
+![Customize API catalog](/Images/APIPortal/api-catalog_j4.png)
 
 To change the API Catalog settings:
 

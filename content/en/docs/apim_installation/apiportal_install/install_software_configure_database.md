@@ -131,9 +131,9 @@ We recommend a strong password for this user account, which:
 * contains at least one lowercase letter
 * contains at least one special character `!@#$%^&*`
 
-### Configure a user account without authentication
+### Configure a user account
 
-If you do not want to use a secure connection, you can configure API Portal to use a user account without authentication.
+If you do not want to use a secure connection, you can configure API Portal to use a user account without TLS authentication.
 
 1. Connect to your database server.
 2. To configure a user account, enter the following:

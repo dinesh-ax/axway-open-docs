@@ -85,4 +85,4 @@ If your data does not change frequently, you can configure longer intervals for 
 
 If you are using API Portal in containers, you can trigger APIs and Applications indexing manually.
 
-After connecting API to Elasticsearch, in JAI, click **Components > API Portal > Elasticsearch Settings**, then click **Trigger APIs Indexing** and **Trigger Applications Indexing** to push data to Elasticsearch.
+After connecting API to Elasticsearch, in JAI, click **Components > API Portal > Elasticsearch Settings**, then click **Index APIs now** and **Index Applications now** to push data to Elasticsearch.

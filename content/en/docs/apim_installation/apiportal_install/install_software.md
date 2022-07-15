@@ -41,7 +41,7 @@ To install API Portal:
    * Configure Joomla! Administrator Interface administrator account password.
    * Enable or disable Joomla! Administrator Interface administrator account password reset on the first login.
    * Locations of `php.ini` and `apiportal.conf` configuration files.
-   * Encrypt the Public API mode user password and store the encryption key in a specified directory. The directory is created along with a file. The last segment of the directory is the file name. For example: `/sample/directory/for/encryption/key` creates an empty file named "key" in the desired directory. You can also use a script to encrypt the password later. For more details, see [Encrypt the Public API user password (optional)](/docs/apim_installation/apiportal_install/upgrade_automatic/#encrypt-the-public-api-mode-user-password-optional).
+   * Encrypt the Public API mode user password and store the encryption key in a specified directory. The directory is created along with a file. The last segment of the directory is the file name. For example: `/sample/directory/for/encryption/key` creates an empty file named "key" in the desired directory. You can also use a script to encrypt the password later. For more details, see [Encrypt the Public API user password (optional)](/docs/apim_administration/apiportal_admin/public_api_configure/#encrypt-the-public-api-mode-user-password).
    * Configure API Portal with SSL/TLS. For HTTPS, you can either provide a certificate and private key, or use a self-signed certificate. For more details, see [Configure API Portal to run with HTTP or HTTPS](#configure-api-portal-to-run-with-http-or-https).
 6. To configure the SE Linux, enter the following commands:
 

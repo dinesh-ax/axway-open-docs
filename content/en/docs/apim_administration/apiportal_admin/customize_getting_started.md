@@ -36,10 +36,10 @@ With ThemeMagic, you have an administrative interface for creating or modifying 
 
 ### Open ThemeMagic
 
-1. Log in to the Joomla! Administrator Interface (JAI), and click **Extensions > Templates**.
-2. In Templates sidebar, select **Styles**, then select the style **Purity III - Default**.
+1. Log in to the Joomla! Administrator Interface (JAI), and click **System > Site Templates**.
+2. Select the style **Purity III - Default**.
 
-    ![Joomla user interface with Purity III selecting the styles](/Images/APIPortal/JoomlaThemeMagicStyles.png)
+    ![Joomla user interface with Purity III selecting the styles](/Images/APIPortal/JoomlaThemeMagicStyles_j4.png)
 
 3. Select **ThemeMagic**. ThemeMagic opens your portal home page with theme variables are displayed on the left.
 
@@ -75,8 +75,8 @@ In addition, there are some other variables for fine-grain customization of the 
 
 ### Use the new theme
 
-1. In JAI, click **Extensions > Templates**.
-2. In the Templates sidebar, select **Styles**, then select the style **Purity III - Default**.
+1. In JAI, click **Sysytem > Site Templates Styles**.
+2. Click **Purity III - Default**.
 3. Select the **Theme** page, and select your new theme from the **Theme** drop-down menu: ![API Portal sample screen on how to save a new theme in templates](/Images/APIPortal/portal_templates.png)
 4. Click **Save**, then click **</> Less to CSS**. This is the preferred option as it will only compile the theme you want to use.
 
@@ -116,8 +116,8 @@ The home page consists of the following main sections:
 
 To customize the layout of your portal:
 
-1. In JAI, click **Extensions > Templates**.
-2. In the Templates sidebar, select **Styles**, then select the style **apiportal-homepage**.
+1. In JAI, click **System > Site Templates Styles**.
+2. Click **apiportal-homepage**.
 3. Customize the layout, and click **Save**. ![Home page layout](/Images/APIPortal/layout.png)
 
 For more details see [T3 Framework Layout](http://www.t3-framework.org/documentation/bs3-layout-system#about-layout) documentation.
@@ -128,8 +128,9 @@ Change the banner of your portal using the **Home Page Banner** module.
 
 To customize the banner:
 
-1. In JAI, click **Extensions > Modules > Home Page Banner**.
-2. Customize the following:
+1. In JAI, click **System > Site Modules**.
+2. Search for **Home Page Banner** module.
+3. Customize the following:
 
    * **Title** - Free text field for the title of the banner. Defaults to **Enter API Portal**.
    * **Title colour** - Colour picker to choose the color of the title.
@@ -144,13 +145,13 @@ To customize the banner:
    * **Border radius** - Numbers only field for border radius of the button border. Defaults to **500**.
    * **Background image** - Change the background image of the banner. You can choose an image from the media manager or upload a new image.
    * **Text alignment** - Choose one of the three options (left, center, right) to position the text and the button on the banner. The module position defaults to **api-home-banner**.
-3. Click **Save**.
+4. Click **Save**.
 
 ### Customize the tiles
 
 Modify the tiles in the home page using the **Home Tiles** module.
 
-![Tiles home page](/Images/APIPortal/tiles-homepage.png)
+![Tiles home page](/Images/APIPortal/tiles-homepage_j4.png)
 
 By default, there are four instances of this module:
 
@@ -161,8 +162,9 @@ By default, there are four instances of this module:
 
 To customize the tiles:
 
-1. In JAI, click **Extensions > Modules > Home Tiles 1**.
-2. Customize the following:
+1. In JAI, click **System > Site Modules**.
+2. Search for **Home Tiles 1**
+3. Customize the following:
 
    * **Title** - Free text field for the title. Defaults to **Explore & Test**.
    * **Title Colour** - Colour picker to choose the colour of the title.
@@ -180,7 +182,7 @@ The home page layout is designed to have up to six tiles, so positions **api-hom
 
 To add a new tile:
 
-1. In JAI, click **Extensions > Modules > New > Home Tiles**.
+1. In JAI, click **System > Site Modules > New > Home Tiles**.
 2. After finishing customizing, click **Save** or **Save & close.**
 
 ## Customize your logo
@@ -197,7 +199,7 @@ Change the API Portal site logo using the Joomla! Media Manager.
 
 To link your logo to template:
 
-1. In JAI, click **Extensions > Templates > Styles**. A list of template styles is displayed.
+1. In JAI, click **System > Site Templates Styles**. A list of template styles is displayed.
 2. Click on template style.
 3. Go to the **Theme** tab, and click **Select** from **Logo Image**.
 4. Navigate to the folder where the image was uploaded.
@@ -213,7 +215,7 @@ To link your logo to template:
 
 You can customize API Portal standard footer `Copyright © YYYY Axway` to display the name of your company, and you can also add more information to it.
 
-1. In the JAI, click **Extensions > Modules**.
+1. In the JAI, click **System > Site Modules**.
 2. Click **New** to create a new module.
 3. From the list of module types click **Custom**.
 4. On the right sidebar, select `Footer[footer]` from the **Position list**, and select `Hide` on the **Show title** option.
@@ -228,8 +230,8 @@ Customize a `404` error page for your API Portal.
 
 Follow these steps create a new template for your new `404` page.
 
-1. Log in to the Joomla! Administrator Interface (JAI), and click **Extensions > Templates**.
-2. Select **Templates** in the sidebar, and click the template **Purity_III Details and Files**.
+1. Log in to the Joomla! Administrator Interface (JAI), and click **System > Site Templates**.
+2. Click the template **Purity_III Details and Files**.
 3. Click **Copy Template**.
 4. Enter a name for the template and click **Copy Template**.
 5. Click **Close**.

@@ -113,13 +113,14 @@ This version of API Gateway and API Manager includes:
 
 * Fixes from all 7.5.3, 7.6.2, and 7.7 service packs released prior to this version. For details of all the service pack fixes included, see the corresponding *SP Readme* attached to each service pack on [Axway Support](https://support.axway.com).
 * Fixes from all 7.7 updates released prior to this version. For details of all the update fixes included, see the corresponding [Release note](/docs/apim_relnotes/) for each 7.7 update.
+* Additional fixes might be delivered as patches up to 15 months after the release date. You can find the list of patches available on top of this update on [Axway Support](https://support.axway.com/en/search/index/type/Downloads/q/20220228/ipp/100/product/324/version/3034/product/464/version/3035/subtype/8). If no patches were created for this release, the link will return "No search results found".
 
 ### Fixed security vulnerabilities
 
-| Internal ID             | Case ID  | Cve Identifier                                              | Description                                                                                                                                                                                                                 |
-| ----------------------- | -------- | ----------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RDAPI-26476             | 01326549 | CVE-2021-42550                                              | **Issue**: Vulnerability found in logback-core-1.2.0.jar deployed with API Gateway.  **Resolution**: The API Gateway logback-core library has been updated to version 1.2.10. This version addresses known vulnerabilities. |
-| RDAPI-26121 RDAPI-26335 | 01321820 | CVE-2021-44228 CVE-2021-45046 CVE-2021-45105 CVE-2021-44832 | **Issue**: Multiple CVEs were found in the log4j 2.13.2 library deployed with API Gateway and API Client Tools.  **Resolution**: The log4j2 library has been updated to version 2.17.1.  This version addresses known vulnerabilities.         |
+| Internal ID             | Case ID  | Cve Identifier                                              | Description                                                                                                                                                                                                                            |
+| ----------------------- | -------- | ----------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RDAPI-26476             | 01326549 | CVE-2021-42550                                              | **Issue**: Vulnerability found in logback-core-1.2.0.jar deployed with API Gateway.  **Resolution**: The API Gateway logback-core library has been updated to version 1.2.10. This version addresses known vulnerabilities.            |
+| RDAPI-26121 RDAPI-26335 | 01321820 | CVE-2021-44228 CVE-2021-45046 CVE-2021-45105 CVE-2021-44832 | **Issue**: Multiple CVEs were found in the log4j 2.13.2 library deployed with API Gateway and API Client Tools.  **Resolution**: The log4j2 library has been updated to version 2.17.1.  This version addresses known vulnerabilities. |
 
 ### Other fixed issues
 

@@ -31,9 +31,9 @@ When planning changes to CSS files, you can quickly check which file controls th
 
 {{< alert title="Warning" color="warning">}}It is not recommended to manually edit the `less/themes/axway/variables-custom.less` file. This file contains the attribute values customized in the ThemeMagic editor. For more details, see [Customize with ThemeMagic](/docs/apim_administration/apiportal_admin/customize_getting_started/#customize-with-thememagic).{{< /alert >}}
 
-1. Log in to the Joomla! Admin Interface (JAI), and click **Extensions > Templates**.
-2. In the Template sidebar, click **Templates**, and select **Purity III_Details and Files**.
-    ![API Portal customizatoin list of available templates through Purity tool](/Images/APIPortal/customation_puritIII_detailsandfiles.png)
+1. Log in to the Joomla! Admin Interface (JAI), and click **System > Site Templates**.
+2. Select **Purity III_Details and Files**.
+    ![API Portal customizatoin list of available templates through Purity tool](/Images/APIPortal/customation_puritIII_detailsandfiles_j4.png)
 3. On the **Editor** tab, open the following folder:
 
     ```
@@ -56,9 +56,9 @@ The custom CSS file is the last file to be loaded in your site. The custom CSS f
 
 ### Create or upload a custom stylesheet
 
-1. Log in to Joomla! Administrator Interface (JAI), and click **Extensions > Templates**.
-2. In the Templates sidebar, click **Templates**, and select the style **Purity III_Details and Files**.
-3. On the **Editor** tab, select **New file**.
+1. Log in to Joomla! Administrator Interface (JAI), and click **System > Site Templates**.
+2. Click **Purity III_Details and Files**.
+3. Click **New file**.
 4. Select the `css` folder, set **File Type** to `css`, enter a name for you file (such as `custom.css`), and click **Create**. To upload a CSS file, click **Choose File**, select the CSS file, and click **Upload**.
 
 You can now edit your custom stylesheet in JAI like any CSS file.
@@ -67,8 +67,8 @@ You can now edit your custom stylesheet in JAI like any CSS file.
 
 You can also copy a CSS file already included in the Purity III - Default style as your custom stylesheet.
 
-1. In JAI, click **Extensions > Templates**.
-2. In the Templates sidebar, click **Templates**, and select the style **Purity III_Details and Files**.
+1. In JAI, click **Sysytem > Site Templates**.
+2. Click **Purity III_Details and Files**.
 3. On the **Editor** tab, open the `css` folder, select the CSS file to copy, and click **New file**.
 4. Select the `css` folder, enter a name for your copy (such as `copied-custom.css`) in **Copied File Name**, and click **Copy File**.
 
@@ -78,9 +78,9 @@ You can now edit the details in your copied custom stylesheet.
 
 If you need the Less functionality in the custom stylesheet as well, create a less file for your custom CSS file. This less file compiles the Less variables to your custom CSS file.
 
-1. In JAI, click **Extensions > Templates**.
-2. In the Template sidebar, click **Templates**, and select the style **Purity III_Details and Files**.
-3. On the **Editor** tab, select **New file**.
+1. In JAI, click **Sysytem > Site Templates**.
+2. Click **Purity III_Details and Files**.
+3. Click **New file**.
 4. Select the `less` folder, set **File Type** to `less`, set **File Name** to `<your css file name>.less`, and click **Create**.
 
 {{< alert title="Note" >}}Styles defined in `custom.less` are independent of the template's stylesheet and do not render with updated variable values in ThemeMagic's preview.{{< /alert >}}

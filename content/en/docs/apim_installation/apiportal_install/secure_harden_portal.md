@@ -20,7 +20,7 @@ To enable SSL on API Portal, you must configure Apache to use the correct certi
 2. Change `SSLCertificateFile` and `SSLCertificateKeyFile` to point to your CA certificate and key files.
 3. Restart Apache.
 
-For more details on API Portal certificate management, see the [API Management Security Guide](https://docs.axway.com/bundle/apim-security-guide/page/api_management_security_guide.html).
+For more details on API Portal certificate management, see the [API Management Security Guide](https://docs.axway.com/bundle/apim-security-guide/page/api_management_7_7_security_guide.html).
 
 ## Disable TLS 1.0 and TLS 1.1 on Apache
 
@@ -221,7 +221,7 @@ The `open_basedir` option must be added after the installation is finished. Set 
 
 * API Portal root directory
 * Value of `upload_tmp_dir` or `/tmp` if it is empty
-* New location of log files if you changed them according to [Change the location of API Portal log files](#change-the-location-of-api-portal-log-files)
+* New location of log files if you changed them according to [Change the location of API Portal log files](/docs/apim_administration/apiportal_admin/apip_logging/#change-the-location-of-apiportal-log-files)
 
 After updating `php.ini`, restart Apache.
 
@@ -389,7 +389,7 @@ These are some general recommendations:
 
 Content Security Policy ([CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)) sets a policy that instructs the browser to only fetch resources, such as scripts, images, or objects, from the specified locations. After CSP is configured, a compliant browser loads resources from locations listed in the policy. CSP reduces the ability of an attacker to inject malicious content and helps to protect a web page from attacks like Cross-Site Scripting (XSS), dynamic code execution, and clickjacking.
 
-CSP is enabled by default in API Portal. To change its configuration, in JAI, click **Extensions > Plugins > API Portal - System**. In the plugin settings you can edit, enable, or disable the policy. Because API Portal uses some inline scripts, you must use nonces to ensure that you are using API Portal securely. If you do not want to take advantage of the nonces you can remove them from the policy.
+CSP is enabled by default in API Portal. To change its configuration, in JAI, click **Extensions > Plugins > API Portal - System**. In the plugin settings you can edit, enable, or disable the policy. Because API Portal uses some inline scripts, you must use [nonces](https://content-security-policy.com/nonce/) to ensure that you are using API Portal securely. If you do not want to take advantage of the nonces you can remove them from the policy. Note that Joomla 4 introduces a built-in CSP functionality, which is disabled by default, and we recommended you to keep it disabled to avoid conflict with API Portal CSP functionality.
 
 ## Define retention periods for personal data
 
@@ -405,5 +405,5 @@ When the retention periods expire you must ensure that all of the data which is 
 
 ## Where to go next
 
-* For more information on the security features of API Management products and best practices for strengthening their security, see the [API Management Security Guide](https://docs.axway.com/bundle/apim-security-guide/page/api_management_security_guide.html).
+* For more information on the security features of API Management products and best practices for strengthening their security, see the [API Management Security Guide](https://docs.axway.com/bundle/apim-security-guide/page/api_management_7_7_security_guide.html).
 * For privacy and personal data security recommendations, see [Manage privacy and personal data](/docs/apim_administration/apiportal_admin/manage_privacy_personal_data).
