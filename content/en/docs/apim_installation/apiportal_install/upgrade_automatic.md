@@ -26,8 +26,6 @@ Before you upgrade your API Portal, complete the following prerequisites. These 
 * Stop and back up the existing API Portal files and database. There is no option to roll back after you start the upgrade.
 * To back up an API Portal software installation, perform a file system backup and export the database.
 
-{{< alert title="Note" color="primary" >}} API Portal upgrade from CentOS 7 to CentOS 8 is not supported. You can only apply a clean install on CentOS 8. {{< /alert >}}
-
 ### API Portal with applied patches
 
 If you are using API Portal with applied patches, you must change the ownership of the installation path before applying an update:

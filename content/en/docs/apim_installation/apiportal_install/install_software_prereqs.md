@@ -23,7 +23,7 @@ API Portal has the following requirements for software components:
 
 ### Operating system
 
-You must have Red Hat Enterprise Linux (RHEL) 7/8 or CentOS 7/8 installed.
+You must have Red Hat Enterprise Linux (RHEL) 7/8 or CentOS 7 installed.
 
 ### Database
 
