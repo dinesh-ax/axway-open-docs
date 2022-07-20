@@ -59,7 +59,7 @@ You must be familiar with:
 
 ## Docker Compose prerequisites
 
-The following are the prerequisites to configure Operational Insights using Docker Compose on virtual machines with Docker installed.
+The following are the requirements to deploy Operational Insights using Docker Compose on virtual machines with Docker installed.
 
 ### Docker
 

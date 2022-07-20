@@ -1,14 +1,20 @@
 ---
-title: Configure Elasticsearch for production environment
-linkTitle: Production setup
-weight: 50
-date: 2022-06-09
-description: Configure Elasticsearch for production environment.
+title: Configure a production setup for Docker compose
+linkTitle: Production setup for Docker compose
+weight: 10
+date: 2022-07-20
+description: Configure a production setup using Docker compose to test Operational Insights in a single instance.
 ---
 
-This section covers advanced configuration topics that are required for a production environment. It is assumed that you have already familiarized yourself with the solution using the Basic setup.
+This section covers advanced configuration topics that are required for a production environment deployed with Docker compose. Follow the next sections to configure Operational Insights in your Docker compose production environment.
 
-Architecture examples
+## Before you start
+
+* Ensure that you have all [prerequisites](/docs/amplify_analytics/op_insights_prerequisites/) in place.
+* Ensure that you have applied the [basic configuration](link) for general frameworks.
+
+<!--
+(conceptual topic. Should be around the overview of this bundle) Architecture examples 
 Traffic-Payload
 Setup Elasticsearch Multi-Node
 Setup API-Manager
@@ -19,7 +25,110 @@ Enable Metricbeat
 Configure cluster UUID
 Custom certificates
 Secure API-Builder Traffic-Monitor API
-(**done**) Lifecycle Management (rename to Configure the retention period)
+(added here) Lifecycle Management (rename to Configure the retention period)
+-->
+
+## Traffic Payload
+
+The payload belonging to an API request is not written directly to the open traffic event log and therefore not stored in Elasticsearch.
+
+To clarify what is meant by payload at this point the following example screenshot.
+
+<!-- I replaced the screenshot with the actual text -->
+
+```bash
+HTTP/1.1 200 OK
+Date:Wed, 13 Jan 2021 23:08:58GMT
+CSRF-Token:62325BA818F8203917CB61AE883346D7F7A206E564E26008CAC3ED37386B1B7B
+Content-type:application/json
+Cache-Control:no-cache,no-store,must-revalidate
+Pragma:no-cache
+Expires:0
+X-Frame-Options:DENY
+X-Content-Type-Options:nosniff
+X-XSS-Protection:0
+Server:Gateway
+Connection:close
+X-CorrelationID:Id-8a7dff5f6612be6b4aa9d851 0
+
+{"id":"1eb19f0c-810a-4ab1-94c6-bf85833754a8","organizationId":"2b4a2c5a-827c-4be7-8dc9-ffbd5f086144,ou=organizations,ou=APIPortal","lastSeen":1610579331159,"changePassword":false}
+```
+
+This payload, if not configured as explained below, will only be displayed as long as it is in the OBSDB. After that, NO DATA is displayed instead of the payload.
+
+Configure the payload as follows:
+
+### Export the payload from API Gateway
+
+In order to also make the payload available in the Traffic Monitor via the solution, this must also be exported from the API gateway to the runtime.
+To do this, go to the Server Settings Open Traffic Event Log configuration (**placeholder** - where's it, in PS?) and enable the payload export:
+
+(**placeholder** - instead of adding an image, complete the sentence "and enable the payload export by ??? configuring something? )
+
+You need to repeat this step for each API gateway group for which you want to make the payload available. You can change the export path if necessary, for example to write the payload to an NFS volume.
+
+### Make the payload available
+
+The saved payload must be made available to the API-Builder Docker container as a mount under `/var/log/payloads`. You can find an example in the docker-compose.yml:
+`${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads` shared volume into the API Builder container.
+
+### Make the payload available per region
+
+If you are using the region feature (**placeholder**, see Setup API-Manager > Different Topologies/Domains), that is, collecting API Gateways of different Admin Node Manager domains into a central Elasticsearch instance, then you also need to make the payload available to the API builder regionally separated. For example, if you have defined the region like, `REGION=US-DC1`, all traffic payload from these API Gateways must be made available to the API Builder as follows:
+
+```bash
+/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>
+```
+
+So you need to make the existing structure available in a regional folder. For this, the region must be in lower case. And you have to configure each Admin-Node-Manager with the correct region (**placeholder**, see Setup API-Manager > Different Topologies/Domains).
+
+Note:
+
+* Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter `PAYLOAD_HANDLING_ENABLED=false` if you do not need this.
+* Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the Save option.
+
+## Setup Elasticsearch multi-node
+
+For a production environment Elasticsearch must run a multi-node Elasticsearch cluster environment. Indices are configured so that available nodes are automatically used for primary and replica shards. If you use only one Elasticsearch node, the replica shards cannot be assigned to any node, which causes the cluster to remain in the Yellow state. This in turn leads to tasks not being performed by Elasticsearch. For example, lifecycle management of the indexes.
+If you are using an external Elasticsearch cluster, you can skip most of the following instructions, besides step number 1 to configure your available Elasticsearch cluster nodes.
+
+The setup of a Multi-Node Elasticsearch Cluster can be done with default settings via the parameter `ELASTICSEARCH_HOSTS`. Some hints for this: (**placeholder**: for this what?)
+
+* The default ports are 9200, 9201, 9202 and 9300, 9301, 9302 for the Elasticsearch instances elasticsearch1, elasticsearch2 and elasticsearch3.
+    * these ports are exposed by Docker-Compose through the docker containers
+    * please configure ELASTICSEARCH_HOSTS accordingly with 9200, 9201, 9202
+    * based on the HTTP ports, the transport port is derived. (9201 --> 9301, ...)
+    * other ports are possible and can be configured
+* Based on the specified URLs, the necessary Elasticsearch parameters are set when creating or starting the Elasticsearch Docker containers.
+* Multiple Elasticsearch Nodes are only really useful if they actually run on different hosts.
+    * Again, it is assumed that the release package is downloaded on the individual hosts and the .env file is provided.
+* You can always add more nodes to the Elasticsearch cluster to provide additional disk space and computing power.
+    * You can start with two nodes today and add another cluster node in 6 months if needed.
+* Note that all clients (Filebeat, Logstash, API-Builder and Kibana) are using the given Elasticsearch hosts
+    * that means, you don't need a loadbalancer in front of the Elasticsearch-Cluster to achieve high availability at this point
+    * make sure, that all clients are configured and restarted with the available Elasticsearch hosts
+
+Watch [this video](https://youtu.be/sM5-0c8aEZk) for a demonstration of how to add an elasticsearch node (**placeholder**: add the node where?)
+
+### placeholder - need a title for this subsection
+
+Need an introduction for this subsection.
+
+* Setup Cluster-Nodes
+
+The solution is prepared for 5 nodes but can easily be extended to more nodes if needed. To configure multiple hosts in the .envfile:
+
+````bash
+ELASTICSEARCH_HOSTS=https://ip-172-31-61-143.ec2.internal:9200,https://ip-172-31-57-105.ec2.internal:9201
+````
+
+If you need special configuration please use the parameters `ELASTICSEARCH_PUBLISH_HOST<n>`, `ELASTICSEARCH_HOST<n>_HTTP` and `ELASTICSEARCH_HOST<n>_TRANSPORT`.
+
+You may also change the cluster name if you prefer: `ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch`.
+
+* Bootstrap the cluster
+
+placeholder
 
 ## placeholder
 
