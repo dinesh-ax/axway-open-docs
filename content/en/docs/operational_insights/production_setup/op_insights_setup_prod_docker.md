@@ -15,17 +15,17 @@ This section covers advanced configuration topics that are required for a produc
 
 <!--
 (conceptual topic. Should be around the overview of this bundle) Architecture examples 
-Traffic-Payload
-Setup Elasticsearch Multi-Node
-Setup API-Manager
-Setup local lookup
+(migrated) Traffic-Payload
+(migrated) Setup Elasticsearch Multi-Node
+(migrated) Setup API-Manager
+(migrated) Setup local lookup
 Custom properties
 Activate user authentication
 Enable Metricbeat
 Configure cluster UUID
 Custom certificates
 Secure API-Builder Traffic-Monitor API
-(added here) Lifecycle Management (rename to Configure the retention period)
+(migrated) Lifecycle Management (rename to Configure the retention period)
 -->
 
 ## Traffic Payload
@@ -114,9 +114,11 @@ Watch [this video](https://youtu.be/sM5-0c8aEZk) for a demonstration of how to a
 
 Need an introduction for this subsection.
 
-* Setup Cluster-Nodes
+The following sections explain how to setup Elasticsearch in a multi-node environment.
 
-The solution is prepared for 5 nodes but can easily be extended to more nodes if needed. To configure multiple hosts in the .envfile:
+#### 1. Setup Cluster nodes
+
+The **solution** is prepared for 5 nodes but can easily be extended to more nodes if needed. To configure multiple hosts, add the following to the `.envfile`:
 
 ````bash
 ELASTICSEARCH_HOSTS=https://ip-172-31-61-143.ec2.internal:9200,https://ip-172-31-57-105.ec2.internal:9201
@@ -126,13 +128,189 @@ If you need special configuration please use the parameters `ELASTICSEARCH_PUBLI
 
 You may also change the cluster name if you prefer: `ELASTICSEARCH_CLUSTERNAME=axway-apim-elasticsearch`.
 
-* Bootstrap the cluster
+#### 2. Bootstrap the cluster
 
-placeholder
+{{< alert title="Note" >}}
+You can skip this step if you want to extend the cluster from the basic setup, since the basic setup has already initialized a cluster.
+{{< /alert >}}
 
-## placeholder
+We recommend starting one node after the next. The first node will initially set up the cluster and bootstrap it. Start the first cluster node with the following statement:
 
-placeholder
+```bash
+docker-compose --env-file .env -f elasticsearch/docker-compose.es01.yml -f elasticsearch/docker-compose.es01init.yml up -d
+```
+
+This node automatically becomes the master node.
+
+#### 3. Add additional nodes
+
+You can add cluster nodes at any time to increase available disk space or CPU performance. To achieve resilience, it is strongly recommended set up at least 2 or even better 3 cluster nodes to also perform maintenance tasks such as updates. For more information see, [Designing for resilience](https://www.elastic.co/guide/en/elasticsearch/reference/current/high-availability-cluster-design.html). It is also possible to have two Elasticsearch nodes running on the same machine.
+
+To add a cluster node you need to configure ELASTICSEARCH_HOSTS and execute the following command:
+
+```
+# To add for instance a third node ELASTICSEARCH_HOSTS must contain three nodes
+docker-compose --env-file .env -f elasticsearch/docker-compose.es03.yml up -d
+```
+
+Additionally please check in Kibana the new node has successfully joined the cluster and shards are assigned to it.
+
+#### 4. Restart clients
+
+Do you have changed the list of available Elasticsearch Nodes via the parameter: ELASTICSEARCH_HOSTS. For example from a single-node to a multi-node cluster, then it is strongly recommended to restart the corresponding clients (Kibana, Filebeat, Logstash, API-Builder). Via docker-compose, so that the containers are created with the new ELASTICSEARCH_HOSTS parameter. This ensures that clients can use the available Elasticsearch nodes for a fail-over in case of a node downtime.
+
+## Configure API Manager
+
+Before a document is send to Elasticsearch, additional information for the processed API is requested by Logstash from the API Manager through an API lookup. This lookup is handled by the API-Builder and performed against the configured API-Manager.
+By default the configured Admin Node Manager host is also used for the API-Manager or the configured API-Manager URL:
+
+```none
+API_MANAGER=https://my.apimanager.com:8075
+```
+
+### Configure multiple API Managers
+
+If you have several API Managers within your domain, you have to configure a mapping of which group (groupId) belongs to which API Manager. The group-id represents the Domain-Group and is attached to each Open-Traffic- or Metric-Event. It's used by Logstash to send the request to the API-Builder Lookup-API and is used there to perform the lookup against the belonging API-Manager.
+
+The following syntax is used for this:
+
+```
+API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
+```
+
+In this example, all events of `group`-2 are enriched with the help of the API manager (<https://api-manager-1:8075>) and of `group-5` accordingly with <https://api-manager-2:8275>.
+
+### Configure different topologies and domains
+
+**placeholder**: is this supposed to be a subsection of Configure API Manager?
+
+From version 2.0.0 it is additionally possible to use the solution with different domains and topologies. An example are different hubs (for example, US, EMEA, APAC), each having their own Admin Node Manager and API-Manager, but still all API Events should be stored in a central Elasticsearch instance.
+
+For this purpose the configurable `GATEWAY_REGION` in Filebeat is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.
+
+(**placeholder**: Image index_per_region.png)
+
+Also in this case, the API Managers must or can be configured according to the Region & Group-ID of the event. Example:
+
+```bash
+API_MANAGER=https://my-apimanager-0:8075, group-1|https://my-api-manager-1:8175, group-5|https://my-api-manager-2:8275, group-6|US|https://my-api-manager-3:8375, group-6|eu|https://my-api-manager-4:8475
+```
+
+In this example, API-Managers are configured per Region & Group-ID. So if an event is processed which has a Region and Group-ID matching the configuration, then the configured API-Manager is used. This includes the lookup for the API details as well as the user lookup for the authorization.
+If the region does not fit, a fallback is made to a group and last but not least to the generally stored API manager.
+A configuration only per region is not possible!
+
+When the API Builder is started, to validate the configuration, a login to each API-Manager is performed. Currently the same API manager user (API_MANAGER_USERNAME/API_MANAGER_PASSWORD) is used for each API Manager.
+
+### Configure Admin Node Manager per region
+
+**placeholder**: is this supposed to be a subsection of Configure API Manager or Configure different topologies and domains?
+
+If you use the solution with multiple regions and different domains, all events/documents are stored in ONE Elasticsearch. Therefore you also need to tell the Admin-Node-Manager in each region, which data (indices) to use. If you don't do that, the Admin-Node-Manager will show the entire traffic from all regions which may not be desired but is also possible.
+To do this, you need to store the appropriate region, which is also specified in the Filebeats for the API gateways, in the conf/envSettings.props file and restart the node manager. Example: REGION=US
+This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the Admin-Node-Manager configuration (<https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/nodemanager>) (**placeholder**: shouldn't link to APIM docs which talks about the NM instead of creating a page for that?)
+
+## Setup local lookup
+
+**placeholder**: what does he means by lookup?
+
+Starting with version 2.0.0 of the solution, it is optionally possible to use local configuration files for the API lookup in addition to the API Manager. This makes it possible to:
+
+* Enrich native APIs
+    * APIs that have been exposed natively through the API-Gateway policies not having a context
+    * you can configure all information that would normally be retrieved from the API-Manager via this lookup file (Organization, API-Name, API-Method-Name, Custom-Properties)
+    * for example display a /healthcheck as Healthcheck API in Kibana dashboards
+* Ignore events
+    * Additionall you can ignore OpenTraffc events so that they are not indexed or stored in Elasticsearch.
+    * For example, the path: /favicon.ico, as this event does not add value.
+
+Note that the local configuration file is used before the API-Manager lookup. If there is a match, no lookup to the API-Manager is performed.
+
+To enable the local lookup, you must perform the following steps:
+
+1. Add your config file. It is best to copy the delivered template: config/api-lookup-sample.json to your config/api-lookup.json.
+
+    ```bash
+    cp config/api-lookup-sample.json config/api-lookup.json
+    ```
+
+2. Activate the config file. In your .env file you must then enable the configuration file to be used by the API-Builder. To do this, configure or enable the following environment variable:
+
+    ```bash
+    API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
+    ```
+
+3. Restart API-Builder:
+
+```bash
+docker stop apibuilder4elastic
+docker-compose up -d
+```
+
+If an event is to be indexed, the API builder will try to read this file and will acknowledge this with the following error if the file cannot be found:
+
+```bash
+Error reading API-Lookup file: './config/api-lookup.json'
+```
+
+### Ignore events
+
+At this point, we intentionally refer to events and not APIs, because different events (TransactionSummy, CircuitPath, TransactionElement) are created in the OpenTraffic log for each API call. Each is processed separately by Logstash and stored using an `upsert` in Elasticsearch with the same Correlation-ID. Most of these events contain the path of the called API, but unfortunately not all.
+This is especially important when ignoring events so that they are not stored in Elasticsearch entirely. Since all events are processed individually, it must also be decided individually to ignore an event. Therefore, to ignore for example the Healthcheck API entirely, the following must be configured in the lookup file:
+
+```bash
+{
+    "/healthcheck": {
+        "ignore": true,
+        "name": "Healthcheck API",
+        "organizationName": "Native API"
+    },
+    "Policy: Health Check": {
+        "ignore": true
+    }
+}
+```
+
+This will ignore events based on the path (TransactionSummary & TransactionElement) and the policy name (CircuitPath). You can see the result in the API-Builder log on level INFO with the following lines:
+
+```log
+Return API with apiPath: '/healthcheck', policyName: '' as to be ignored: true
+```
+
+or
+
+```
+Return API with apiPath: '', policyName: 'Health Check' as to be ignored: true
+```
+
+The information is cached in Logstash via memcached for 1 hour, so you will not see the loglines in the API-Builder for each request. You can of course force a reload of updated configuration via docker restart memcached.
+
+It is additionally possible to overlay the local lookup file per group and region. This allows you, for example, to return different information per region for the same native API or to ignore an API only in a specific region. To do this, create files with the same base name and then a qualifier for the group and/or for the group plus region. Examples:
+
+```
+api-lookup.group-2.json
+api-lookup.group-2.us.json
+```
+
+Again, it is not possible to specify only the region, but only in combination with the appropriate group.
+
+## Custom properties
+
+The solution supports configured API Manager API custom properties by default. This means that the custom properties are indexed within the field: `customProperties` in Elasticsearch and can be used for customer-specific evaluations.
+
+Since version 4.3.0, it is also possible to index runtime attributes, i.e. policy attributes, in Elasticsearch and then analyze them in Kibana, for example.
+
+The following steps are necessary:
+
+1. Export the custom attributes
+
+    In Policy Studio, configure which attributes should be exported to the transaction event log. Learn more (<https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_reference/log_global_settings/index.html#transaction-event-log-settings>) how to configure messages attributes to be stored in transaction events.
+
+    All exported attributes will be found in the Elasticsearch indices: `apigw-traffic-summary` and `apigw-hourly-traffic-summary` within the field `customMsgAtts`.
+
+2. Configure custom properties
+
+    placeholder
 
 ## Configure the retention period
 
