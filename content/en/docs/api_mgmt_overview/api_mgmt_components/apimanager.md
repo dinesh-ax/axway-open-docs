@@ -10,11 +10,11 @@
 
 The main API Manager features are:
 
-* API registration - Adding APIs to the API Catalog. For details, see [API registration](#api-registration-and-lifecycle-management-in-api-manager).
-* Partner organization management - API Manager includes partner-based management of API consumers that browse the API Catalog and client applications that use the APIs. Delegated partner administration enables partner organizations to manage their own API consumers, easing the management of large partners, or a large number of partners. A wide range of client application credentials are supported, including OAuth 2.0 and API keys.
-* Policy management - API Manager enables you to apply authorization and quota policies to APIs at the partner and client application levels. Custom policies can also be developed in Policy Studio, and applied to APIs.
-* API alerting - API Manager enables you to configure API, partner, policy and runtime events to generate alerts that trigger governance processes. For example, this includes sending an email notification or starting application workflows.
-* API import and export - Registered APIs can be exported from API Manager and imported to another API Manager using a file-based package. This enables APIs to be promoted from a sandbox API group (where client applications are developed and tested) to the production API group. You can configure an API promotion policy to automate this process.
+* **API registration**: Adding APIs to the API Catalog. For more information, see [API registration](#api-registration-and-lifecycle-management-in-api-manager).
+* **Partner organization management**: API Manager includes partner-based management of API consumers that browse the API Catalog and client applications that use the APIs. Delegated partner administration enables partner organizations to manage their own API consumers, easing the management of large partners, or a large number of partners. A wide range of client application credentials are supported, including OAuth 2.0 and API keys.
+* **Policy management**: API Manager enables you to apply authorization and quota policies to APIs at the partner and client application levels. Custom policies can also be developed in Policy Studio, and applied to APIs.
+* **API alerting**: API Manager enables you to configure API, partner, policy and runtime events to generate alerts that trigger governance processes. For example, this includes sending an email notification or starting application workflows.
+* **API import and export**: Registered APIs can be exported from API Manager and imported to another API Manager using a file-based package. This enables APIs to be promoted from a sandbox API group (where client applications are developed and tested) to the production API group. You can configure an API promotion policy to automate this process.
 
 ## API Manager tools
 
@@ -56,7 +56,7 @@ The following diagram shows a simplified API management architecture:
 
 ![API management simplified architecture](/Images/docbook/images/api_mgmt/api_mgmt_architecture_simple.png)
 
-## API registration and lifecycle management in API Manager
+## API registration and lifecycle management
 
 API management focuses on registering existing REST APIs, and managing their consumption by customers and partners to support their business objectives. REST APIs are registered using the API Manager web console. REST APIs are managed directly by API Manager using authentication, authorization, and quota policies defined in the client registry. API administrators can use API Manager to manage API consumption, and API consumers can consume the virtualized APIs using API Manager, or using a customized self-service API Portal.
 
@@ -66,25 +66,35 @@ API management is performed by an *API owner* (a technical business or IT operat
 
 API Manager provides a web-based interface that enables API owners to register existing back-end REST APIs, apply standard policies, and virtualize them on API Gateway as public front-end APIs. The APIs are immediately available for management in API Manager, and for consumption in API Manager, or in a self-service API Portal.
 
+### API lifecycle states
+
 In API Manager, the lifecycle of an API includes the following states:
 
-1. Unpublished - The API is registered and tested in isolation in an API owner organization. The API is available to the API administrator and API owners who are members of that organization. The API can be edited, or be moved to the published state, or deleted. These actions can only be performed by the API owner or the API administrator.
+**1. Unpublished** - The API is registered and tested in isolation in an API owner organization, and it is available to the API administrator and API owners who are members of that organization. The API can be edited, or be moved to the published state, or deleted. These actions can only be performed by the API owner or the API administrator.
 
-    Unpublished APIs are displayed in the API Catalog view to users in the same organization. The users in this organization are the API owners and developers on the same team working on these APIs. However, an unpublished API is not displayed to users in other organizations. The API must first be published, and then that organization must be authorized to access the API. The API is then displayed in the API Catalog for users in that organization.
+Unpublished APIs are displayed in the API Catalog view to users in the same organization. The users in this organization are the API owners and developers on the same team working on these APIs. However, an unpublished API is not displayed to users in other organizations. The API must first be published, and then that organization must be authorized to access the API. The API is then displayed in the API Catalog for users in that organization.
 
-    All APIs (published and unpublished) are displayed in the API Catalog for the API administrator.
-2. Published - When an API is ready to be consumed by other organizations, it is published in the API Catalog by the API owner. The API administrator must then approve the API as the final step to publish to other organizations in the API Catalog. When the API is published, the API administrator can authorize other organizations to access the API. This displays the API in API Manager and API Portal to API consumers who are members of the authorized organization.
+All APIs (published and unpublished) are displayed in the API Catalog for the API administrator.
 
-    When an API is published, only the API administrator can make changes. The published API can only be deprecated or unpublished, and cannot be deleted. Unpublishing an API stops client applications in other organizations using the API. A published API cannot be edited, and must first be unpublished. However, the API administrator can edit the API documentation of a published API. This allows changes in the API documentation without impacting the API availability.
-3. Deprecated - When the API administrator wishes to deprecate a published API, they have the option to flag the API with a retirement date. If the API administrator does not avail of this option, the API will enter a deprecated state indefinitely. When an API is deprecated, it is still available to client applications in other organizations. This gives API consumers time to port their existing applications to adopt a newer version of the API. The API administator can choose to undeprecate a deprecated API by selecting the 'undeprecate' option, which removes the retirement date flag in the API Catalog.
+**2. Published** - When an API is ready to be consumed by other organizations, it is published in the API Catalog by the API owner. The API administrator must then approve the API as the final step to publish to other organizations in the API Catalog. When the API is published, the API administrator can authorize other organizations to access the API. This displays the API in API Manager and API Portal to API consumers who are members of the authorized organization.
 
-    If the API administrator chooses to flag the API with a retirement date, they can choose either today's date or a future date. If the API administrator chooses today's date as the retirement date for a published API, the API will be retired immediately. An API is retired when it is unpublished in the API Catalog, and thus will no longer be available to client applications in other organizations. The retirement date of an API is displayed to API consumers in the API Catalog.
+When an API is published, only the API administrator can make changes. The published API can only be deprecated or unpublished, and cannot be deleted. Unpublishing an API stops client applications in other organizations using the API. A published API cannot be edited, and must first be unpublished. However, the API administrator can edit the API documentation of a published API. This allows changes in the API documentation without impacting the API availability.
 
-    If the API administrator chooses a future date as the retirement date for a published API, the API will enter a deprecated state until the retirement date is reached. When the retirement date of the API is reached, the API will be retired.
+**3. Deprecated** - When the API administrator wishes to deprecate a published API, they have the option to flag the API with a retirement date. If they do not avail of this option, the API will enter a deprecated state indefinitely.
+
+When an API is deprecated, it is still available to client applications in other organizations. This gives API consumers time to port their existing applications to adopt a newer version of the API. The API administrator can choose to undeprecate a deprecated API by selecting the **undeprecate** option, which removes the retirement date flag in the API Catalog.
+
+If the API administrator chooses to flag the API with a retirement date, they can choose either today's date or a future date.
+
+When today's date is selected, the API is retired immediately. An API is retired when it is unpublished in the API Catalog, and thus will no longer be available to client applications in other organizations. The retirement date of an API is displayed to API consumers in the API Catalog.
+
+When a future date is selected, the API will enter a deprecated state until the retirement date is reached. When the retirement date is reached, the API is retired.
+
+## High level tasks in API Manager
 
 The following are the very high level tasks you can perform in API Manager.
 
-### 1 - API registration
+### API registration
 
 If the back-end API is an existing REST API, an API owner uses API Manager to register the APIs and apply standard policies. The registered APIs are virtualized by API Gateway, which protects the back-end services, and makes the APIs available for consumption. This describes the typical API management approach.
 
@@ -95,13 +105,13 @@ For more details, see the following:
 
 If the existing back-end API is not a REST API, or if custom policies are required, a policy developer uses Policy Studio to create a new API (for example, for SOAP to REST, or cloud-based applications). APIs developed in Policy Studio are then imported as back-end APIs in API Manager.
 
-### 2 - API administration
+### API administration
 
 The API administrator manages and monitors the APIs at runtime using API Manager. For example, this includes all organizations and users registered to log into API Manager, client applications and their authentication credentials, and authorization and quota policies. The API administrator manages who can consume, what they can consume, and how much can they consume. For example, which business partners are permitted to consume which APIs, and what are their quota levels.
 
 For more details, see [Manage access to APIs](/docs/apim_administration/apimgr_admin/api_mgmt_admin/).
 
-### 3 - API consumption
+### API consumption
 
 API consumers can self-register in API Manager or API Portal. They browse and consume the managed APIs provided by API Gateway, and use them to develop and test their applications. The organization administrators in named organizations manage the applications and API consumer users.
 
