@@ -1,12 +1,12 @@
 ---
 title: Configure a production setup for Docker compose
-linkTitle: Production setup for Docker compose
+linkTitle: Production setup for Docker Compose
 weight: 10
 date: 2022-07-20
-description: Configure a production setup using Docker compose to test Operational Insights in a single instance.
+description: Configure a production setup using Docker Compose to test Operational Insights in a highly available environment.
 ---
 
-This section covers advanced configuration topics that are required for a production environment deployed with Docker compose. Follow the next sections to configure Operational Insights in your Docker compose production environment.
+This section covers advanced configuration topics that are required for a production environment deployed with Docker compose.
 
 ## Before you start
 
@@ -14,13 +14,18 @@ This section covers advanced configuration topics that are required for a produc
 * Ensure that you have applied the [basic configuration](link) for general frameworks.
 
 <!--
-(conceptual topic. Should be around the overview of this bundle) Architecture examples 
+- Configure High availability
+- Elasticsearch cluster
+- Logstash, API-Builder and Memcached
+- Traffic-Payload
+- Activate user authentication
+
 (migrated) Traffic-Payload
 (migrated) Setup Elasticsearch Multi-Node
 (migrated) Setup API-Manager
 (migrated) Setup local lookup
-Custom properties
-Activate user authentication
+(migrated) Custom properties
+(migrated) Activate user authentication
 Enable Metricbeat
 Configure cluster UUID
 Custom certificates
@@ -28,7 +33,7 @@ Secure API-Builder Traffic-Monitor API
 (migrated) Lifecycle Management (rename to Configure the retention period)
 -->
 
-## Traffic Payload
+## Configure traffic payload
 
 The payload belonging to an API request is not written directly to the open traffic event log and therefore not stored in Elasticsearch.
 
@@ -302,15 +307,82 @@ Since version 4.3.0, it is also possible to index runtime attributes, i.e. polic
 
 The following steps are necessary:
 
-1. Export the custom attributes
+### Export the custom attributes
 
-    In Policy Studio, configure which attributes should be exported to the transaction event log. Learn more (<https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_reference/log_global_settings/index.html#transaction-event-log-settings>) how to configure messages attributes to be stored in transaction events.
+In Policy Studio, configure which attributes should be exported to the transaction event log. Learn more (<https://docs.axway.com/bundle/axway-open-docs/page/docs/apim_reference/log_global_settings/index.html#transaction-event-log-settings>) how to configure messages attributes to be stored in transaction events.
 
-    All exported attributes will be found in the Elasticsearch indices: `apigw-traffic-summary` and `apigw-hourly-traffic-summary` within the field `customMsgAtts`.
+All exported attributes will be found in the Elasticsearch indices: `apigw-traffic-summary` and `apigw-hourly-traffic-summary` within the field `customMsgAtts`.
 
-2. Configure custom properties
+### Configure custom properties
 
-    placeholder
+In order to be able to use your attributes in aggregations for reports later on, you have to configure them for the solution in advance. By using the parameter: `EVENTLOG_CUSTOM_ATTR` you define which attributes should be indexed in Elasticsearch.
+It is important that the fields have as high cardinality as possible to work efficiently in aggregations. The fields are indexed as a keyword in Elasticsearch. It is also possible to index fields as text, but these are not available in the long-term data and not recommended.
+
+After restarting APIBuilder4Elastic, the solution will configure Elasticsearch (index templates & transform job) according to the parameter: `EVENTLOG_CUSTOM_ATTR`. Note that it takes 4 hours for the custom properties to be available in the transformed data (apigw-hourly-traffic-summary).
+
+(**placeholder**) Watch this video that demonstrate how to ingest the HTTP user-agent into Elasticsearch: [Axway APIM with Elasticsearch - Use custom attributes](https://youtu.be/F0LCZhnWLkg).
+
+## Activate user authentication
+
+(**placeholder** introduction ??)
+
+### Generate Built-In user passwords
+
+This step can be ignored, when you are using an existing Elasticsearch cluster. Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for these users. It is assumed that the following command is executed on the first elasticsearch1 node:
+
+```bash
+docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto --batch --url https://localhost:9200"
+```
+
+As a result you will see the randomly generated passwords for the users: apm_system, kibana_system, kibana, logstash_system, beats_system, remote_monitoring_user and elastic. These passwords needs to be configured in the provided .env.
+
+### Setup passwords
+
+Please update the `.env` and setup all passwords as shown above. If you are using an existing Elasticsearch please use the passwords provided to you. The `.env` contains information about each password and for what it is used:
+
+```bash
+FILEBEAT_MONITORING_USERNAME=beats_system
+FILEBEAT_MONITORING_PASSWORD=DyxUva2a6CwedZUhcpFH
+
+KIBANA_USERNAME=kibana_system
+KIBANA_PASSWORD=qJdDRYyL97lP5ERkHHrj
+
+LOGSTASH_MONITORING_USERNAME=logstash_system
+LOGSTASH_MONITORING_PASSWORD=Y6J6vgw9Z0RTPcFR8Qp3
+
+LOGSTASH_USERNAME=elastic
+LOGSTASH_PASSWORD=2x8vxZrvXX9a3KdGuA26
+
+API_BUILDER_USERNAME=elastic
+API_BUILDER_PASSWORD=2x8vxZrvXX9a3KdGuA26
+```
+
+### Disable anonymous user
+
+In the `.env` file uncomment the following line:
+
+```bash
+ELASTICSEARCH_ANONYMOUS_ENABLED=false
+```
+
+After restart, Kibana will prompt to login before continue. Intially you may use the elastic user account to login and then create individual users and permissions.
+
+### Restart services
+
+After you have configured all passwords and configured security, please restart all services.
+
+* Filebeat - It is now using the beats_system user to send monitoring information
+* Logstash - Using the logstash_system to send monitoring data and logstash user to insert documents
+* Kibana - Is using the kibana_system to send monitoring data
+* API-Builder - Is using the API-Builder user to query Elasticsearch
+
+It's very likely that you don't use the super-user `elastic` for `API_BUILDER_USERNAME`. It's recommended to create dedicated account. The monitoring users are used to send metric information to Elasticsearch to enable stack monitoring, which gives you insight about event processing of the complete platform.
+
+(**placeholder**) Watch this video for a demonstration: [Authentication for Elasticsearch](https://youtu.be/4xxqV7PyBRQ).
+
+## Custom certificates
+
+a
 
 ## Configure the retention period
 

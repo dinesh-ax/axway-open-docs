@@ -28,39 +28,43 @@ The following are the **components** used in Operational insights component:
 * **Kibana**: Used to visualize the indexed data in dashboards. Operational insights provides some default dashboards, but it is also possible to add custom dashboards to the solution.
 * **Traffic Monitor**: TO DO
 
-## Architecture
-
-This section presents the overall architecture of the Elasticsearch components running with API Gateway Manager both using  Docker compose and Helm.
-
-### Docker compose
+## Architecture using Docker Compose
 
 The following image shows the overall architecture of the Elasticsearch components running with API Gateway Manager deployed with Docker compose:
 
-(**add the image** <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#overview> )  
+![Docker Compose architecture](/Images/op_insights/op_insights_DockerComposeArchitecture.png)
 
-With that architecture it is possible to collect data from API Gateways running all over the world into a centralized Elasticsearch instance to have the data available with the best possible performance, independent from the network performance.
+<!-- <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#overview> -->
+
+This architecture makes it possible to collect data from API Gateways running all over the world into a centralized Elasticsearch instance to have the data available with the best possible performance, independent from the network performance.
 
 It also helps, when running API Gateway in a Docker environment, where containers are started and stopped, as it avoids to lose data when an API Gateway container is stopped.
 
-### Helm
+For more examples of architectures, see [Docker Compose architecture examples](link).
+
+## Architecture using Helm
+
+<!-- <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm> -->
 
 The following diagram shows an overview of the architecture to be deployed in the Kubernetes cluster. The example is for an environment where the API management platform is external to Kubernetes, so Filebeat is also external.
 
-(**add the image** <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm#architecture-overview> )  
+<!-- <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm#architecture-overview> -->
+
+![Helm architecture](/Images/op_insights/op_insights_HelmArchitecture.png)
 
 ## Key benefits
 
 API Management Operational Insights components provides the following key benefits:
 
-**Performance**:
+### Performance
 
 When having many API Gateway instances with millions of requests, the API Gateway [traffic monitor](/docs/apim_reference/monitor_traffic_events_metrics/) can become slow and the observation period quite short. Operational insights solve that performance issue, and make it possible to observe a long time frame and get other benefits by using a standard external datastore, the Elasticsearch
 
-**Visibility**:
+### Visibility
 
 The solution allows API Manager users to use the standard traffic monitor and see only the traffic of their own APIs. This allows API service providers who have registered their APIs to monitor and troubleshoot their own traffic without the need for a central team.
 
-**Analytics**:
+### Analytics
 
 Deliver standard dashboards that provide analysis capabilities across multiple perspectives. It also allows you to add your own dashboards.
 
@@ -76,6 +80,4 @@ The following is a summary of the high level steps to use Operational Insights:
 
 ## Monitoring and reporting with API Gateway Analytics
 
-placeholder
-
-This is a summary of what you're going to accomplish, what's the advantage of integrating Op insights to your API Manager, something like: "After you integrate Operational Insights capability to you API Gateway Manger, you can avail of better performance to monitor the traffic of your APIs, and a large range of Kibana dashboard to support you to understand and analyze your data from different perspectives."
+After you integrate Operational Insights component to you API Gateway Manger, you can avail of better performance to monitor the traffic of your APIs, and you can make use of a large range of Kibana dashboard to support you to understand and analyze your data from different perspectives.

@@ -15,9 +15,9 @@ The following sections cover the configuration specific for deploying Axway API 
 
 ## Get started
 
-{{ < alert title="note" > }}
+{{< alert title="Note" >}}
 Watch [this video](https://youtu.be/w4n9JcBA-X4) to see how to deploy the solution on Kubernetes. The video explains how you could start the solution with minimal setup.
-{{ < /alert > }}
+{{< /alert >}}
 
 Nevertheless, you need sufficient resources (<https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm#required-resources>) for it, if you take over the standard resources defined by the values.yaml (<https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/helm/values.yaml>). In the further course of the document how you can include your own Secrets, Volumes or adjust the required resources.
 Create your own `myvalues.yaml` based on the standard values.yaml and configure needed parameters. All of the parameters are explained in detail in the charts values.yaml.
