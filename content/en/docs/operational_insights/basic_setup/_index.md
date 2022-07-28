@@ -19,19 +19,15 @@ This basic setup uses minimal parameters to run and test Operational Insights on
 
 For a production environment, check the parameters mentioned in the [env-sample](https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/7d91baaf8009ceb09ac9f3889752912b17b83736/env-sample#L604-L648) and set them if necessary.
 
-You can deploy Operational Insights using a Helm chart or Docker Compose. This page is organized in three main sections describing the common setup for both Helm and Docker Compose options, and two specific sections for each Helm and Docker Compose.
+You can deploy Operational Insights using Docker Compose or Helm charts. The following sections cover the common setup for both Helm and Docker Compose options.
 
-## General basic setup
-
-The following sections are common for both Helm and Docker Compose options.
-
-### Enable Open Traffic Event Log
+## Enable Open Traffic Event Log
 
 You must [enable Open-Traffic Event log](/docs/apim_administration/apigtw_admin/admin_open_logging/#configure-open-traffic-event-logging) for your API Gateway instances to allow your log files to be created by default at `apigateway/logs/opentraffic`. This location is required for when configuring Filebeat later.
 
 To avoid data loss, it is strongly recommended to increase the disk space for the Open Traffic logs from 1 GB to at least 8 GB, particularly if you have a lot of traffic. For example, if you have 100 TPS on one API Gateway instance, depending on your custom policies, the oldest log file will be deleted after approximately 30 minutes with only 1 GB OpenTraffic log configured. If for any reason Filebeat and Logstash are not running to process events for more than 15-20 minutes, you will have a loss of data as it also takes some time to catch up.
 
-### Install Kibana dashboards
+## Install Kibana dashboards
 
 To install the Kibana dashboards, use the Kibana Menu **Stack Management > Saved Objects > Import saved objects** and select the following file from the release package, `kibana/dashboards/7/*.ndjson`.
 
@@ -39,7 +35,7 @@ In the **Import options** window, select **Automatically overwrite conflicts**. 
 
 You can create customized visualizations and dashboards, but do not change the existing ones as they will be overwritten with the next update. If you have created your own visualizations and dashboards, they will not be changed by the import.
 
-### Setup Admin Node Manager
+## Setup Admin Node Manager
 
 Watch this video for an overview, [Traffic-Monitor and Kibana Dashboard](https://youtu.be/OZ0RNnqE6hs).
 
@@ -58,7 +54,7 @@ To configure the node manager to render log data from Elasticsearch, follow thes
 7. Copy the new configuration from the Policy Studio project folder (path on Linux, `/home/<user>/apiprojects/\<project-name\>`) back to the Admin Node Manager folder (`\<install-dir\>/apigateway/conf/fed`).
 8. Restart the Admin Node Manager.
 
-### Traffic Monitor view for API Manager users
+## Traffic Monitor view for API Manager users
 
 Watch this video for an overview, [Traffic Monitor for API Manager users](https://youtu.be/X08bQPC1sc4).
 
@@ -73,13 +69,13 @@ Operational Insights solves this problem by storing the API transactions in Elas
 | Operator            | Org Admin   | APIs of its own organization      | Such a user will only see the APIs that belong to the same organization as himself.  |
 | Operator            | User        | APIs of its own organization      | The same rules apply as for the Org-Admin           |
 
-#### Setup API Manager user in API Gateway Manager
+### Setup API Manager user in API Gateway Manager
 
 To give API Manager users an restricted access to the API Gateway Traffic-Monitor, the user must be configured in the API-Gateway-Manager with the same login name as in the API-Manager. Here, for example, an LDAP connection can be a simplification.
 Additionally you need to know, that by default, all API-Gateway Traffic-Monitor users get unrestricted access only if one of their roles includes the permission: `adminusers_modify`. But typically, only a full API-Administrator has this right and therefore only these users can see the entire traffic. All other users get a restricted view of the API traffic and will be authorized according to the configured authorization configuration described below.
 However, with the parameter: UNRESTRICTED_PERMISSIONS you can configure which right(s) a user must have to get unrestricted access.
 
-#### Customize user authorization
+### Customize user authorization
 
 By default, the organization(s) of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his the organization(s) he belongs in API-Manager. From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example: `{ term: { "serviceContext.apiOrg": "Org-A" }}`.
 

@@ -2,6 +2,7 @@
 title: Amplify Analytics Operational Insights
 linkTitle: Configure Operational Insights
 weight: 80
+no_list: true
 date: 2022-06-09
 hide_readingtime: true
 description: Configure API Gateway with Elasticsearch to manage your metrics database and use Operational Insights component to observe millions of requests across different API Gateway instances.
@@ -40,17 +41,7 @@ This architecture makes it possible to collect data from API Gateways running al
 
 It also helps, when running API Gateway in a Docker environment, where containers are started and stopped, as it avoids to lose data when an API Gateway container is stopped.
 
-For more examples of architectures, see [Docker Compose architecture examples](link).
-
-## Architecture using Helm
-
-<!-- <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm> -->
-
-The following diagram shows an overview of the architecture to be deployed in the Kubernetes cluster. The example is for an environment where the API management platform is external to Kubernetes, so Filebeat is also external.
-
-<!-- <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm#architecture-overview> -->
-
-![Helm architecture](/Images/op_insights/op_insights_HelmArchitecture.png)
+For more examples of architectures, see [Docker Compose architecture examples](/docs/operational_insights/production_setup/op_insights_arch_examples/).
 
 ## Key benefits
 
@@ -81,3 +72,26 @@ The following is a summary of the high level steps to use Operational Insights:
 ## Monitoring and reporting with API Gateway Analytics
 
 After you integrate Operational Insights component to you API Gateway Manger, you can avail of better performance to monitor the traffic of your APIs, and you can make use of a large range of Kibana dashboard to support you to understand and analyze your data from different perspectives.
+
+## Updates
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#updates -->
+
+Operational insights component is under continuous development, and with each release the following artifacts might change:
+
+* All Docker Compose files
+* Elasticstack Version
+* Logstash Pipelines
+* Elasticsearch Configuration (for example, Index templates, ILM-Policies, Transformations)
+* Filebeat configuration
+* API Builder Docker Container version
+* Kibana dashboards
+* Scripts, and so on.
+
+All these tools play together and only work if they are from the same release. Operational Insights component checks if, for example, the index templates have the required version.
+
+With each update there will be a changelog, release notes and instructions for the update. For each component it is explained whether there have been changes and how to apply them if necessary.
+
+It is strongly discouraged to make changes in any files of this component, except the `.env` file and the config folder. These will be overwritten with the next release. This is the only way to easily update from one version to the next. If you need to change files, it is recommended to make this change automatically and repeatable (for example, <https://www.ansible.com>).
+
+For more information on to update Operational Insights, see <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/UPDATE.md>

@@ -39,7 +39,7 @@ Example of a classic deploy of API Gateway with three nodes.
 
 ## Kubernetes deployment
 
-For more information on how to deploy Operational Insights on Kubernetes, see [Configure a production setup for Helm](link).
+For more information on how to deploy Operational Insights on Kubernetes, see [Configure a production setup for Helm](/docs/operational_insights/basic_setup/op_insights_setup_basic_helm/).
 
 ## Architecture FAQ
 

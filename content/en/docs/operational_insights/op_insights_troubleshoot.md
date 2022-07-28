@@ -1,9 +1,9 @@
 ---
-title: Troubleshooting Operational insights
+title: Troubleshooting Operational Insights
 linkTitle: Troubleshoot
-weight: 200
+weight: 300
 date: 2022-06-09
-description: Troubleshoot problems you might encounter when configuring and running Operational insights.
+description: Troubleshoot problems you might encounter when configuring and running Operational Insights.
 ---
 
 ## Solution does not show data in real time
