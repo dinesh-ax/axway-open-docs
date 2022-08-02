@@ -222,36 +222,48 @@ You can customize API Portal standard footer `Copyright © YYYY Axway` to displa
 5. Use the text editor to enter the text.
 6. Click **Save**.
 
-## Customize 404 error page
+## Customize the 404 error page
 
 Customize a `404` error page for your API Portal.
 
-### Create a template
+### Duplicate the template
 
-Follow these steps create a new template for your new `404` page.
+Duplicate the current template to avoid losing your changes when you upgrade API Portal.
 
-1. Log in to the Joomla! Administrator Interface (JAI), and click **System > Site Templates**.
-2. Click the template **Purity_III Details and Files**.
-3. Click **Copy Template**.
-4. Enter a name for the template and click **Copy Template**.
-5. Click **Close**.
+1. In JAI, click **System** in the left sidebar.
+2. Under **Templates** click **Site Templates**, and click the **Purity_III Details and Files** template.
+3. Click **Copy Template**, add a name to the template, and click **Copy Template**.
+4. Click **Save**, then click **Close**.
 
-### Customize the page
+### Customize 404 page
 
-Customize the message for the page.
+Customize the message for your error page.
 
-1. From the list of templates, click your new template.
+1. In JAI, from the list of templates, click your newly created template.
 2. On the **Editor** tab, click **error.php** to edit this file.
-3. Customize the line describing the `404` page.
-4. Save and close the template.
+3. Customize the line describing the 404 page.
+4. Click **Save & Close** to save your changes.
+5. Click **Close** to leave the template page.
 
-### Assign the template
+### Assign your template as default for all pages
 
-Assign your new template as the default `404` page in API Portal.
+Assign your new template as the default template for API Portal pages.
 
-1. Select **Styles** in the sidebar.
-2. On the list of styles, locate the style created for your new template and click **Default**.
-3. Click the style to open it, and select the **Assignment** tab.
-4. Select **Home** in the **Main Menu**.
-5. Save and close the style.
-6. Refresh the API Portal home page in the browser. Your customization is available, and is displayed when a user triggers the error page.
+1. In JAI, click **System** in the left sidebar.
+2. Under **Templates**, click **Site Templates Styles** and click to open the newly created style for your template.
+3. Click the **Theme** tab, and select **Axway** for **Theme**.
+4. Click the **Layout** tab, and select **Blog** for **Position & Responsive Configuration**.
+5. Click **Less to CSS**.
+6. Click **Save**, then click **Close**.
+7. In the **Default** column, mark this style as default.
+
+### Assign your template as default for the Home page
+
+Create a new style and assign it to the Home page.
+
+1. Select the checkbox next to an existent customized style and press **Duplicate**.
+2. Click to open the style.
+3. In **Style Name**, add a name related to homepage.
+4. Click the **Layout** tab, and select **apiportal-homepage** for **Position & Responsive Configuration**.
+5. Click the **Assignment** tab, and select only **Home**.
+6. Click **Save**, then click **Close**.
