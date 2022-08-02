@@ -123,6 +123,18 @@ To upgrade to API Portal May 2022 release, follow these steps:
 
     Note that *Joomla 4* uses a native `MySQLi` driver in conjunction with `One-way` or `Two-way authentication` for the `Connection Encryption` field for SSL connection.
 
+### Upgrade with mandatory prerequisites
+
+Watch the following video to learn more about upgrading API Portal from February 2022 to May 2022 update with mandatory prerequisites:
+
+{{< youtube id="g7Hp9pZEv4M" title="Upgrading API Portal from February 2022 to May 2022 – Mandatory Prerequisites" >}}
+
+### Upgrade with optional prerequisites
+
+Watch the following video to learn more about upgrading API Portal from February 2022 to May 2022 update with optional prerequisites:
+
+{{< youtube id="gKGHw7WhPb4" title="Upgrading API Portal from February 2022 to May 2022 – Optional Prerequisites" >}}
+
 ## Post-upgrade steps
 
 After the upgrade, perform the following tasks.
