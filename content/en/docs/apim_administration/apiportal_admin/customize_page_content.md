@@ -107,7 +107,7 @@ To enable this feature follow these steps:
 
 ### Enforce password policies
 
-To ensure compliance with security polices, you can enforce password policies by asking your API Portal users to change their password at first login, as well as after an expired interval. These settings are available in API Manager, and they are enabled by default.
+To ensure compliance with security polices, you can enforce password policies by asking your API Portal users to change their password at first login, as well as after an expired interval. These settings are available in API Manager, and they are enabled by default. For more information, see [Customize password validation](/docs/apim_administration/apimgr_admin/api_mgmt_custom/#customize-api-manager-password-validation).
 
 To disable the **Enable password expiry** and **Days before passwords expire** settings, follow these steps:
 
