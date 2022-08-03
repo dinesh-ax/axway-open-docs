@@ -31,7 +31,7 @@ Before you upgrade your API Portal, complete the following prerequisites. These 
 If you are using API Portal with applied patches, you must change the ownership of the installation path before applying an update:
 
 ```
-chown -R apache:apache {ApiPortalInstallPath}
+sudo chown -R apache:apache {ApiPortalInstallPath}
 ```
 
 `{apiportalInstallPath}` is the API Portal installation directory. API Portal is installed at `/opt/axway/apiportal/htdoc` by default.
@@ -112,7 +112,7 @@ To upgrade to API Portal May 2022 release, follow these steps:
     If you are using a different adapter and you need to switch to `MySQLi` adapter, ensure that you changed the database credentials accordingly. You might need to [create a MySQL user account without TLS authentication](/docs/apim_installation/apiportal_install/install_software_configure_database/#configure-a-user-account-without-authentication).
 6. Click **Extensions > Plugins**, then search and disable the *T3 Framework* plugin.
 7. Click **Components > Joomla! Update > Upload & Update**, then apply *Joomla 4* by uploading the relevant file from the upgrade package.
-8. Wait for the upgrade process to finish and log in to JAI again.
+8. Wait for the upgrade process to finish.
 9. Establish an SSH connection to your API Portal server and upgrade your product:
 
     ```shell
