@@ -382,7 +382,21 @@ It's very likely that you don't use the super-user `elastic` for `API_BUILDER_US
 
 ## Custom certificates
 
-a
+If an existing Elasticsearch cluster is being used, provide the required CA to the solution to allow certificate validation. Otherwise, a certificate must be created for each component. For more information on how to create certificates using Policy Studio, see [Configure certificate](/docs/apim_administration/apigtw_admin/general_certificates/#configure-an-x509-certificate).
+
+After created the corresponding certificates and keys based on your own CA, save them in the folder: `config/certificates`. Afterwards, these certificates must be configured in the `.env` file as bellow:
+
+```bash
+API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
+API_BUILDER_SSL_CERT=config/certificates/corporate-certificate.crt
+API_BUILDER_SSL_KEY_PASSWORD=dfslkjaskljdklasjdlas
+ELASTICSEARCH_CA=config/certificates/corp-ca.crt
+ELASTICSEARCH_KEY=config/certificates/corporate-elasticsearch.key
+ELASTICSEARCH_KEY_PASSPHRASE=config/certificates/corporate-elasticsearch.crt
+ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.key
+KIBANA_KEY=config/certificates/corporate-kibana.key
+KIBANA_CRT=config/certificates/corporate-kibana.crt
+```
 
 ## Configure the retention period
 

@@ -261,6 +261,53 @@ cd axway-elk-setup
 
 The following example explains how you can create a secret, that keeps the API-Manager username and password and use it with API-Builder. The same procedure applies for all confidential information. Please check values.yaml for more details.
 
+## Custom certificates
+
+By default, necessary keys and certificates are automatically generated in a Secret: `axway-elk-apim4elastic-certificates` and included in the corresponding containers.
+There are a number of keys and certificates all issued by a single CA. All components trust certificates of this CA, which is especially necessary for the communication with Elasticsearch. If you use an external Elasticsearch cluster, then the corresponding CA of this cluster must be included in the environment.
+
+This is how you include an external Elasticsearch certificate into the solution. It is also assumed here that the resources, i.e. certificates and keys, are managed via the `axway-elk-setup` Helm chart.
+
+1. Create a secret containing your CA
+
+```bash
+kubectl create secret generic apim4elastic-elastic-ca --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
+```
+
+2. Template it
+
+Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
+
+3. Install or upgrade your setup chart
+
+```bash
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+Release "axway-elk-setup" has been upgraded. Happy Helming!
+NAME: axway-elk-setup
+LAST DEPLOYED: Tue May  4 15:06:30 2021
+NAMESPACE: apim-elk
+STATUS: deployed
+REVISION: 2
+TEST SUITE: None
+```
+
+4. Reference the CA
+
+To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. If you do not control all keys and certificates yourself, you must continue to reference the secret: `axway-elk-apim4elastic-certificates`, otherwise it will not be included by the new declaration and some keys from the default certificates are missing.
+
+You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in your myvalues.yaml. This tells every component to read the CA for Elasticsearch from this location.
+
+```bash
+global:
+  elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
+```
+
+5. Install or Upgrade the APIM4Elastic solution
+
+```bash
+helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+```
+
 ## Next steps
 
 After you have tried the solution in a single node elasticsearch scenario, ensure that you have read [size your infrastructure](/docs/amplify_analytics/op_insights_infra_size) then you can proceed to setup Operational insights in your production environment.
