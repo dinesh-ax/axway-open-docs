@@ -270,43 +270,43 @@ This is how you include an external Elasticsearch certificate into the solution.
 
 1. Create a secret containing your CA
 
-```bash
-kubectl create secret generic apim4elastic-elastic-ca --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
-```
+    ```bash
+    kubectl create secret generic apim4elastic-elastic-ca --from-file=myElasticsearchCa.crt=myElasticsearchCa.crt --dry-run -o yaml > templates/elasticsearch-certificate.yaml
+    ```
 
 2. Template it
 
-Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
+    Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
 
-3. Install or upgrade your setup chart
+3.  Install or upgrade your setup chart
 
-```bash
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
-Release "axway-elk-setup" has been upgraded. Happy Helming!
-NAME: axway-elk-setup
-LAST DEPLOYED: Tue May  4 15:06:30 2021
-NAMESPACE: apim-elk
-STATUS: deployed
-REVISION: 2
-TEST SUITE: None
-```
+  ```bash
+  helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+  Release "axway-elk-setup" has been upgraded. Happy Helming!
+  NAME: axway-elk-setup
+  LAST DEPLOYED: Tue May  4 15:06:30 2021
+  NAMESPACE: apim-elk
+  STATUS: deployed
+  REVISION: 2
+  TEST SUITE: None
+  ```
 
 4. Reference the CA
 
-To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. If you do not control all keys and certificates yourself, you must continue to reference the secret: `axway-elk-apim4elastic-certificates`, otherwise it will not be included by the new declaration and some keys from the default certificates are missing.
+    To use the custom CA, it must be included appropriately in all containers. To do this, modify your `myvalues.yaml` as shown here in the Logstash example. If you do not control all keys and certificates yourself, you must continue to reference the secret: `axway-elk-apim4elastic-certificates`, otherwise it will not be included by the new declaration and some keys from the default certificates are missing.
 
-You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in your myvalues.yaml. This tells every component to read the CA for Elasticsearch from this location.
+    You can declare secret mounts in the same way for each component. After you provide each component with the additional secret, you can store the path to its CA in your myvalues.yaml. This tells every component to read the CA for Elasticsearch from this location.
 
-```bash
-global:
-  elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
-```
+    ```bash
+    global:
+      elasticsearchCa: "customConfig/certificates/myElasticsearchCa.crt"
+    ```
 
 5. Install or Upgrade the APIM4Elastic solution
 
-```bash
-helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
-```
+    ```bash
+    helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+    ```
 
 ## Next steps
 
