@@ -16,18 +16,41 @@ Operational insights is one of the components of Amplify Analytics solution. It 
 
 Operational insights imports the log files produced by the API Gateways around the globe into an Elasticsearch cluster. Once the data has been indexed, it can be used by various clients. One of the clients is Kibana, to visualize the data in dashboards, and another client is the standard API Gateway Manager Traffic Monitor, which can access the data.
 
-The following are the **components** used in Operational insights component:
+The following are the tooling used in Operational insights:
 
-* **Filebeat**: Runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, Event log, Trace messages and Audit logging are streamed. All components, besides Filebeat, can be deployed and configured in a highly available way.
-* **Logstash**: Pre-process the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by [API Builder](/docs/api_mgmt_overview/api_mgmt_components/apibuilder/). This makes it possible to access additional information such as policies, custom properties, and so on in Kibana and other applications. This information is cached in Memcached.
-* **Memcached**: Used by Logstash to cache information (API details) retrieved from API Builder so that information does not have to be retrieved repeatedly.
-* **API-Builder**: Perform the following tasks:
-    * Provides some REST APIs for Logstash processing. For this purpose, it mainly uses the API Manager REST API to retrieve the information.
-    * Provides the same REST API expected by the Traffic Monitor, but based on Elasticsearch. The Admin Node Manager is then redirected to the API builder traffic monitor API for some of the request.
-    * Configures Elasticsearch for Operational insights. This includes index templates, ILM policies, and so on. This makes it easy to update Operational insights.
-* **Elasticsearch**: Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API Builder. After this data is indexed,it can also be used by other clients.
-* **Kibana**: Used to visualize the indexed data in dashboards. Operational insights provides some default dashboards, but it is also possible to add custom dashboards to the solution.
-* **Traffic Monitor**: TO DO
+### Filebeat
+
+Runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, Event log, Trace messages and Audit logging are streamed. All components, besides Filebeat, can be deployed and configured in a highly available way.
+
+## Logstash
+
+Pre-process the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by [API Builder](/docs/api_mgmt_overview/api_mgmt_components/apibuilder/). This makes it possible to access additional information such as policies, custom properties, and so on in Kibana and other applications. This information is cached in Memcached.
+
+### Memcached
+
+Used by Logstash to cache information (API details) retrieved from API Builder so that information does not have to be retrieved repeatedly.
+
+### API-Builder
+
+Perform the following tasks:
+
+* Provides some REST APIs for Logstash processing. For this purpose, it mainly uses the API Manager REST API to retrieve the information.
+* Provides the same REST API expected by the Traffic Monitor, but based on Elasticsearch. The Admin Node Manager is then redirected to the API builder traffic monitor API for some f the request.
+* Configures Elasticsearch for Operational insights. This includes index templates, ILM policies, and so on. This makes it easy to update Operational insights.
+
+### Elasticsearch
+
+Ultimately, all information is stored in an Elasticsearch cluster in various indexes and is thus available to Kibana and API Builder. After this data is indexed,it can also be used by other clients.
+
+### Kibana
+
+Used to visualize the indexed data in dashboards. Operational insights provides some default dashboards, but it is also possible to add custom dashboards to the solution.
+
+### Traffic Monitor
+
+The standard API-Gateway Traffic Monitor which is shipped with Operational Insights is based on a REST API that is provided by the Admin Node Manager. By default the Traffic-Information is loaded from the OBSDB running on each API-Gateway instance. The API-Builder, which is part of this project, is partly re-implementing this REST-API, which makes it possible, that the standard Traffic-Monitor is using data from ElasticSearch instead of the internal OBSDB. That means, you can use the same tooling as of today, but the underlying implementation of the Traffic-Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API-Gateway instance. This improves performance damatically, as Elasticsearch can scale across multiple machines if required and other dashboards can be created for instance with Kibana.
+
+The glue between Elasticsearch and the API-Gateway Traffic-Monitor is an API-Builder project, that is exposing the same Traffic-Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. The API-Builder is available as a ready to use Docker-Image and preconfigured in the docker-compose file.
 
 ## Architecture using Docker Compose
 
