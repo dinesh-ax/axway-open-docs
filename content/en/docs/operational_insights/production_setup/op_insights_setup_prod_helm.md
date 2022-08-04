@@ -278,18 +278,18 @@ This is how you include an external Elasticsearch certificate into the solution.
 
     Optionally you may change the generated Yaml file to really become a more flexible Helm-Template.
 
-3.  Install or upgrade your setup chart
+3. Install or upgrade your setup chart
 
-  ```bash
-  helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
-  Release "axway-elk-setup" has been upgraded. Happy Helming!
-  NAME: axway-elk-setup
-  LAST DEPLOYED: Tue May  4 15:06:30 2021
-  NAMESPACE: apim-elk
-  STATUS: deployed
-  REVISION: 2
-  TEST SUITE: None
-  ```
+    ```bash
+    helm upgrade -n apim-elk -f myvalues.yaml axway-elk https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/releases/download/v3.1.0/helm-chart-apim4elastic-v3.1.0.tgz
+    Release "axway-elk-setup" has been upgraded. Happy Helming!
+    NAME: axway-elk-setup
+    LAST DEPLOYED: Tue May  4 15:06:30 2021
+    NAMESPACE: apim-elk
+    STATUS: deployed
+    REVISION: 2
+    TEST SUITE: None
+    ```
 
 4. Reference the CA
 
