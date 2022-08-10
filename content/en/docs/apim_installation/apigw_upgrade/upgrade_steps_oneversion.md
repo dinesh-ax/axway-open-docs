@@ -113,6 +113,7 @@ Running this script performs the following:
 
 * Back up your existing `INSTALL_DIR/policystudio` directory. The backup of the installation is created at `INSTALL_DIR/backups/policystudio/<date_time>`.
 * Remove old JRE versions by deleting the `INSTALL_DIR/policystudio/jre` directory.
+* Remove old plugins by deleting the `INSTALL_DIR/policystudio/plugins` directory.
 * Unzip and extract API Gateway 7.7 Policy Studio update over the `policystudio` directory in your existing API Gateway 7.7 installation directory.
 * Start Policy Studio with `policystudio -clean`.
 
@@ -156,6 +157,7 @@ Running this script performs the following:
 
 * Back up your existing `INSTALL_DIR/configurationstudio` directory. The backup of the installation is created at `INSTALL_DIR/backups/configurationstudio/<date_time>`.
 * Remove old JRE versions by deleting the `INSTALL_DIR/configurationstudio/jre` directory.
+* Remove old plugins by deleting the `INSTALL_DIR/policystudio/plugins` directory.
 * Unzip and extract API Gateway 7.7 Configuration Studio Update over the `configurationstudio` directory in your existing API Gateway 7.7 installation directory.
 * Start Configuration Studio with `configurationstudio -clean`
 
