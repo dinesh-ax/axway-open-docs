@@ -13,26 +13,6 @@ This section covers advanced configuration topics that are required for a produc
 * Ensure that you have all [prerequisites](/docs/amplify_analytics/op_insights_prerequisites/) in place.
 * Ensure that you have applied the [basic configuration](link) for general frameworks.
 
-<!--
-- Configure High availability
-- Elasticsearch cluster
-- Logstash, API-Builder and Memcached
-- Traffic-Payload
-- Activate user authentication
-
-(migrated) Traffic-Payload
-(migrated) Setup Elasticsearch Multi-Node
-(migrated) Setup API-Manager
-(migrated) Setup local lookup
-(migrated) Custom properties
-(migrated) Activate user authentication
-Enable Metricbeat
-Configure cluster UUID
-Custom certificates
-Secure API-Builder Traffic-Monitor API
-(migrated) Lifecycle Management (rename to Configure the retention period)
--->
-
 ## Configure traffic payload
 
 The payload belonging to an API request is not written directly to the open traffic event log and therefore not stored in Elasticsearch.
@@ -164,9 +144,24 @@ Additionally please check in Kibana the new node has successfully joined the clu
 
 Do you have changed the list of available Elasticsearch Nodes via the parameter: ELASTICSEARCH_HOSTS. For example from a single-node to a multi-node cluster, then it is strongly recommended to restart the corresponding clients (Kibana, Filebeat, Logstash, API-Builder). Via docker-compose, so that the containers are created with the new ELASTICSEARCH_HOSTS parameter. This ensures that clients can use the available Elasticsearch nodes for a fail-over in case of a node downtime.
 
+## Configure cluster UUID
+
+This step is optional, but it is required to monitor your Filebeat instances as part of the stack monitoring.
+
+To obtain the Cluster UUID, open the following in your browser, <https://elasticsearch1:9200/>.
+
+If you have already activated authentication, you can use the elastic user here.
+
+You can also configure the following parameters to make you Filebeat instances unique:
+
+* `GATEWAY_NAME`
+* `GATEWAY_REGION`
+
+You must restart the Filebeat service to activate these changes.
+
 ## Configure API Manager
 
-Before a document is send to Elasticsearch, additional information for the processed API is requested by Logstash from the API Manager through an API lookup. This lookup is handled by the API-Builder and performed against the configured API-Manager.
+Before a document is sent to Elasticsearch, additional information for the processed API is requested by Logstash from the API Manager through an API lookup. This lookup is handled by the API-Builder and performed against the configured API-Manager.
 By default the configured Admin Node Manager host is also used for the API-Manager or the configured API-Manager URL:
 
 ```none
@@ -320,13 +315,15 @@ It is important that the fields have as high cardinality as possible to work eff
 
 After restarting APIBuilder4Elastic, the solution will configure Elasticsearch (index templates & transform job) according to the parameter: `EVENTLOG_CUSTOM_ATTR`. Note that it takes 4 hours for the custom properties to be available in the transformed data (apigw-hourly-traffic-summary).
 
-(**placeholder**) Watch this video that demonstrate how to ingest the HTTP user-agent into Elasticsearch: [Axway APIM with Elasticsearch - Use custom attributes](https://youtu.be/F0LCZhnWLkg).
+Watch this video that demonstrate how to ingest the HTTP user-agent into Elasticsearch: [Axway APIM with Elasticsearch - Use custom attributes](https://youtu.be/F0LCZhnWLkg).
 
 ## Activate user authentication
 
-(**placeholder** introduction ??)
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#activate-user-authentication -->
 
-### Generate Built-In user passwords
+Set up authentication authorization for Elasticsearch and Kibana.
+
+### 1. Generate Built-in user passwords
 
 This step can be ignored, when you are using an existing Elasticsearch cluster. Elasticsearch is initially configured with a number of built-in users, that don't have a password by default. So, the first step is to generate passwords for these users. It is assumed that the following command is executed on the first elasticsearch1 node:
 
@@ -336,7 +333,7 @@ docker exec elasticsearch1 /bin/bash -c "bin/elasticsearch-setup-passwords auto 
 
 As a result you will see the randomly generated passwords for the users: apm_system, kibana_system, kibana, logstash_system, beats_system, remote_monitoring_user and elastic. These passwords needs to be configured in the provided .env.
 
-### Setup passwords
+### 2. Setup passwords
 
 Please update the `.env` and setup all passwords as shown above. If you are using an existing Elasticsearch please use the passwords provided to you. The `.env` contains information about each password and for what it is used:
 
@@ -357,7 +354,7 @@ API_BUILDER_USERNAME=elastic
 API_BUILDER_PASSWORD=2x8vxZrvXX9a3KdGuA26
 ```
 
-### Disable anonymous user
+### 3. Disable anonymous user
 
 In the `.env` file uncomment the following line:
 
@@ -367,7 +364,17 @@ ELASTICSEARCH_ANONYMOUS_ENABLED=false
 
 After restart, Kibana will prompt to login before continue. Intially you may use the elastic user account to login and then create individual users and permissions.
 
-### Restart services
+### 4. Enable user authentication in Kibana
+
+In the .env file also uncomment the following line to enable user authentication in Kibana:
+
+```bash
+KIBANA_SECURITY_ENABLED=true
+```
+
+After restart, Kibana will prompt to login before continue. Intially you may use the elastic user account to login and then create individual users and permissions.
+
+### 5. Restart services
 
 After you have configured all passwords and configured security, please restart all services.
 
@@ -398,7 +405,15 @@ KIBANA_KEY=config/certificates/corporate-kibana.key
 KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
 
+## Secure API Builder Traffic Monitor API
+
+The API Builder REST API for accessing Elasticsearch data has no access restrictions. To ensure only API Gateway Manager users (topology administrators with proper RBAC role) or other users with appropriate access rights can query the log data, you can expose this API via API Manager and add security there.
+
+To import the API Builder application REST API into your API Manager, you can access the OpenAPI definition here (replace docker-host and port appropriately for the container that is hosting the API-Builder project): <https://docker-host:8443/apidoc/swagger.json?endpoints/trafficMonitorApi>.
+
 ## Configure the retention period
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#lifecycle-management -->
 
 Since new data is continuously stored in Elasticsearch in various indexes, these must be removed after a certain period of time.
 
@@ -406,7 +421,14 @@ Since version 2.0.0, the solution uses the Elasticsearch [index lifecycle manage
 
 The configuration is defined here per data type (e.g. Summary, Details, Audit, ...). The following table gives an overview about the default values. The number of days that is crucial for the retention period is the delete days. This gives the guaranteed number of days that the data is guaranteed to be available. More information on how the lifecycle works can be found later in this section. You can use the further phase, for example, to allocate more favorable resources accordingly.
 
-**TABLE**:
+| Data type              | Description                                                            | Hot (Rollover) | Warm    | Cold    | Delete  |
+| :---                   |:---                                                                    | :---           | :---    | :---    | :---    |
+| **Traffic-Summary**    | Main index for traffic-monitor overview and primary dashboard          | 30GB / 7d      | 0d      | 5d      | 10d    |
+| **Traffic-Details**    | Details in Traffic-Monitor for Policy, Headers and Payload reference   | 30GB / 7d      | 0d      | 5d      | 10d    |
+| **Traffic-Trace**      | Trace-Messages belonging to an API-Request shown in Traffic-Monitor    | 30GB / 7d      | 0d      | 5d      | 10d    |
+| **General-Trace**      | General trace messages, like Start- & Stop-Messages                    | 30GB / 7d      | 0d      | 5d      | 10d    |
+| **Gateway-Monitoring** | System status information (CPU, HDD, etc.) from Event-Files            | 10GB / 30d     | 0d      | 50d     | 100d    |
+| **Domain-Audit**       | Domain Audit-Information as configured in Admin-Node-Manager           | 10GB / 30d     | 0d      | 300d    | 750d    |
 
 As of version 4.1.0, you can configure how long the indexed data should be kept in Elasticsearch. Before starting, you should read and understand the following information thoroughly, because once deleted, data cannot be recovered.
 Individual API transactions are stored as documents in Elasticsearch Indices. However, it is not the case that individual documents are ultimately deleted again, instead it is always an entire index with millions of transactions/documents. Therefore, you can only control the retention period for an entire index, not per document.
@@ -451,7 +473,7 @@ Here is an example:
 The configuration is defined per index and is divided into two areas. When should the rollover happen and how many days after the rollover should the data still be available.
 The following figure illustrates the process:
 
-**IMAGE**:
+**IMAGE**: <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/index-ilm-details.png>
 
 The following steps show how to configure the retention period.
 

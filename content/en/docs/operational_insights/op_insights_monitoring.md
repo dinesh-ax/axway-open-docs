@@ -6,13 +6,74 @@ date: 2022-08-05
 description: placeholder - needs an introduction
 ---
 
+It is important that the Operational Insights is monitored appropriately and by default Internal Stack Monitoring is used for this purpose, which monitors the Elasticsearch cluster, Kibana, Logstash and Filebeat. You can alternatively use Metricbeat and you can find more guidance in this section on platform monitoring.
+
+## Enable Metricbeat
+
+In the default configuration, the solution uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, etc. independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated.
+Metricbeat should be used instead. Unfortunately, Operational Insights cannot easily be delivered with a pre-configured Metricbeat, as it depends too much on the deployment.
+So this means that you have to set some parameters in the `.env` file and then start Metricbeat.
+
+This section covers how to enable Metricbeat and thus monitor Memcache, the running Docker containers in addition to the pure Elastic stack.
+
+### 1. Activate Metricbeat
+
+(**placeholder**: needs an introduction)
+
+* Check that the `METRICBEAT_USERNAME` and `METRICBEAT_PASSWORD` user is set up correctly. This user must have rights to Kibana (to upload dashboards) and Elasticsearch (to create indexes).
+* Set the parameter `METRICBEAT_ENABLED=true`. This will be populated when the Metricbeat container starts.
+* Set the parameter `SELF_MONITORING_ENABLED=false` to disable legacy monitoring.
+
+### 2. Configure Metricbeat
+
+The parameter METRICBEAT_MODULES must be set differently for each host, depending on which services are running on which host.
+
+| Component              | Description                           |
+| :---                   | :---                                  |
+| **elasticsearch**      | Replaces internal monitoring so that Elasticsearch metrics appear in Kibana Stack-Monitoring. **Important**: ONE metricbeat monitors ALL Elasticsearch nodes based on the parameter: ELASTICSEARCH_HOSTS and Kibana if needed.                                   |
+| **kibana**             | Enables monitoring of Kibana analogous to Elasticsearch. You can use a Metricbeat for monitoring Elasticsearch & Kibana as explained. |
+| **logstash**           | Monitoring Logstash. Provides the data in Kibana Stack-Monitoring. |
+| **filebeat**           | Monitoring Filebeat. Provides the data in Kibana stack-Monitoring. |
+| **memcached**          | Captures statistics from Memcached. Is indexed, but currently not used in any dashboard and can be disabled if not needed. |
+| **system**             | Provides system metrics such as disk IO, network IO, etc. **Important** In the default configuration out of the Docker container which limits the process view. Will be improved in a later release. See example: [System overview](imgs/metricbeat-system-overview.png) or [Host overview](imgs/metricbeat-api-host-overview.png) |
+| **docker**             | Provides information about running Docker containers that can be displayed in dashboards. Docker containers are automatically detected on the host. See example: [Docker overview](imgs/containers-overview.png) |
+
+Set the parameter `METRICBEAT_NODE_NAME` to a descriptive name, which should be displayed later in the Kibana dashboards for the host Metricbeat is running on.
+
+### 3. Start Metricbeat
+
+Now start the Metricbeat container on each host:
+
+```bash
+docker-compose --env-file .env -f metricbeat/docker-compose.metricbeat.yml up -d
+```
+
+On each host a container `metricbeat` started with given configuration in the belonging .env file.
+
+### 4. Disable self-monitoring
+
+Ensure the parameter `SELF_MONITORING_ENABLED=false` is set. Then stop Elasticsearch, Kibana, Logstash, and Filebeat services and restart them with docker-compose that they are no longer using self-monitoring. A docker restart is not sufficient here. For example:
+
+```bash
+docker stop kibana
+docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
+```
+
+{{< alert title="Note" color="primary" >}}
+Before restarting an Elasticsearch Node, ensure the cluster state is green to stay online during the restart.
+{{< /alert >}}
+
+## Enable Application Performance Monitoring
+
+You can enable Application Performance Monitoring (APM) to monitor APIBuilder4Elastic and other services (e.g. API Builder Services) if required.
+
+Image: <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/apm/2_apm-apibuilder4elastic-overview.png>
+
 <!-- https://git.ecd.axway.org/apigw/apigateway-openlogging-elk/-/tree/master/apm -->
 
-**placeholder** - needs an introduction
+Elastic [Application Performance Monitoring](https://www.elastic.co/observability/application-performance-monitoring) (APM) allows you to monitor the APIBuilder4Elastic better than just using logs directly from the API Builder. Of course, you can also add other API-Builder services or other applications.
 
-Elastic [Application Performance Monitoring](https://www.elastic.co/observability/application-performance-monitoring) (APM) allows you to monitor the APIBuilder4Elastic (**placeholder: is this the correct name?**) better than just using logs directly from the API Builder. Of course, you can also add other API-Builder services or other applications.
-
-After APM is set up, you can use Kibana -> Observability -> APM (**placeholder**: where's this Menu located?) to access a series of application performance dashboards. The following are examples of ???
+After APM is set up, you can use **Kibana > Observability > APM** (**placeholder**: where's this Menu located?) to access a series of application performance dashboards. The following are examples of ???
 
 APM Services overview:
 
@@ -70,6 +131,20 @@ Application performance monitoring enabled. Using APM-Server: https://axway-elk-
 ```
 
 If no APM service is specified, then the following default is used: <https://apm-server:8200>. However, you can configure it yourself using the parameter: APM_SERVER. For further parameters please refer to the env-sample.
+
+## Disk usage monitoring
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#disk-usage-monitoring -->
+
+It is important that you monitor the disk usage of the Elasticsearch cluster and get alarmed accordingly.
+Elasticsearch also independently monitors disk usage against preconfigured thresholds and closes write operations when the high disk watermark index is exceeded. This means that no more new data can be written.
+
+To avoid this condition, your alerts should already warn below the Elasticsearch thresholds. The thresholds for Elasticsearch:
+
+* Low watermark for disk usage: 85%.
+* High watermark for disk usage: 90%
+
+So your alerts should report a critical alert before 90%. For more information, see [Disk-based shard allocation settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/modules-cluster.html#disk-based-shard-allocation).
 
 ### Helm
 

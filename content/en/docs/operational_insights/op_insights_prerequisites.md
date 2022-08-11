@@ -69,6 +69,38 @@ Components such as the API Builder project are supposed to run as a Docker conta
 
 Your virtual machines must have Docker Compose installed and executable.
 
+### Elastic stack for Docker Compose
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#requirements -->
+
+If you are using an existing Elastic Search environment including Kibana, the following requirements apply.
+
+* Minimal Elasticsearch is version 7.10.x with X-Pack enabled
+* Depending on the traffic enough disk-space available (it can be quite heavy depending on the traffic volume)
+
+### Users and roles
+
+The following table represents a suggestion of which roles should be created for the solution to work. You are also welcome to divide the roles differently and assign them to the users accordingly.
+
+| Role              | Cluster privileges                                                    | Index privileges                   | Kibana                   |
+| :---              | :---                                                                  | :---                               | :---                     |
+| [axway_apigw_write](elasticsearch/usersAndRoles#role-axway_apigw_write) | `monitor`                                                             | `apigw-* - write`                  | No                       |
+| [axway_apigw_read](elasticsearch/usersAndRoles#role-axway_apigw_read)  | `monitor`                                                             | `apigw-* - read`                   | No                       |
+| [axway_apigw_admin](elasticsearch/usersAndRoles#role-axway_apigw_admin) | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | `apigw-* - monitor, view_index_metadata, create_index`, `apim-* - read,view_index_metadata`| Yes (All or Custom)  |
+| [axway_kibana_write](elasticsearch/usersAndRoles#role-axway_kibana_write)| None                                                                 | None                               | Yes (Analytics All)      |
+| [axway_kibana_read](elasticsearch/usersAndRoles#role-axway_apigw_read) | None                                                                  | None                               | Yes (Analytics Read)     |
+
+The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
+
+| Username                  | Roles                                                        | Comment                                                        |
+| :---                      | :---                                                         | :---                                                           |
+| [axway_logstash](elasticsearch/usersAndRoles#user-axway_logstash)            | `axway_apigw_write`, `logstash_system`                       | Parameter: `LOGSTASH_USERNAME` and `LOGSTASH_SYSTEM_USERNAME`  |
+| [axway_apibuilder](elasticsearch/usersAndRoles#user-axway_apibuilder)          | `axway_apigw_read`, `axway_apigw_admin`                      | Parameter: `API_BUILDER_USERNAME`                              |
+| [axway_filebeat](elasticsearch/usersAndRoles#user-axway_filebeat)            | `beats_system`                                               | Parameter: `BEATS_SYSTEM_USERNAME`                             |
+| [axway_kibana_read](elasticsearch/usersAndRoles#user-axway_kibana_read)         | `axway_apigw_read`, `axway_kibana_read`                      | Read only access to Dashboards                                 |
+| [axway_kibana_write](elasticsearch/usersAndRoles#user-axway_kibana_write)        | `axway_apigw_read`, `axway_kibana_write`                     | Write access to Dashboard, Visualizations and some other information such as ILM-Policies.                      |
+| [axway_kibana_admin](elasticsearch/usersAndRoles#user-axway_kibana_admin)        | `axway_apigw_read`, `axway_apigw_admin`, `axway_kibana_write`, `monitoring_user` | Access to Stack-Monitoring and APM         |
+
 ## Next steps
 
 After you ensured that you have all prerequisites in place, you can [setup a basic environment](/docs/amplify_analytics/op_insights_config_elastic_singlenode) to test the solution in a development environment.
