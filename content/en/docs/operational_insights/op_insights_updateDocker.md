@@ -18,9 +18,17 @@ To see a table with the list of changed components, see [Release history - Chang
 
 With the following steps you can update the solution without downtime. Of course, this requires that all components (Logstash, API Builder, Memcached) are running at least 2x and configured accordingly. So all filebeats have to communicate with all logstash hosts.
 
-## General overview
+## About components update
 
 The core component is the API Builder application which provides the information about the necessary configuration. In principle, it contains the desired or necessary state suitable for the version, especially about the Elasticsearch configuration, such as index templates, ILM policies, etc. If the version is updated, the API builder checks the current configuration in Elasticsearch and adjusts it if necessary to fit the corresponding version. This includes necessary changes for bug fixes or enhancements.
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#updates -->
+
+All components of Operational Insights ecosystem play together and only work if they are from the same release.Operational Insights checks if, for example, the index templates have the required version.
+
+It is strongly discouraged to make changes in any files of the project, except the `.env` file and the `config` folder. This is the only way to easily update from one version to the next. If you encounter a problem or need a feature, please open an issue that can be integrated directly into the solution.
+
+Of course you are welcome to create your own Kibana dashboards or clone and customize existing ones. However, if you need to change files, it is recommended to make this change automatically and repeatable (for example, <https://www.ansible.com>).
 
 ### Upgrade approach
 

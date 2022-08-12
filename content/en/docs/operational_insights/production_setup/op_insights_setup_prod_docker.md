@@ -174,7 +174,7 @@ If you have several API Managers within your domain, you have to configure a map
 
 The following syntax is used for this:
 
-```
+```none
 API_MANAGER=group-2|https://api-manager-1:8075, group-5|https://api-manager-2:8275
 ```
 
@@ -188,7 +188,7 @@ From version 2.0.0 it is additionally possible to use the solution with differen
 
 For this purpose the configurable `GATEWAY_REGION` in Filebeat is used. If this region is configured (e.g. US-DC1), all documents from this region are stored in separate indices, which nevertheless enable global analytics in the Kibana dashboards.
 
-(**placeholder**: Image index_per_region.png)
+Image: <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/index_per_region.png>
 
 Also in this case, the API Managers must or can be configured according to the Region & Group-ID of the event. Example:
 

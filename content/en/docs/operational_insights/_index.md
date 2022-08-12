@@ -22,7 +22,7 @@ The following are the tooling used in Operational insights:
 
 Runs directly on the API gateways as a Docker container or as a native application. It streams the generated logfiles to the deployed Logstash instances. The OpenTraffic log, Event log, Trace messages and Audit logging are streamed. All components, besides Filebeat, can be deployed and configured in a highly available way.
 
-## Logstash
+### Logstash
 
 Pre-process the received events before sending them to Elasticsearch. As part of this processing, some of the data (for example, API details) are enriched using APIs provided by [API Builder](/docs/api_mgmt_overview/api_mgmt_components/apibuilder/). This makes it possible to access additional information such as policies, custom properties, and so on in Kibana and other applications. This information is cached in Memcached.
 
@@ -30,7 +30,7 @@ Pre-process the received events before sending them to Elasticsearch. As part of
 
 Used by Logstash to cache information (API details) retrieved from API Builder so that information does not have to be retrieved repeatedly.
 
-### API-Builder
+### API Builder
 
 Perform the following tasks:
 
@@ -86,15 +86,17 @@ Deliver standard dashboards that provide analysis capabilities across multiple p
 
 The following is a summary of the high level steps to use Operational Insights:
 
-* Ensure that you have read the prerequisites section (**link**).
-* Configure your system for a single node Elasticsearch cluster (**link**).
-* Size your infrastructure (**link**).
-* Configure your API Gateway Manager with Elasticsearch (**link**).
-* Configure your system for a production environment (**link**).
+* Ensure that you have read the [prerequisites](/docs/operational_insights/op_insights_prerequisites/) section.
+* Configure your system for a [single node](/docs/operational_insights/basic_setup/op_insights_setup_basic_docker/) Elasticsearch cluster.
+* Size your [infrastructure](/docs/operational_insights/op_insights_infra_size).
+* Configure Elasticsearch in your [API Gateway Manager](/docs/operational_insights/production_setup/op_insights_setup_prod_docker/#configure-api-manager).
+* Configure your system for a [production](/docs/operational_insights/production_setup/op_insights_setup_prod_docker/) environment.
 
 ## Monitoring and reporting with API Gateway Analytics
 
 After you integrate Operational Insights component to you API Gateway Manger, you can avail of better performance to monitor the traffic of your APIs, and you can make use of a large range of Kibana dashboard to support you to understand and analyze your data from different perspectives.
+
+For more information, see [Enable monitoring and metrics](/docs/operational_insights/op_insights_monitoring/).
 
 ## Updates
 

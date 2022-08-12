@@ -1,24 +1,24 @@
 ---
-title: Application and performance monitoring
-linkTitle: Application and performance monitoring
+title: Enable monitoring and metrics
+linkTitle: Enable monitoring and metrics
 weight: 50
 date: 2022-08-05
-description: placeholder - needs an introduction
+description: Enable monitoring and metrics in Operational Insights deployed either in a Docker Compose environment or in Helm charts.
 ---
 
 It is important that the Operational Insights is monitored appropriately and by default Internal Stack Monitoring is used for this purpose, which monitors the Elasticsearch cluster, Kibana, Logstash and Filebeat. You can alternatively use Metricbeat and you can find more guidance in this section on platform monitoring.
 
 ## Enable Metricbeat
 
-In the default configuration, the solution uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, etc. independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated.
-Metricbeat should be used instead. Unfortunately, Operational Insights cannot easily be delivered with a pre-configured Metricbeat, as it depends too much on the deployment.
-So this means that you have to set some parameters in the `.env` file and then start Metricbeat.
+In the default configuration, Operational Insights uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, and son on independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated. Metricbeat should be used instead.
 
-This section covers how to enable Metricbeat and thus monitor Memcache, the running Docker containers in addition to the pure Elastic stack.
+Because Operational Insights cannot easily be delivered with a pre-configured Metricbeat, because this depends too much on the deployment, you must set some parameters in the `.env` file and then start Operational Insights.
+
+This section covers how to enable Metricbeat and monitor Memcache, the running Docker containers in addition to the pure Elastic stack.
 
 ### 1. Activate Metricbeat
 
-(**placeholder**: needs an introduction)
+The first step to enable Metricbeat is to activate it.
 
 * Check that the `METRICBEAT_USERNAME` and `METRICBEAT_PASSWORD` user is set up correctly. This user must have rights to Kibana (to upload dashboards) and Elasticsearch (to create indexes).
 * Set the parameter `METRICBEAT_ENABLED=true`. This will be populated when the Metricbeat container starts.
@@ -26,7 +26,7 @@ This section covers how to enable Metricbeat and thus monitor Memcache, the runn
 
 ### 2. Configure Metricbeat
 
-The parameter METRICBEAT_MODULES must be set differently for each host, depending on which services are running on which host.
+Use the parameter METRICBEAT_MODULES, which must be set differently for each host, depending on which services are running on which host.
 
 | Component              | Description                           |
 | :---                   | :---                                  |
@@ -42,7 +42,7 @@ Set the parameter `METRICBEAT_NODE_NAME` to a descriptive name, which should be 
 
 ### 3. Start Metricbeat
 
-Now start the Metricbeat container on each host:
+Start the Metricbeat container on each host:
 
 ```bash
 docker-compose --env-file .env -f metricbeat/docker-compose.metricbeat.yml up -d
@@ -63,9 +63,9 @@ docker-compose --env-file .env -f kibana/docker-compose.kibana.yml up -d
 Before restarting an Elasticsearch Node, ensure the cluster state is green to stay online during the restart.
 {{< /alert >}}
 
-## Enable Application Performance Monitoring
+## Enable Elastic Application Performance Monitoring
 
-You can enable Application Performance Monitoring (APM) to monitor APIBuilder4Elastic and other services (e.g. API Builder Services) if required.
+You can enable Application Performance Monitoring (APM) to monitor APIBuilder4Elastic and other services (for example, API Builder Services).
 
 Image: <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/apm/2_apm-apibuilder4elastic-overview.png>
 
@@ -95,15 +95,13 @@ Selected APIBuilder4Elastic - Metrics:
 
 (**placeholder: screenshot**)
 
-## Setup APM
+APIBuilder4Elastic is prepared to use an external APM server or to deploy directly with Operational Insights. You can enable the APM service via Docker Compose in your `.env` file or in the Helm chart. The activation is divided into 2 steps, the setup and start of the APM server and the connection to the APIBuilder4Elastic. The setup steps is not necessary if you use an existing external APM server.
 
-Operational Insights, respectively the APIBuilder4Elastic, is prepared to use an external APM-Server or to deploy directly with the solution. You can enable the APM-Service via Docker Compose in your `.env` file or in the Helm chart. The activation is divided into 2 steps. The setup and start of the APM server and the connection to the APIBuilder4Elastic. Step 1 is of course not necessary if you use an existing external APM server.
+## Activate APM in a Docker Compose deploy
 
-### Docker Compose
+Follow these steps to activate APM:
 
-If you are deploying Operational Insights in Docker Compose, follow this section:
-
-#### 1. Start the APM server
+### 1. Start the APM server
 
 This launches the APM service as a Docker container. The configured Elasticsearch hosts (ELASTICSEARCH_HOSTS) and certificates are used to connect to Elasticsearch. If you want to have user login enabled, you also need to set the APM_USERNAME and APM_PASSWORD parameters. Please make sure that the initial setup user must have rights to create templates (e.g. the elastic user).
 
@@ -124,7 +122,7 @@ To make use of the APM-Service in APIBuilder4Elastic, you need to set the parame
 Application performance monitoring enabled. Using APM-Server: https://axway-elk-apm-server:8200
 ```
 
-#### 2. Activate APM service in APIBuilder4Elastic
+### 2. Activate APM service in APIBuilder4Elastic
 
 ```bash
 Application performance monitoring enabled. Using APM-Server: https://axway-elk-apm-server:8200
@@ -132,25 +130,11 @@ Application performance monitoring enabled. Using APM-Server: https://axway-elk-
 
 If no APM service is specified, then the following default is used: <https://apm-server:8200>. However, you can configure it yourself using the parameter: APM_SERVER. For further parameters please refer to the env-sample.
 
-## Disk usage monitoring
-
-<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#disk-usage-monitoring -->
-
-It is important that you monitor the disk usage of the Elasticsearch cluster and get alarmed accordingly.
-Elasticsearch also independently monitors disk usage against preconfigured thresholds and closes write operations when the high disk watermark index is exceeded. This means that no more new data can be written.
-
-To avoid this condition, your alerts should already warn below the Elasticsearch thresholds. The thresholds for Elasticsearch:
-
-* Low watermark for disk usage: 85%.
-* High watermark for disk usage: 90%
-
-So your alerts should report a critical alert before 90%. For more information, see [Disk-based shard allocation settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/modules-cluster.html#disk-based-shard-allocation).
-
-### Helm
+## Activate APM in Helm
 
 If you are deploying Operational Insights with Helm, follow this section:
 
-#### 1. Start the APM server in your Helm chart
+### 1. Start the APM server in your Helm chart
 
 In your `local-values.yml` you activate the APM server by means of. Additionally, please set the Elasticsearch cluster UUID to include the APM server in stack monitoring:
 
@@ -160,7 +144,7 @@ apm-server:
   elasticsearchClusterUUID: 3hxrsNg6QXq2wSkVWGTD4A
 ```
 
-#### 2. Activate APM service in APIBuilder4Elastic in your Helm chart
+### 2. Activate APM service in APIBuilder4Elastic in your Helm chart
 
 Now you can further configure APIBuilder4Elastic with the following parameters.
 
@@ -175,3 +159,16 @@ apibuilder4elastic:
    # You may disable the certificate check
    # verifyServerCert: "false"
 ```
+
+## Disk usage monitoring
+
+<!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#disk-usage-monitoring -->
+
+It is important that you monitor the disk usage of the Elasticsearch cluster and get alarmed accordingly. Elasticsearch also independently monitors disk usage against pre-configured thresholds and closes write operations when the high disk watermark index is exceeded. This means that no more new data can be written.
+
+To avoid this condition, your alerts should already warn below the Elasticsearch thresholds. The thresholds for Elasticsearch:
+
+* Low watermark for disk usage: 85%.
+* High watermark for disk usage: 90%
+
+So your alerts should report a critical alert before 90%. For more information, see [Disk-based shard allocation settings](https://www.elastic.co/guide/en/elasticsearch/reference/7.16/modules-cluster.html#disk-based-shard-allocation).
