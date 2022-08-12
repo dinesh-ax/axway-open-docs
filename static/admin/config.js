@@ -277,11 +277,18 @@ const collections = [{
   label_singular: 'page in APIM ref section',
   description: 'All reference pages for API Gateway and API Manager.',
 }, {
+  ...docsDefaults('apim_sec_guide', 'apim_sec_guide'),
+  name: 'apim_sec_guide',
+  label: 'Security guide',
+  label_singular: 'page in Security guide section',
+  description: 'Security guide for API Management.',
+  folder: 'content/en/docs/apim_sec_guide',
+}, {
   ...docsDefaults('glossary', 'docbook/images/glossary'),
   name: 'glossary',
   label: 'Glossary',
   label_singular: 'page in glossary section',
-  description: 'Glossary for API Management and Amplify Central.',
+  description: 'Glossary for API Management.',
   folder: 'content/en/docs/glossary',
 }, {
   ...docsDefaults('apim_relnotes', 'docbook/images/release_notes'),
