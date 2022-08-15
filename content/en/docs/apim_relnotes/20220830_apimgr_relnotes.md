@@ -34,9 +34,11 @@ placeholder
 
 It is important, especially when upgrading from an earlier version, to be aware of the following changes in the behavior or operation of the product in this update, which may impact your current installation.
 
-### placeholder 2
+### Policy Studio and Configuration Studio update process
 
-placeholder 2
+During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins.
+
+For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
 ## Deprecated features
 
