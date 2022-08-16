@@ -389,9 +389,7 @@ It's very likely that you don't use the super-user `elastic` for `API_BUILDER_US
 
 ## Custom certificates
 
-If an existing Elasticsearch cluster is being used, provide the required CA to the solution to allow certificate validation. Otherwise, a certificate must be created for each component. For more information on how to create certificates using Policy Studio, see [Configure certificate](/docs/apim_administration/apigtw_admin/general_certificates/#configure-an-x509-certificate).
-
-After created the corresponding certificates and keys based on your own CA, save them in the folder: `config/certificates`. Afterwards, these certificates must be configured in the `.env` file as bellow:
+If an existing Elasticsearch cluster is being used, provide the required CA to the solution to allow certificate validation. Otherwise, a certificate must be created for each component. The script `config/certificates/gen_certs_and_keys.sh` creates the corresponding certificates and keys in the folder: `config/certificates`. Afterwards, these certificates must be configured in the `.env` file:
 
 ```bash
 API_BUILDER_SSL_KEY=config/certificates/corporate-certificate.key
@@ -404,6 +402,11 @@ ELASTICSEARCH_CRT=config/certificates/corporate-elasticsearch.key
 KIBANA_KEY=config/certificates/corporate-kibana.key
 KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
+
+After creating the certificates import the certificate authority in Policy Studio:
+* Navigate to Environment Configuration > Certificates and Keys > Certificates
+* Click on Create/Import > Import Certficate + Key > Navigate to your root ELK solution folder, choose `/config/certificates/ca.p12`
+* Click on Use Subject for the Alias Name field then click on OK
 
 ## Secure API Builder Traffic Monitor API
 
