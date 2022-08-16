@@ -404,6 +404,7 @@ KIBANA_CRT=config/certificates/corporate-kibana.crt
 ```
 
 After creating the certificates import the certificate authority in Policy Studio:
+
 * Navigate to Environment Configuration > Certificates and Keys > Certificates
 * Click on Create/Import > Import Certficate + Key > Navigate to your root ELK solution folder, choose `/config/certificates/ca.p12`
 * Click on Use Subject for the Alias Name field then click on OK
