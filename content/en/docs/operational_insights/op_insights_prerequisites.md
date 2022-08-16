@@ -13,7 +13,7 @@ You have two options to deploy Operational Insights:
 * On a Docker orchestration platform, such as Kubernetes or OpenShift cluster, by using the provided Helm chart.
 * On virtual machines with Docker installed, by using Docker Compose.
 
-This page covers the prerequisites for both virtual machine based and Docker Orchestration platform deployments.
+This page covers the prerequisites for both virtual machine based and Docker orchestration platform deployments.
 
 ## General prerequisites
 
@@ -23,7 +23,7 @@ The following prerequisites are common for all types of deployment.
 
 Operational Insights is based on the [Elastic Stack](https://www.elastic.co/elastic-stack/). It can run completely in docker containers, which for example are started on the basis of the `docker-compose.yaml` file or in a Docker Orchestration framework.
 
-It is also possible to use existing components, such as an Elasticsearch cluster or a Kibana instance to avail of the flexibility of using, for instance, an Elasticsearch service at AWS or Azure, or use Filebeat manually installed on the API Gateway machines.
+It is also possible to use existing components, such as an Elasticsearch cluster or a Kibana instance, to avail of the flexibility of using, for instance, an Elasticsearch service at AWS or Azure, or use Filebeat manually installed on the API Gateway machines.
 
 {{< alert title="Note" >}}
 Operational Insights has been tested with Elasticsearch >7.10.x version.
@@ -33,37 +33,35 @@ Operational Insights has been tested with Elasticsearch >7.10.x version.
 
 Operational Insights is designed to work with classical and EMT API Management deployment models. Because it is mainly based on events given in the [Open Traffic Event Log](/docs/apim_reference/monitor_traffic_events_metrics/#open-traffic-event-log-settings), you must ensure that this setting is enabled. Also, event logs are indexed and stored in Elasticsearch, which allows for system-monitoring information and to highlight annotations based on [governance alerts](/docs/apim_administration/apimgr_admin/api_mgmt_alerts/#alert-descriptions) in API Manager.
 
-Operational Insights works only with API Management 7.7 [January 2020](/docs/apim_relnotes/) onwards. Because of `Dateformat` changes in the open traffic format, older versions of API Gateway will shown errors in the Logstash processing.
+Operational Insights works only with API Management 7.7 [January 2020](/docs/apim_relnotes/) onwards. Because of `Dateformat` changes in the open traffic format, older versions of API Gateway will display errors in the Logstash processing.
 
 ## Helm prerequisites
 
-The following are the requirements to deploy Operational Insights on Docker Orchestration platforms using Helm charts.
+The following are the requirements specific to deploy Operational Insights on Docker Orchestration platforms using Helm charts.
 
-* Kubernetes >= 1.19 (At least three dedicated worker nodes for three Elasticsearch instances).
-* Helm >= 3.3.0
-* kubectl installed and configured.
-* OpenShift (not yet tested (Please create an issue if you need help))
-* See required resources - <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/tree/develop/helm#required-resources>
-* Ingress controller already installed. See <https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/>
+* Kubernetes >= `1.19` (At least three dedicated worker nodes for three Elasticsearch instances).
+* Helm >= `3.3.0`.
+* `kubectl` installed and configured.
+* OpenShift (not yet tested).
+* [Required resources](/docs/operational_insights/op_insights_updatehelm/#required-resources).
+* [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) already installed.
 
 ### Kubernetes and OpenShift knowledge
 
-Even though the Helm chart makes deploying the solution on Kubernetes or OpenShift quite easy, extensive knowledge about these platforms and Helm is mandatory.
+Even though the Helm chart facilitates the deploy, extensive knowledge about these platforms and Helm is required:
 
-You must be familiar with:
-
-* Concepts of Helm, how to create a Helm chart, installation and upgrade.
+* Concepts of Helm: how to create a Helm chart, installation, and upgrade.
 * Kubernetes resources such as deployments, configMaps, and secrets.
 * Kubernetes networking, Ingress, Services, and load balancing.
 * Kubernetes volumes, persistent volumes, and volume mounts.
 
 ## Docker Compose prerequisites
 
-The following are the requirements to deploy Operational Insights using Docker Compose on virtual machines with Docker installed.
+The following are the requirements to deploy Operational Insights specifically using Docker Compose on virtual machines with Docker installed.
 
 ### Docker
 
-Components such as the API Builder project are supposed to run as a Docker container. The Elasticsearch stack is using standard Docker images, which are configured with environment variables and some mount points, allowing for great flexible where you can run them with the provided Docker Compose or with a Docker Orchestration platform (Kubernetes, OpenShift) to get elastic scaling and self-healing.
+Components such as API Builder are supposed to run as a Docker container. The Elasticsearch stack is using standard Docker images, which are configured with environment variables and some mount points, allowing for great flexible where you can run them with the provided Docker Compose or with a Docker Orchestration platform (Kubernetes, OpenShift) to get elastic scaling and self-healing.
 
 ### Docker Compose
 
@@ -73,22 +71,22 @@ Your virtual machines must have Docker Compose installed and executable.
 
 <!-- https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk#requirements -->
 
-If you are using an existing Elastic Search environment including Kibana, the following requirements apply.
+If you are using an existing Elasticsearch environment including Kibana, the following requirements apply.
 
-* Minimal Elasticsearch is version 7.10.x with X-Pack enabled
-* Depending on the traffic enough disk-space available (it can be quite heavy depending on the traffic volume)
+* Minimal Elasticsearch is version 7.10.x with X-Pack enabled.
+* Depending on the traffic, enough disk-space available (it can be quite heavy depending on the traffic volume).
 
 ### Users and roles
 
-The following table represents a suggestion of which roles should be created for the solution to work. You are also welcome to divide the roles differently and assign them to the users accordingly.
+The following table represents a suggestion of which roles should be created to work with Operational Insights, but you can configure the roles differently and assign them to the users accordingly.
 
-| Role              | Cluster privileges                                                    | Index privileges                   | Kibana                   |
-| :---              | :---                                                                  | :---                               | :---                     |
-| [axway_apigw_write](elasticsearch/usersAndRoles#role-axway_apigw_write) | `monitor`                                                             | `apigw-* - write`                  | No                       |
-| [axway_apigw_read](elasticsearch/usersAndRoles#role-axway_apigw_read)  | `monitor`                                                             | `apigw-* - read`                   | No                       |
-| [axway_apigw_admin](elasticsearch/usersAndRoles#role-axway_apigw_admin) | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | `apigw-* - monitor, view_index_metadata, create_index`, `apim-* - read,view_index_metadata`| Yes (All or Custom)  |
-| [axway_kibana_write](elasticsearch/usersAndRoles#role-axway_kibana_write)| None                                                                 | None                               | Yes (Analytics All)      |
-| [axway_kibana_read](elasticsearch/usersAndRoles#role-axway_apigw_read) | None                                                                  | None                               | Yes (Analytics Read)     |
+| Role                                                                    | Cluster privileges  | Index privileges   | Kibana    |
+| :---                                                                    | :---                | :---               | :---      |
+| [axway_apigw_write](elasticsearch/usersAndRoles#role-axway_apigw_write)  | `monitor`          | `apigw-* - write`  | No         |
+| [axway_apigw_read](elasticsearch/usersAndRoles#role-axway_apigw_read)    | `monitor`          | `apigw-* - read`   | No         |
+| [axway_apigw_admin](elasticsearch/usersAndRoles#role-axway_apigw_admin)  | `monitor`, `manage_ilm`, `manage_index_templates`, `manage_transform` | `apigw-* - monitor, view_index_metadata, create_index`, `apim-* - read,view_index_metadata`| Yes (All or Custom)  |
+| [axway_kibana_write](elasticsearch/usersAndRoles#role-axway_kibana_write)| None               | None               | Yes (Analytics All)   |
+| [axway_kibana_read](elasticsearch/usersAndRoles#role-axway_apigw_read)   | None               | None               | Yes (Analytics Read)     |
 
 The following table assumes that the same user should also be used for stack monitoring. You can also split this into two users if necessary.
 
@@ -103,4 +101,4 @@ The following table assumes that the same user should also be used for stack mon
 
 ## Next steps
 
-After you ensured that you have all prerequisites in place, you can [setup a basic environment](/docs/amplify_analytics/op_insights_config_elastic_singlenode) to test the solution in a development environment.
+After you ensured that you have all prerequisites in place, you can [setup a basic environment](/docs/amplify_analytics/op_insights_config_elastic_singlenode) to run tests in a development environment.

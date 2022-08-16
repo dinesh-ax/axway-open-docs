@@ -6,7 +6,9 @@ date: 2022-06-09
 description: Size your infrastructure to be able to store and process millions of transactions per day and make them quickly available for traffic monitoring and analytics.
 ---
 
-Operational Insights is designed to store and process millions of transactions per day and make them quickly available for traffic monitoring and analytics. This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided. The solution has been extensively tested, especially for high-volume requirements. It processed 1010 transactions per second, up to 55 million transactions per day on the following infrastructure.
+Operational Insights is designed to store and process millions of transactions per day and make them quickly available for traffic monitoring and analytics.
+
+This advantage of being able to access millions of transactions is not free of charge with Elasticsearch, but is available in the size of the disc space provided. The solution has been extensively tested, especially for high-volume requirements. It processed 1010 transactions per second, up to 55 million transactions per day on the following infrastructure.
 
 {{< alert title="Note">}}It is highly recommended that you size your infrastructure before configuring Operational Insights in your production environment.{{< /alert >}}
 
@@ -14,14 +16,16 @@ Operational Insights is designed to store and process millions of transactions p
 
 The following are important aspects for sizing your platform:
 
-* Transactions per second - transactions to be processed in real time.
-* Retention period - this is reflected in the required disk space.
+* **Transactions per second**: Transactions to be processed in real time.
+* **Retention period**: This is reflected in the required disk space.
 
-### Transactions per second
+### Configure transactions per second
 
-The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be scaled so that the events that occur on the basis of the transactions can be processed (Ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned in order to also quickly enable catch-up operation after a downtime or maintenance.
+The number of concurrent transactions per second (TPS) that the entire platform must handle. The platform must therefore be scaled so that the events that occur on the basis of the transactions can be processed (ingested) in real time. It is important to consider the permanent load. As a general rule, more capacity should be planned to also quickly enable catch up operation after a downtime or maintenance.
 
-The following table explains what a single component, such as Logstash, Filebeat, ... can process in terms of TPS with INFO Trace-Messages enabled to stay real-time. Please understand these values as the absolute maximum, which do not give any margin upwards for downtimes or maintenance of the platform. More is not possible per component, so obviously more capacity must be planned for production. The tests were performed on a number of **AWS EC2 instances** (add link to section Test infrastructure) with the default parameters for this solution. In order to be able to reliably determine the limiting component, all other components were adequate sized and only the component under test was as stated in the table.
+The following table explains what a single component, such as Logstash or Filebeat can process in terms of TPS with `INFO` trace messages enabled to stay real time. The values in the table are the absolute maximum, which does not give any margin upwards for downtimes or maintenance of the platform. It is not possible to increase the capacity per component, so you must plan well for production.
+
+The tests were performed on a number of **AWS EC2 instances**, using default parameters. To be able to reliably determine the limiting component, all other components were adequate sized and only the component under test was as stated in the table.
 
 | Component               | Max. TPS           | Host-Machine | Config                | Comment |
 | :---                    | :---               | :---         | :---                  | :---    |
@@ -31,14 +35,14 @@ The following table explains what a single component, such as Logstash, Filebeat
 | 3 Elasticsearch nodes   | 740                | t2.xlarge    | 8GB JVM-Heap for each node | Data is searchable with a slight delay, but ingesting is not falling behind real-time in general up to the max. TPS.|
 | 4 Elasticsearch nodes   | 1010                | t2.xlarge    | 8GB JVM-Heap for each node | |
 
-Please note:  
+Observe the following:
 
-* Logstash, API-Builder, Filebeat (for monitoring only) and Kibana are load balanced across all available Elasticsearch nodes. An external Load-Balancer is not required as this is handled internally by each of the Elasticsearch clients.
-* do not size the Elasticsearch Cluster-Node too large. The servers should not have more than 32GB memory, because after that the memory management kills the advantage again. It is better to add another server. See the [Test-Infrastructure](#test-infrastructure) for reference.
+* Logstash, API Builder, Filebeat (for monitoring only), and Kibana are load balanced across all available Elasticsearch nodes. An external load balancer is not required as this is handled internally by each of the Elasticsearch clients.
+* Do not size the Elasticsearch cluster node too large. The servers should not have more than 32GB memory because after that, the memory management kills the advantage again. In this case it is better to add another server. For more information, see [Results of infrastructure test](#results-of-infrastructure-test).
 
-### Retention period
+### Configure the retention period
 
-The second important aspect for sizing is the retention period, which defines how long data should be available. Accordingly, disk space must be made available.
+The second important aspect for sizing is to configure the retention period, which defines how long data should be available. Accordingly, disk space must be made available.
 In particular the Traffic-Summary and Traffic-Details indicies become huge and therefore play a particularly important role here. The solution is delivered with default values which you can read here. Based on the these default values which result in ap. 14 days the following disk space is required.
 
 | Volume per day           | Total Disk-Space  | Comment |
@@ -49,18 +53,16 @@ In particular the Traffic-Summary and Traffic-Details indicies become huge and t
 | up to 25 Mio (~300 TPS)  | 750 GB            | 3 Elasticsearch nodes, each with 250 GB |
 | up to 50 Mio (~600 TPS)  | 1.5 TB            | 4 Elasticsearch nodes, each with 500 GB |
 
-Tests were performed with log level `INFO`. If you run your API gateways with DEBUG or have an unusually high number of log messages, more disk space may be necessary.
+Tests were performed with log level `INFO`. If you run your API gateways with `DEBUG`, or have an unusually high number of log messages, more disk space might be necessary.
 
-Note that when Elasticsearch is started by Docker-Compose, its data is stored in an external volume. This is located at `/var/lib/docker` by default. So you need to make sure that the available space is allocated there.
+Note that when Elasticsearch is started by Docker Compose, its data is stored in an external volume. This is located at `/var/lib/docker` by default. Consequently, you must ensure that the available space is allocated there.
 
-If the required storage space is unexpectedly higher, then you can do the following:
+If the required storage space is unexpectedly higher, you proceed as following:
 
 * Add an additional Elasticsearch cluster node at a later time.
-    * Elasticsearch will then start balancing the cluster by moving shards to this new node
-    * this additional node will of course also improve the overall performance of the cluster
-* Increase the disk space of an existing node
-    * if the cluster state is green, you can stop a node, allocate more disk space, and then start it again
-    * the available disk space is used automatically by allocating shards
+    * Elasticsearch will then start balancing the cluster by moving shards to the new node, which will also improve the overall performance of the cluster.
+* Increase the disk space of an existing node.
+    * If the cluster state is green, you can stop a node, allocate more disk space, then start it again. The available disk space is used automatically by allocating shards.
 
 For more information, see [Configure the retention period](/docs/amplify_analytics/op_insights_config_elastic_production#configure-the-retention-period)
 
@@ -70,9 +72,9 @@ The following test infrastructure was used to determine the [maximum capacity or
 
 | Count | Node/Instance              |CPUS     | RAM   |Disc  | Component      | Version | Comment |
 | :---: | :---                       | :---    | :---  | :--- | :---           | :---    | :---    |
-| 6x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | API-Management | 7.7-July| 6 API-Gateways Classical deployment, Simulate Traffic based on Test-Case |
-| 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.0  | Logstash instances started as needed for the test. Logstash, API-Builder and Memcache always run together |
-| 5x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 80GB | Elasticsearch  | 7.10.0  | Elasticsearch instances started as needed. Kibana running on the first node |
+| 6x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | API-Management | 7.7-July| 6 API Gateways classical deployment, simulate traffic based on test-case |
+| 4x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 30GB | Logstash, API-Builder, Memcached | 7.10.0  | Logstash instances started as needed for the test. Logstash, API Builder, and Memcache always run together. |
+| 5x    | AWS EC2 t2.xlarge instance | 4 vCPUS | 16GB  | 80GB | Elasticsearch  | 7.10.0  | Elasticsearch instances started as needed. Kibana running on the first node. |
 
 There is no specific reason that EC2 t2.xlarge instances were used for the test setup. The deciding factor was simply the number of CPU cores and 16 GB RAM.
 
@@ -82,13 +84,13 @@ To give you a good feel for the memory usage of the individual components, the f
 
 | Component      | Memory usage | Comment                                                                                                                  |
 | :---           | :---         | :---                                                                                                                     |
-| Elasticsearch  | 5.8 GB       | Configured to max. 8 GB, 5 Elasticsearch Hosts in total                                                                  |
-| Kibana         | 320 MB       | One Kibana instance running on along with first Elasticsearch host                                                       |
-| Logstash       | 4.5 GB       | Configured to max. 6 GB, 4 Logstash processes running in total                                                           |
-| API-Builder    | 110-120 MB   | 4 API-Builder docker containers running in total                                                                         |
-| Memcached      | 10-11 MB     | 4 Memcache instances. Memory finally depends on number of unique APIs, Apps, etc. However, very unlikely more than 30 MB |
-| Filebeat       | 130 MB       | Filebeat is running as a Docker-Container along the API-Gateway. Filebeat itself is using ap. 30-35 MB.                  |
+| Elasticsearch  | 5.8 GB       | Configured to max. 8 GB, 5 Elasticsearch Hosts in total.                                                                  |
+| Kibana         | 320 MB       | One Kibana instance running along with first Elasticsearch host.                                                       |
+| Logstash       | 4.5 GB       | Configured to max. 6 GB, 4 Logstash processes running in total.                                                           |
+| API-Builder    | 110-120 MB   | 4 API Builder docker containers running in total.                                                                         |
+| Memcached      | 10-11 MB     | 4 Memcache instances. Memory finally depends on number of unique APIs, Apps, and so on, however, very unlikely more than 30 MB. |
+| Filebeat       | 130 MB       | Filebeat is running as a Docker container alongside API Gateway. Filebeat itself is using approximately 30-35 MB.                  |
 
 ## Next steps
 
-On the following section, you are going to configure your API Gateway Manager to render log data, which is now provided by Elasticsearch instead of the individual API Gateway instances. For more information, see [Configure API Gateway Manager for Elasticsearch](/amplify_analytics/config_APIMng_elasticsearch).
+On the following sections, you are going to configure your API Gateway Manager to render log data, which is now provided by Elasticsearch instead of the individual API Gateway instances. For more information, see [Configure API Gateway Manager for Elasticsearch](/amplify_analytics/config_APIMng_elasticsearch).
