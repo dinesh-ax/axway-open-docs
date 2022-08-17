@@ -3,7 +3,8 @@ title: Create and start Admin Node Manager Docker container
 linkTitle: Create and start Admin Node Manager Docker container
 weight: 50
 date: 2019-09-18
-description: Steps to build an Admin Node Manager Docker image and start an Admin Node Manager container.
+description: Steps to build an Admin Node Manager Docker image and start an
+  Admin Node Manager container.
 ---
 
 ## Create an Admin Node Manager Docker image
@@ -69,6 +70,8 @@ This example creates an Admin Node Manager Docker image named `my-metrics-admin-
 * Uses a specified user name of `gwadmin` and a specified password for the administrator user
 * Runs with metrics processing enabled
 * Uses a specified merge directory (containing the JDBC driver JAR file for the metrics database) that is merged into the API Gateway image
+
+{{< alert title="Note" color="primary" >}}The domain certificate specified here must be a CA certificate created by the `gen_domain_cert.py` script.  For more details, see [setting up the Docker environment.](/docs/apim_installation/apigw_containers/docker_scripts_prereqs/index.html#generate-domain-ssl-certificates){{< /alert >}}
 
 ### Other options for creating Admin Node Manager Docker images  
 
