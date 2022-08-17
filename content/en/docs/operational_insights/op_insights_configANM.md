@@ -99,4 +99,4 @@ If a given protocol, such as `Directory` for instance, is not implemented, API B
 
 The following image shows how the **Compare attribute** filter looks like:
 
-<https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/is_not_implemented.png> 
+<https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/imgs/is_not_implemented.png>
