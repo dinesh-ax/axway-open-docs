@@ -1,11 +1,10 @@
 {
 "title": "Configure ICAP servers",
-"linkTitle": "Configure ICAP servers",
-"weight": 4,
-"date": "2019-10-17",
-"description": "Configure API Gateway to connect to an ICAP server."
+  "linkTitle": "Configure ICAP servers",
+  "weight": 4,
+  "date": "2019-10-17",
+  "description": "Configure API Gateway to connect to an ICAP server."
 }
-
 The Internet Content Adaptation Protocol (ICAP) is a lightweight HTTP-based protocol used to optimize proxy servers, which frees up resources and standardizes how features are implemented. For example, ICAP is typically used to implement features such as virus scanning, content filtering, ad insertion, or language translation in the HTTP proxy server cache. *Content Adaptation*
 refers to performing a specific value-added service (for example, virus scanning) for a specific client request and/or response.
 
@@ -25,11 +24,13 @@ tab:
 
 **Port**: The port on which the ICAP server is listening. Defaults to `1344`.
 
-**Request Service**: The path to the service (exposed by the ICAP server) that handles Request Modification (REQMOD) requests. The default value is `/request`.
+**Request Service**: The relative path to the service exposed by the ICAP server that handles Request Modification (REQMOD) requests. The default value is `/request`.
 
-**Response Service**: The path to the service exposed by the ICAP server that handles Response Modification (RESPMOD) requests. The default value is `/response`.
+**Response Service**: The relative path to the service exposed by the ICAP server that handles Response Modification (RESPMOD) requests. The default value is `/response`.
 
-**Options Service**: The path to the service (exposed by the ICAP server) that handles OPTIONS requests. OPTIONS requests enable server capabilities to be queried. The default value is `/options`.
+**Options Service**: The relative path to the service exposed by the ICAP server that handles OPTIONS requests. OPTIONS requests enable server capabilities to be queried. The default value is `/options`.
+
+The paths for each of these services should be given by your ICAP server's documentation.
 
 ## Security settings
 

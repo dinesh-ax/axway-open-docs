@@ -23,12 +23,12 @@ The client token request should be sent in an HTTP `POST`to the token endpoint w
 | `grant_type` | Required. Must be set to `password`.                                          |
 | `username`   | Required. The resource owner's user name.                                     |
 | `password`   | Required. The resource owner's password.                                      |
-| `scope`      | Optional. The scope of the authorization.                                     |
+| `scope`      | Optional. A list of scopes, delimited by space ( ) or comma (`,`), which indicates the scope of the authorization. A plus sign (`+`) is also accepted as a delimiter when submitting the request via query string  parameters.                                     |
 | `format`     | Optional. Expected return format. The default is `json`. Possible values are `urlencoded`,                                                           `json`, and `xml`. |
 
 The following is an example HTTP `POST`request:
 
-```
+```json
 POST /api/oauth/token HTTP/1.1
 Content-Length:424
 Content-Type:application/x-www-form-urlencoded; charset=UTF-8
@@ -39,7 +39,7 @@ grant_type=password&username=johndoe&password=A3ddj3w
 
 Comma (`,`) and plus (`+`) characters are treated as delimiters when specified in the `scope` parameter. For example, if you send the following client token request:
 
-```
+```bash
 curl -ki https://localhost:8089/api/oauth/token --data-urlencode 'scope=resource.WRITE,resource.READ'
 ```
 
@@ -49,7 +49,7 @@ API Gateway returns an access token containing `"scope":"resource.WRITE resource
 
 The API Gateway validates the resource owner's credentials and authenticates the client against the Client Application Registry. An access token, and optional refresh token, is sent back to the client on success. For example, a valid response is as follows:
 
-```
+```json
 HTTP/1.1 200 OK
 Cache-Control:no-store
 Content-Type:application/json
@@ -66,19 +66,19 @@ Pragma:no-cache
 
 The following Jython sample client sends a request to the authorization server using the resource owner password credentials flow:
 
-```
+```bash
 INSTALL_DIR/samples/scripts/oauth/resourceowner_password_credentials.py
 ```
 
 To run the sample, open a shell prompt at `INSTALL_DIR/samples/scripts`, and execute the following command:
 
-```
+```bash
 run oauth/resourceowner_password_credentials.py
 ```
 
 The script outputs the following:
 
-```
+```none
 Sending up access token request using grant_type set to password
 Response from access token request:200
 Parsing the json response

@@ -19,12 +19,12 @@ The client token request should be sent in an HTTP `POST`to the token endpoint w
 | Parameter    | Description                                             |
 |--------------|---------------------------------------------------------|
 | `grant_type` | Required. Must be set to `client_credentials`.          |
-| `scope`      | Optional. The scope of the authorization.               |
+| `scope`      | Optional. A list of scopes, delimited by space ( ) or comma (`,`), which indicates the scope of the authorization. A plus sign (`+`) is also accepted as a delimiter when submitting the request via query string  parameters.              |
 | `format`     | Optional. Expected return format. The default is `json`. Possible values are:`urlencoded`, `json`, `xml`  |
 
 The following is an example POST request:
 
-```
+```json
 POST /api/oauth/token HTTP/1.1
 Content-Length:424
 Content-Type:application/x-www-form-urlencoded; charset=UTF-8
@@ -33,19 +33,20 @@ Authorization:Basic czZCaGRSa3F0MzpnWDFmQmF0M2JW
 grant_type=client_credentials
 ```
 
-Comma (`,`) and plus (`+`) characters are treated as delimiters when specified in the `scope` parameter. For example, if you send the following client token request:
+Comma (`,`) and space ( ) characters are treated as delimiters when specified in the `scope` parameter. For example, if you send the following client token request, API Gateway returns an access token containing `"scope":"resource.WRITE resource.READ"`.
 
-```
+```bash
 curl -ki https://localhost:8089/api/oauth/token --data-urlencode 'scope=resource.WRITE,resource.READ'
 ```
 
-API Gateway returns an access token containing `"scope":"resource.WRITE resource.READ"`. The comma is interpreted as a space.
+* The comma is interpreted as a space.
+* The plus sign (`+`) delimiter is not allowed here because it is a POST request, with the scopes specified in the body of the request.
 
 ## Handle the response
 
 The API Gateway authenticates the client against the Client Application Registry. An access token is sent back to the client on success. A refresh token is not included in this flow. An example valid response is as follows:
 
-```
+```json
 HTTP/1.1 200 OK
 Cache-Control:no-store
 Content-Type:application/json
@@ -61,19 +62,19 @@ Pragma:no-cache
 
 The following Jython sample client sends a request to the authorization server using the client credentials flow:
 
-```
+```bash
 INSTALL_DIR/samples/scripts/oauth/client_credentials.py
 ```
 
 To run the sample, open a shell prompt at `INSTALL_DIR/samples/scripts`, and execute the following command:
 
-```
+```bash
 run oauth/client_credentials.py
 ```
 
 The script outputs the following:
 
-```
+```none
 Sending up access token request using grant_type set to client_credentials
 Response from access token request:200
 Parsing the json response

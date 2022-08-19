@@ -29,7 +29,7 @@ To install API Portal:
    ```
    sudo ./apiportal_install.sh
    ```
-5. Enter the appropriate values when prompted by the installation script. The options you are prompted for include:
+5. Enter the appropriate values when prompted by the installation script. The options include:
 
    * Change the default install path. API Portal is installed at `/opt/axway/apiportal/htdoc` by default, but you can specify a custom path. The folders specified in the custom path are created if they do not already exist.
    * Use MySQL in SSL mode (with one way authentication or two way authentication). The certificates generated from MySQL Server must be located in `/etc/mysql/certs/`.
@@ -41,9 +41,9 @@ To install API Portal:
    * Configure Joomla! Administrator Interface administrator account password.
    * Enable or disable Joomla! Administrator Interface administrator account password reset on the first login.
    * Locations of `php.ini` and `apiportal.conf` configuration files.
-   * Encrypt the Public API mode user password and store the encryption key in a specified directory. The directory is created along with a file. The last segment of the directory is the file name. For example: `/sample/directory/for/encryption/key` creates an empty file named "key" in the desired directory. You can also use a script to encrypt the password later. For more details, see [Encrypt the Public API user password (optional)](/docs/apim_administration/apiportal_admin/public_api_configure/#encrypt-the-public-api-mode-user-password).
-   * Configure API Portal with SSL/TLS. For HTTPS, you can either provide a certificate and private key, or use a self-signed certificate. For more details, see [Configure API Portal to run with HTTP or HTTPS](#configure-api-portal-to-run-with-http-or-https).
-6. To configure the SE Linux, enter the following commands:
+   * Encrypt the Public API mode user password and store the encryption key in a specified directory. The directory is created along with a file. The last segment of the directory is the file name. For example: `/sample/directory/for/encryption/key` creates an empty file named "key" in the desired directory. You can also use a script to encrypt the password later. For more information, see [Encrypt the Public API user password (optional)](/docs/apim_administration/apiportal_admin/public_api_configure/#encrypt-the-public-api-mode-user-password).
+   * Configure API Portal with SSL/TLS. For HTTPS, you can either provide a certificate and private key, or use a self-signed certificate. For more information, see [Configure API Portal to run with HTTP or HTTPS](#configure-api-portal-to-run-with-http-or-https).
+6. Run the following commands to update your SELinux configuration and complete API Portal installation:
 
    ```
    sudo setsebool -P httpd_read_user_content 1

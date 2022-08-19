@@ -26,7 +26,7 @@ When setting up your Elasticsearch server, observe the following recommendations
 * Enable Elasticsearch security features, and configure username and password for the built-in users. While Kibana is not required, we recommend it as an official client for ES.
 * Configure a secure HTTPS traffic so that all the communication between API Portal and Elasticsearch is secured.
 
-For more information, see the [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html) documentation.
+For more information, see [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-minimal-setup.html) documentation.
 
 ## Add API Manager credentials to API Portal
 
@@ -55,7 +55,7 @@ Follow these steps to connect API Portal to the Elasticsearch server, and to con
 
 ## Configure a schedule to push data to Elasticsearch
 
-After connecting API to Elasticsearch, populate the crontab fields to create a schedule to push data to Elasticsearch.
+After connecting API to Elasticsearch, populate the `crontab` fields to create a schedule to push data to Elasticsearch.
 
 1. In JAI, click **Components > API Portal > Elasticsearch Settings**.
 2. Populate the following fields:
@@ -69,13 +69,11 @@ After that, APIs and Applications will automatically reindex based on the cron s
 
 Before you configure your time schedule interval for indexing APIs and Applications, consider the following to help you to decide on what are the most appropriate schedule indexation intervals for your environment.
 
-* How long it takes to push the data to the index?
+**How long it takes to push the data to the index?**
 
-This will depend on some aspects like the number of APIs and Applications, infrastructure resources (your server's calculating power), and network capabilities.
+This will depend on some aspects like the number of APIs and Applications, infrastructure resources (your server's calculating power), and network capabilities. To discover this time, you can [trigger the indexation manually](#push-data-to-elasticsearch-manually) and monitor how long it takes for the process to end. You must perform this for APIs and Applications separately because they have different schedules.
 
-To discover this time, you can [trigger the indexation manually](#push-data-to-elasticsearch-manually) and monitor how long it takes for the process to end. You must perform this for APIs and Applications separately because they have different schedules.
-
-* How often does your data in API Manager gets changed?
+**How often your data in API Manager gets changed?**
 
 If your data changes frequently (adding, updating, or deleting APIs and Applications) we recommend that you use the minimum required time period (the value that you found when monitoring the process).
 
@@ -85,4 +83,27 @@ If your data does not change frequently, you can configure longer intervals for 
 
 If you are using API Portal in containers, you can trigger APIs and Applications indexing manually.
 
-After connecting API to Elasticsearch, in JAI, click **Components > API Portal > Elasticsearch Settings**, then click **Index APIs now** and **Index Applications now** to push data to Elasticsearch.
+After connecting API Portal to Elasticsearch, in JAI, click **Components > API Portal > Elasticsearch Settings**, then click **Index APIs now** and **Index Applications now** to push data to Elasticsearch.
+
+## Known issues
+
+The following are known issues and possible solutions for when you are using Elasticsearch with API Portal.
+
+### Error on saving of Elasticsearch form in JAI
+
+The Elasticsearch schedule is saved in `crontab`, which can be forbidden by your SELinux policy. Then, when you try to persist Elasticsearch settings in JAI, the following error message is displayed, "There was an error saving crontab!".
+
+You can workaround this issue by manually creating a schedule in `crontab` to persist the Elasticsearch scheduling manually. Follow these steps:
+
+1. Open a secure shell connection with your server.
+2. Type `sudo crontab -e` to open the crontab editor.
+3. Paste the following text into the editor:
+   ```bash
+   * 1 * * * php '{APIPORTAL_INSTALL_DIRECTORY}/apifeed.php' --entry apis --logfile '{APIPORTAL_INSTALL_DIRECTORY}/logs/com_apiportal.apifeed.log' --errlogfile '{APIPORTAL_INSTALL_DIRECTORY}/logs/com_apiportal.apifeed.error.log'
+   * 1 * * * php '{APIPORTAL_INSTALL_DIRECTORY}/apifeed.php' --entry applications --logfile '{APIPORTAL_INSTALL_DIRECTORY}/logs/com_apiportal.apifeed.log' --errlogfile '{APIPORTAL_INSTALL_DIRECTORY}/logs/com_apiportal.apifeed.error.log'
+   ```
+   The first entry is for APIs and the second is for Applications indexation.
+
+4. Replace `{APIPORTAL_INSTALL_DIRECTORY}` with your API Portal installation directory, which by default is `/opt/axway/apiportal/htdoc`.
+5. Replace the schedule from the example (`* 1 * * *`) with your desired schedule. For more information on how to form the schedule, see [crontab guru](https://crontab.guru/) .
+6. Save the text and close the editor.

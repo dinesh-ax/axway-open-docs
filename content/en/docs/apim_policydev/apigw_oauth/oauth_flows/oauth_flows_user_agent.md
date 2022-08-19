@@ -29,12 +29,12 @@ Redirect the user to the authorization endpoint with the following parameters:
 | `response_type` | Required. Must be set to `token`.                                                                                                                |
 | `client_id`     | Required. The client ID generated when the application was registered in the Client Application Registry.                                        |
 | `redirect_uri`  | Optional. The location where the access token will be sent. This value must match one of the values provided in the Client Application Registry. |
-| `scope`         | Optional. A space delimited list of scopes, which indicates the access to the resource owner's data requested by the application.                |
+| `scope`         | Optional. A list of scopes, delimited by space ( ) or comma (`,`), which indicates the access to the resource owner's data requested by the application. A plus sign (`+`) is also accepted as a delimiter when submitting the request via query string  parameters.                |
 | `state`         | Optional. Any state the consumer wants reflected back to it after approval during the callback.                                                  |
 
 The following is an example URL:
 
-```
+```none
 https://apigateway/oauth/authorize?client_id=SampleConfidentialApp&response_type=token&redirect_uri=http%3A%2F%2Flocalhost%3A8090%2Fauth%2Fredirect.html&scope=https%3A%2F%2Flocalhost%3A8090%2Fauth%2Fuserinfo.email
 ```
 
@@ -46,7 +46,7 @@ https://apigateway/oauth/authorize?client_id=SampleConfidentialApp&response_type
 
 The response to the above request is sent to the `redirect_uri`. If the user approves the access request, the response contains an access token and the state parameter (if included in the request). For example:
 
-```
+```none
 https://localhost/oauth_callback#access_token=19437jhj2781FQd44AzqT3Zg&token_type=Bearer&expires_in=3600
 ```
 
@@ -66,7 +66,7 @@ After the request is verified, the API Gateway sends a response to the client. T
 After the application obtains an access token, it can gain access to protected resources on the resource server by placing it in an `Authorization:Bearer`
 HTTP header:
 
-```
+```json
 GET /oauth/protected HTTP/1.1
 Authorization:Bearer O91G451HZ0V83opz6udiSEjchPynd2Ss9
 Host:apigateway.com
@@ -74,7 +74,7 @@ Host:apigateway.com
 
 For example, the `curl`command to call a protected resource with an access token is as follows:
 
-```
+```bash
 curl -H "Authorization:Bearer O91G451HZ0V83opz6udiSEjchPynd2Ss9" https://apigateway.com/oauth/protected
 ```
 
@@ -82,7 +82,7 @@ curl -H "Authorization:Bearer O91G451HZ0V83opz6udiSEjchPynd2Ss9" https://apigate
 
 The following Jython sample client creates and sends an authorization request for the implicit grant flow to the authorization server:
 
-```
+```bash
 INSTALL_DIR/samples/scripts/oauth/implicit_grant.py
 ```
 
@@ -91,13 +91,13 @@ To run the sample, perform the following steps:
 1. Open a shell prompt at the `INSTALL_DIR/samples/scripts` directory.
 2. Execute the following command:
 
-    ```
+    ```bash
     run oauth/implicit_grant.py
     ```
 
     The script outputs the following:
 
-    ```
+    ```none
     Go to the URL here:
     http://127.0.0.1:8080/api/oauth/authorize?client_id=SampleConfidentialApp&response_type=token&scope=https%3A%2F%2Flocalhost%3A8090%2Fauth%2Fuserinfo.email&redirect_uri=https%3A%2F%2Flocalhost%2Foauth_callback&state=1956901292
     Enter Access Token code in dialog
@@ -105,14 +105,14 @@ To run the sample, perform the following steps:
 
     After the resource owner has authorized and approved access to the application, the authorization server redirects to the redirection URI a fragment containing the access token. For example:
 
-    ```
+    ```none
     https://localhost/oauth_callback#access_token=4owzGyokzLLQB5FH4tOMk7Eqf1wqYfENEDXZ1mGvN7u7a2Xexy2OU9&expires_in=3599
     &state=1956901292&token_type=Bearer
     ```
 
     In this example, the access token is:
 
-    ```
+    ```none
     4owzGyokzLLQB5FH4tOMk7Eqf1wqYfENEDXZ1mGvN7u7a2Xexy2OU9
     ```
 
@@ -122,7 +122,7 @@ To run the sample, perform the following steps:
 
     The script attempts to access the protected resource using the access token. For example:
 
-    ```
+    ```none
     **********************ACCESS TOKEN RESPONSE******************************
     Access token received from authorization server 4owzGyokzLLQB5FH4tOMk7Eqf1wqYfENEDXZ1mGvN7u7a2Xexy2OU9
     ******************************************************************************

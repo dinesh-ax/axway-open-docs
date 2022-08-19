@@ -5,10 +5,9 @@
   "date": "2019-10-17",
   "description": "Use the Throttling filter to rate limit calls to a back-end service."
 }
-
 The **Throttling** filter enables you to limit the number of requests that pass through an API Gateway in a specified time period. This enables you to enforce a specified message quota or *rate limit* on a client application, and to protect a back-end service from message flooding.
 
-{{< alert title="Note" color="primary" >}}This filter requires a [Key Property Store (KPS)](/docs/apim_policydev/apigw_kps/get_started/) table, which can be, for example, an API Manager KPS table.{{< /alert >}}
+This filter requires a [Key Property Store (KPS)](/docs/apim_policydev/apigw_kps/get_started/) table, which can be, for example, an API Manager KPS table.
 
 You can configure this filter, for example, to allow only a specified number of messages from a specified client over a configured time period through to a virtualized API. If the number of messages exceeds the specified limit, the filter fails for the excess messages.
 
@@ -19,19 +18,17 @@ Some example use cases for the **Throttling** filter include:
 * Protect a back-end service that can handle a maximum of only 20 messages per client per second.
 * Enforce a specific message rate limit or quota where a customer has purchased a maximum of 100 messages per client per hour only.
 
-{{< alert title="Note" color="primary" >}}API Gateway version 7.6.0 introduced the **Smooth Rate Limiting** algorithm for improved handling of high traffic levels. The existing algorithm has been renamed as **Floating Time Window**, and is still provided for backwards compatibility with previous API Gateway versions. Existing configuration from previous API Gateway versions is preserved during upgrade and executes as before.{{< /alert >}}
-
 ## Rate limit algorithm options
 
 You can select the following options from the rate limit algorithm drop-down list:
 
-* **Smooth Rate Limiting**: This algorithm smooths out the traffic by dividing per second limits into regular millisecond intervals. For example, a setting of 500 requests per second results in 1 request being accepted every 2 milliseconds. It provides most protection to back-end servers, and is especially suitable for back-end server throttling in elastic environments, but can also be used in on-premise deployments.
+* **Smooth Rate Limiting**: This algorithm smooths out the traffic by dividing per second limits into regular millisecond intervals. For example, a setting of 500 requests per second results in 1 request being accepted every 2 milliseconds. It provides most protection to back-end servers, and is especially suitable for back-end server throttling in elastic environments, but can also be used in on-premise deployments. This algorithm distributes rate limits among running API Gateways evenly (round robin) or dynamically (based on past traffic) to match your load balancing strategy. It also keeps track of the number of running API Gateways and dynamically updates the limits for each API Gateway when there is a change in the number of running API Gateways.
 
-    The Smooth Rate Limiting algorithm distributes rate limits among running API Gateways evenly (round robin) or dynamically (based on past traffic) to match your load balancing strategy. It also keeps track of the number of running API Gateways and dynamically updates the limits for each API Gateway when there is a change in the number of running API Gateways.
+    The smooth rate limits are stored in an Apache Cassandra database. Before using this algorithm, you must first configure an Apache Cassandra connection.
 
-    The smooth rate limits are stored in an Apache Cassandra database. If you want to use this algorithm, you must first configure an Apache Cassandra connection.
+    {{< alert title="Note" color="primary" >}}**Smooth Rate Limiting** is the preferred option, and we recommend you to use it in every circumstance.{{< /alert >}}
 
-* **Floating Time Window**: This algorithm is provided for backwards compatibility with previous API Gateway versions. It does not include any traffic smoothing, and is suitable for lower traffic levels, over longer time intervals (for example, 10 transactions per minute or 100 transactions per hour). This means that if a rate limit is set to 100 requests per minute, all 100 can arrive in the first 10 seconds, and will be served. But any requests in next 50 seconds will be rejected. Floating time window is the default algorithm. Its rate limits are stored in a local or distributed cache.
+* **Floating Time Window**: This is a legacy algorithm provided only for backwards compatibility. Its rate limits are stored in a local or distributed cache, and it does not include any traffic smoothing. It is only suitable for lower traffic levels, over longer time intervals (for example, 10 transactions per minute or 100 transactions per hour). For example, if a rate limit is set to 100 requests per minute, all 100 requests can arrive in the first 10 seconds, and will be served. But, any requests in next 50 seconds will be rejected. This is the default algorithm. It is strongly discouraged to use this algorithm with a distributed cache because it will allow too many requests.
 
 ### Smooth rate limiting algorithm settings
 
