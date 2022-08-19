@@ -7,9 +7,7 @@ description: null
 ---
 API Gateway and API Manager updates are cumulative, comprising new features and changes delivered in previous updates unless specifically indicated otherwise in the Release notes.
 
-This latest release continues to simplify and evolve API management...
-
-placeholder
+In this release, we're adding some user interface (UI) and user experience (UX) improvements, additional support for YAML, externalisation of the configuration for the Admin Node Manager, and the capability to use FIPS with Open SSL 3.0. We keep working to make Amplify API Management a top solution that helps you to control of all your APIs and events across gateways, vendors, and environments!
 
 ## Installation
 

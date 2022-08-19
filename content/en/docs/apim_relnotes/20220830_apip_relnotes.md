@@ -8,6 +8,8 @@ description: null
 ---
 API Portal updates are cumulative, comprising new features and changes delivered in previous updates unless specifically indicated otherwise in the Release notes.
 
+This release is a small update for API Portal. It contains some performance improvements and some fixes. We are continuing to work on the new user interface (UI) and custom page builder capability with a target of delivery in the November 2022 update.
+
 ## Installation
 
 API Portal is available as a software installation or a virtualized deployment in a Docker container. For more information, see the following options:
