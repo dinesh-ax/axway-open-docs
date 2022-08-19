@@ -46,11 +46,13 @@ If you have a **7.5.5** or **7.6.2** API Portal installation, you can upgrade di
    ```
    tar xpzvf <package_name>.tgz
    ```
+
 3. Give executable permissions to the script `apiportal_cumulative_upgrade.sh`:
 
    ```
    chmod +x apiportal_cumulative_upgrade.sh
    ```
+
 4. Execute the script:
 
    ```
@@ -67,6 +69,7 @@ If you have a 7.7.x API Portal installation, you can upgrade to the latest versi
    ```
    tar xpvzf <package_name>.tgz
    ```
+
 3. Extract the Joomla! upgrade package (for example, `joomla-update-package-3.9.14-package.zip`) from the API Portal upgrade package to your local file system.
 4. Log in to the Joomla! Administrator Interface (JAI) (`https://<API Portal host>/administrator`).
 5. Click **Components > Joomla! Update**, and click the **Upload & Update** tab. If **Joomla! Update** is not visible in the menu, connect to your user database and execute the following query for API Portal database:
@@ -74,6 +77,7 @@ If you have a 7.7.x API Portal installation, you can upgrade to the latest versi
    ```
    update s8f7h_menu set menutype='main' where title like 'com_joomlaupdate'
    ```
+
 6. Select the Joomla! upgrade package (for example, `joomla-update-package-3.9.14-package.zip`) from your file system.
 7. Click **Upload & Install**, and follow the displayed instructions.
 8. Enter the following to run the upgrade script:
@@ -107,6 +111,7 @@ To upgrade to API Portal May 2022 release, follow these steps:
     ```shell
     sudo systemctl restart httpd
     ```
+
 5. Open API Portal in a browser, log in to the Joomla! Administrator Interface (JAI), click **System > Global Configuration > Server** and ensure that you are using `MySQLi` database driver for `Database Type` field.
 
     If you are using a different adapter and you need to switch to `MySQLi` adapter, ensure that you changed the database credentials accordingly. You might need to [create a MySQL user account without TLS authentication](/docs/apim_installation/apiportal_install/install_software_configure_database/#configure-a-user-account-without-authentication).

@@ -115,7 +115,7 @@ Alternatively, you can environmentalize a certificate using an alias. For exampl
 
 The policy developer finishes editing and environmentalizing the configuration that they are running with, and deploys it to the API Gateway. They must then save the policy package in Policy Studio to enable promotion to the testing environment. To save the policy package, perform the following steps:
 
-1. When the active configuration is loaded, select **File > Save > Policy Package**.
+1. When the active configuration is loaded, select **File > Export > Policy Package**.
 
     Before creating the policy package, Policy Studio automatically detects any unenvironmentalized certificate references, and enables you to automatically environmentalize these settings before proceeding.
 2. Browse to the directory in which to save the package, and enter its filename (for example, `c:\temp\payment.pol`).
