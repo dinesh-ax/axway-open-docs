@@ -38,6 +38,14 @@ During the Policy Studio and Configuration Studio update process, the `plugins` 
 
 For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
+### Organization administrator self-service API publishing
+
+When Self-service API publishing is enabled, Organization administrators can access APIs for the organizations they are a member of or have been granted access to. Previously, when self-service was enabled, API Manager incorrectly allowed access to APIs in other organizations even when no API access was granted.
+
+Customer scripts or client applications might now fail to get APIs from other organizations if the Organization administrators have not been granted access to these APIs.
+
+For more information, see [API Manager access control, Organization administrator](/docs/api_mgmt_overview/key_concepts/api_mgmt_orgs_roles/index.html#organizationadministrator).
+
 ## Deprecated features
 
 As part of our software development life cycle, we constantly review our API Management offering. As part of this update, the following capabilities have been deprecated
@@ -66,7 +74,9 @@ This version of API Gateway and API Manager includes:
 
 ### Fixed security vulnerabilities
 
-table
+| Internal ID | Case ID                    | Cve Identifier | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| ----------- | -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RDAPI-27290 | 01365642 |                | **Issue**: When `api.manager.orgadmin.selfservice.enabled` system property is set to `true` an organization administrator can see APIs of other organizations. **Resolution**: When self-service is enabled an organization administrator can only see APIs for organizations he/she is a member of or has been granted access to. |
 
 ### Other fixed issues
 
