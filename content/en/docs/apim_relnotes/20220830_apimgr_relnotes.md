@@ -38,6 +38,14 @@ During the Policy Studio and Configuration Studio update process, the `plugins` 
 
 For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
+### HTTP Redirect and Connect to URL filters now fail URLs containing non-encoded characters
+
+The **HTTP Redirect** filter now fails URLs containing non-encoded CRLF characters with an `Internal Server Error` instead of passing with a `301 Moved Permanently` response with no location header.
+
+The **Connect to URL filter** now fails URLs containing non-encoded trailing CRLF characters with an `Internal Server Error` instead of passing the trimmed URL without the trailing CRLF characters to the server.
+
+For more information, see [HTTP redirect filter](/docs/apim_policydev/apigw_polref/routing_additional/#http-redirect-filter) and [Connect to URL filter](/docs/apim_policydev/apigw_polref/routing_common/#connect-to-url-filter).
+
 ### Organization administrator self-service API publishing
 
 When Self-service API publishing is enabled, Organization administrators can access APIs for the organizations they are a member of or have been granted access to. Previously, when self-service was enabled, API Manager incorrectly allowed access to APIs in other organizations even when no API access was granted.
@@ -74,8 +82,9 @@ This version of API Gateway and API Manager includes:
 
 ### Fixed security vulnerabilities
 
-| Internal ID | Case ID                    | Cve Identifier | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| Internal ID | Case ID                    | Cve Identifier | Description |
 | ----------- | -------------------------- | -------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RDAPI-27804 | 01381544 |                | **Issue**: Query parameter value containing trailing CRLF in HTTP Redirect and Connect to URL filters may be either discarded or set incorrectly. **Resolution**: HTTP Redirect filter now validates the destination URL and fails with an Internal Server Error response for non-encoded CRLF values. Connect to URL filter now fails with an Internal Server Error response for URL with non-encoded trailing CRLF value.  |
 | RDAPI-27290 | 01365642 |                | **Issue**: When `api.manager.orgadmin.selfservice.enabled` system property is set to `true` an organization administrator can see APIs of other organizations. **Resolution**: When self-service is enabled an organization administrator can only see APIs for organizations he/she is a member of or has been granted access to. |
 
 ### Other fixed issues
