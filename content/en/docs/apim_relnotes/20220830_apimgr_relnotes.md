@@ -38,6 +38,12 @@ During the Policy Studio and Configuration Studio update process, the `plugins` 
 
 For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
+### HTTP cookie validation
+
+API Gateway validates HTTP cookies as per RFC 6265. A new `com.axway.apigw.cookie.validation.ignore` Java system property has been added to bypass cookie validation introduced in the 7.7.0.20210530 release. When the property is set to `true`, API Gateway skips cookie validation.
+
+For more information, see [System property changes](/docs/apim_reference/system_props/).
+
 ### HTTP Redirect and Connect to URL filters now fail URLs containing non-encoded characters
 
 The **HTTP Redirect** filter now fails URLs containing non-encoded CRLF characters with an `Internal Server Error` instead of passing with a `301 Moved Permanently` response with no location header.
@@ -89,7 +95,9 @@ This version of API Gateway and API Manager includes:
 
 ### Other fixed issues
 
-table
+| Internal ID | Case ID                    | Description |
+| ----------- | -------------------------- |  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RDAPI-27888 | 01382791 01384839 | **Issue**: API Gateway Get Cookie filter no longer allows RFC-invalid cookie values. **Resolution**: A new `com.axway.apigw.cookie.validation.ignore` Java system property has been added allowing to bypass the cookie validation in this filter. Defaults to false.  |
 
 ## Known issues
 
