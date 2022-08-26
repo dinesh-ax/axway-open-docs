@@ -199,6 +199,12 @@ An issue only arises when a port is specified as part of the virtual host. API M
 
 Related Issue: RDAPI-23379
 
+### EdDSA certificates are not currently supported
+
+TLS and PKI certificates using EdDSA signatures (`ed25519` and `ed448`) for authentication are not currently supported within API Gateway. Certificates cannot be imported into the `config` file, and connections are not be established with external endpoints that use EdDSA certificates.
+
+Related Issue: RDAPI-28033
+
 ## Documentation
 
 To find all available documentation for this product version:
