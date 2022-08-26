@@ -28,6 +28,18 @@ The following new features and enhancements are available in this update.
 
 This feature enhancement allows a Node Manager in container mode to be reconfigured without the need to rebake its Docker image. Configuration updates such as policy changes, JVM system properties, environment properties and so on, can now be mounted on a Docker Volume and made available to a Node Manager container. For more information, see [Create an API Gateway with Docker volumes](/docs/apim_howto_guides/configuring_apigw_container/).
 
+### Openshift Container Platform support
+
+API Gateway, running in containers is now fully supported on Openshift Container Platform using the following configurations:
+
+* Openshift 4.9
+* Axway provided helm chart
+* UBI 7 based images, built using the latest version of the container scripts (apigw-emt-scripts).
+
+For Openshift Platform setup, see [Openshift Platform documentation](https://docs.openshift.com/container-platform/4.9/welcome/index.html)
+
+For production environments, Cassandra and MySQL should be configured in dedicated VMs.
+
 ## Important changes
 
 It is important, especially when upgrading from an earlier version, to be aware of the following changes in the behavior or operation of the product in this update, which may impact your current installation.
