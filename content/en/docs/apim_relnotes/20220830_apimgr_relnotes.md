@@ -34,7 +34,7 @@ It is important, especially when upgrading from an earlier version, to be aware 
 
 ### Policy Studio and Configuration Studio update process
 
-During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins.
+During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins. Any custom plugins added to this directory will be removed. It is not recommended to add custom plugins in this directory.
 
 For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
