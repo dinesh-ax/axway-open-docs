@@ -17,7 +17,7 @@ API Portal is available as a software installation or a virtualized deployment i
 * If you are installing API Portal for the first time using this update, see [Install API Portal](/docs/apim_installation/apiportal_install/).
 * If you are already using API Portal (7.5.x, 7.6.x, 7.7.x) and want to install this update, see [Upgrade API Portal](/docs/apim_installation/apiportal_install/upgrade_automatic/).
 * If you are using API Portal 7.7.x with an applied patch and you want to install this update, you need to execute one manual step. See [Upgrade API Portal prerequisites](/docs/apim_installation/apiportal_install/upgrade_automatic/#api-portal-with-applied-patches).
-* You can use the [cumulative upgrade script](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-api-portal-using-the-cumulative-upgrade-script) to upgrade directly from earlier versions (for example, 7.5.5, 7.6.2) to API Portal [7.7 November 2020](/docs/apim_relnotes/20201130_apip_relnotes/), then you must apply API Portal 7.7 **February 22** update, and then you can apply the **May 22** update package.
+* You can use the [cumulative upgrade script](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-api-portal-using-the-cumulative-upgrade-script) to upgrade directly from earlier versions (for example, 7.5.5, 7.6.2) to API Portal [7.7 November 2020](/docs/apim_relnotes/20201130_apip_relnotes/), then you must apply API Portal 7.7 **February 22** update, and then you can apply the **August 22** update package.
 * See [API Portal single version upgrade](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-from-api-portal-7-6-2) to upgrade versions incrementally.
 
 {{< alert title="Note" color="primary" >}}
@@ -33,39 +33,40 @@ We highly recommend following the update flow as outlined above to avoid any inc
 
 The following new features and enhancements are available in this update.
 
-### placeholder 1
+### API Manager lightweight APIs adoption in API Catalog
 
-placeholder 1.
+With this release, API Portal is using new lightweight endpoints to improve performance of the API Catalog page when **API Information Source** is set to **Summary**. For more information, see [API information source](/docs/apim_administration/apiportal_admin/customize_apicatalog_overview/#customize-source-of-api-descriptions).
+
+The endpoints are available at:
+
+```none
+/api/portal/v1.4/discovery/apis/light
+```
+
+They were previously released in [API Manager May 22](/docs/apim_relnotes/20220530_apimgr_relnotes/#new-api-manager-lightweight-apis) update.
 
 ## Limitations of this update
 
 This update has the following limitations:
 
-* API Portal 7.7.20220530 is compatible with API Gateway and API Manager 7.7.20220530 only.
-* For direct update to API Portal May 2022 (which is based on Joomla 4), we recommend you to update from the API Portal Feb 2022 (which is based on Joomla 3.10) first.
+* API Portal 7.7.20220830 is compatible with API Gateway and API Manager 7.7.20220830 only.
+* To update to API Portal August 2022 (which is based on Joomla 4) from versions older than Feb 2022 we recommend you to upgrade to API Portal Feb 2022 first, then follow the [Upgrade API Portal May 2022 or latest](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-to-api-portal-may-2022-or-latest-releases) section.
+* Direct update to API Portal August 2022 can be done only from API Portal May 2022 by following the [Upgrade from the Joomla! Administrator Interface](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-from-the-joomla-administrator-interface) section.
 * This update is not available as a virtual appliance or as a managed service on Axway Cloud.
 
 ## Important changes
 
-It is important, especially when upgrading from an earlier version, to be aware of the following changes in the behavior or operation of the product in this update.
-
-### placeholder 2
-
-placeholder 2
+There are no major changes in this update.
 
 ## Deprecated features
 
 No features have been deprecated in this update.
 
-<!-- As part of our software development life cycle we constantly review our API Management offering. As part of this update, the following capabilities have been deprecated-->
-
 ## End of support notices
 
-placeholder 3
+There are no end of support notices in this update
 
 ## Removed features
-
-<!-- To stay current and align our offerings with customer demand and best practices, Axway might discontinue support for some capabilities. As part of this review, the following features have been removed: -->
 
 No capabilities have been removed in this update.
 
@@ -79,11 +80,28 @@ This version of API Portal includes:
 
 ### Fixed security vulnerabilities
 
-table
+| Internal ID | Case ID | CVE Identifier | Description                                                                                                                                                                                                                                                                       |
+| ----------- | ------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IAP-5190    | 1351702 |                | **Issue**: Change password form fields keep their value after modal is cancelled. **Resolution**: Change password form is reset and fields cleared when the 'Cancel' button is clicked. **Resolution**: Change password form is reset and fields cleared when the 'Cancel' button is clicked. |
+| IAP-5436    |         |                | **Issue**: Vulnerable version 1.1.1o-r0 of OpenSSL was used. **Resolution**: OpenSSL was updated to version 1.1.1q-r0, which is not vulnerable.                                                                                                                                           |
+| IAP-5435    |         |                | **Issue**: Vulnerable version 7.83.1-r1 of curl was used. **Resolution**: curl was updated to version 7.83.1-r2, which is not vulnerable.                                                                                                                                                 |
+| IAP-5070    |         |                | **Issue**: Vulnerable version 1.25.0 of Prism was used. **Resolution**: Prism was updated to version 1.27.0, which is not vulnerable.                                                                                                                                                     |
+| IAP-5485    |         | CVE-2022-37434 | **Issue**: Vulnerable version 1.2.12-r1 of Z-Library was used. **Resolution**: Z-Library was updated to version 1.2.12-r2, which is not vulnerable.                                                                                                                                       |
+| IAP-5437    |         |                | **Issue**: Vulnerable version 1.35.0-r13 of BusyBox was used. **Resolution**: BusyBox was updated to version 1.35.0-r17, which is not vulnerable.                                                                                                                                         |
+| IAP-5192    | 1351700 |                | **Issue**: Custom password validation rules are not enforced on the forced password change form. **Resolution**: Custom password validation rules defined in 'app-login/app.config' are enforced on password change.                                                                      |
+| IAP-5354    |         |                | **Issue**: Vulnerable version 2.27.0 of Moment.js was used. **Resolution**: Moment.js was updated to version 2.29.4, which is not vulnerable.                                                                                                                                             |
 
 ### Other fixed issues
 
-table
+| Internal ID | Case ID | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ----------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IAP-4463    | 1266708 | **Issue**: The API Manager custom property \`help\` option is not supported in API Portal. **Resolution**: Custom property \`help\` option is now supported in API Portal.                                                                                                                                                                                                                                                                                                                                                   |
+| IAP-4933    | 1325688 | **Issue**: Notification message is not shown after following password reset and registration confirmation link with Apache SameSite Strict configuration. **Resolution**: Notification message is shown after following password reset and registration confirmation link.                                                                                                                                                                                                                                                   |
+| IAP-5247    |         | **Issue**: Security credentials drop-down field is not updated when security method is changed on API details page. **Resolution**: Security credentials drop-down field is now populated with the security methods.                                                                                                                                                                                                                                                                                                         |
+| IAP-5263    | 1367911 | **Issue**: API Portal fails showing applications and APIs from slave manager that is behind a proxy configured with lowercase headers. **Resolution**: API Portal respects lowercase headers from slave manager and now successfully shows applications and APIs.                                                                                                                                                                                                                                                            |
+| IAP-5446    | 1342380 | **Issue**: API Catalog page is using an API that contains all data, which impacts the performance. **Resolution**: Now, API Catalog page has been optimized to use a lightweight endpoint to build the catalog.                                                                                                                                                                                                                                                                                                              |
+| IAP-5448    | 1385517 | **Issue**: On build time, the installer being used for the build process relies on the fact that \`/.dockerenv\` file exists in Docker and that there is a process named \`docker\` in the "build-time container". This file is missing for non-docker build clients. **Resolution**: We have replaced the \`/.dockerenv\` file check and the \`docker\` process check in the API Portal installer with \`DOCKER\_ENV\` environment variable check. The environment variable is hardcoded in the Dockerfile and set to true. |
+| IAP-5449    | 1386704 | **Issue**: When API Portal container is restarted or upgraded, the customized language override file gets overwritten by the one shipping with API Portal. **Resolution**: API Portal language override file gets merged with customized override language file on container restart or upgrade.                                                                                                                                                                                                                             |
 
 ## Known issues
 
