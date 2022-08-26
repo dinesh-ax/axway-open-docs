@@ -26,7 +26,7 @@ The following new features and enhancements are available in this update.
 
 ### Configure a Node Manager Docker container to use a persisted volume for Node Manager configuration
 
-This feature enhancement allows a Node Manager in EMT mode to be reconfigured without the need to rebake its Docker image. Configuration updates such as policy changes, JVM system properties, environment properties and so on, can now be mounted on a Docker Volume and made available to a Node Manager container. For more information, see [Create an API Gateway with Docker volumes](/docs/apim_howto_guides/configuring_apigw_container/).
+This feature enhancement allows a Node Manager in container mode to be reconfigured without the need to rebake its Docker image. Configuration updates such as policy changes, JVM system properties, environment properties and so on, can now be mounted on a Docker Volume and made available to a Node Manager container. For more information, see [Create an API Gateway with Docker volumes](/docs/apim_howto_guides/configuring_apigw_container/).
 
 ## Important changes
 
