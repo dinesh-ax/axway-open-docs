@@ -24,9 +24,9 @@ Any custom `.fed` files deployed to a container must be upgraded using [upgradec
 
 The following new features and enhancements are available in this update.
 
-### placeholder 1
+### Configure a Node Manager Docker container to use a persisted volume for Node Manager configuration
 
-placeholder
+This feature enhancement allows a Node Manager in container mode to be reconfigured without the need to rebake its Docker image. Configuration updates such as policy changes, JVM system properties, environment properties and so on, can now be mounted on a Docker Volume and made available to a Node Manager container. For more information, see [Create an API Gateway with Docker volumes](/docs/apim_howto_guides/configuring_apigw_container/).
 
 ### YAML and Policy Studio
 
@@ -63,6 +63,42 @@ When Self-service API publishing is enabled, Organization administrators can acc
 Customer scripts or client applications might now fail to get APIs from other organizations if the Organization administrators have not been granted access to these APIs.
 
 For more information, see [API Manager access control, Organization administrator](/docs/api_mgmt_overview/key_concepts/api_mgmt_orgs_roles/index.html#organizationadministrator).
+
+### API Gateway expession language resolver changed
+
+An internal issue was found for API Gateway, where the expression language resolver, which is used to resolve selector statements. In previous versions, multiple expression resolvers were loaded into the API Gateway instance, leading to unpredictable behaviour. This has been fixed to always use the JUEL API resolver.
+
+### CSP Header updated
+
+The default CSP header has been changed to improve security and remove references to unused Axway assets. If you have a customer CSP header defined, please see the new defaults.
+
+For API Manager
+
+```
+script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self'; frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self' https://*:8075 https://*:8065 https://portals-search-api.admin.axway.com; form-action 'self'; prefetch-src 'none'
+```
+
+For API Gateway Manager
+
+```
+script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self';frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self' https://portals-search-api.admin.axway.com; form-action 'self'; prefetch-src 'none'
+```
+
+For Analytics
+
+```
+script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self'; frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self'; form-action 'self'; prefetch-src 'none'
+```
+
+For more information, see [Define a restrictive Content Security Policy](/docs/apim_installation/apiportal_install/secure_harden_portal/#define-a-restrictive-content-security-policy).
+
+### New Cassandra user script
+
+A new script has been added to help in creating new users in Cassandra. It is located in `apigateway/samples/cassandrauser/scripts/createuser.sh`. For more information, see [Create a new Cassandra database user](/docs/cass_admin/cassandra_config/#create-a-new-cassandra-database-user).
+
+### Disable connection cache for LDAP authentication via auth repository
+
+Setting the cache refresh interval of a LDAP authentication via auth repository will now disable the cache altogether. For more information, see [General settings in Policy Studio](/docs/apim_reference/general_settings/index.html)
 
 ### Federal Information Processing Standards (FIPS)
 
