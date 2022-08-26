@@ -37,6 +37,7 @@ system/conf/apiportal/email
 system/conf
 samples/scripts/
 tools/filebeat-VERSION-PLATFORM
+conf
 ```
 
 When you are restoring the files, ensure that you merge any updated files instead of copying them back directly, to avoid any regex matching issues.

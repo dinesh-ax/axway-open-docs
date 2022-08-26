@@ -60,6 +60,22 @@ Customer scripts or client applications might now fail to get APIs from other or
 
 For more information, see [API Manager access control, Organization administrator](/docs/api_mgmt_overview/key_concepts/api_mgmt_orgs_roles/index.html#organizationadministrator).
 
+### Federal Information Processing Standards (FIPS)
+
+FIPS capabilities have been reintroduced into API Gateway combined with an upgrade of OpenSSL 3.0.5.
+
+Enabling FIPS restricts cryptographic cipher options pertaining to message encryption and decryption and signature and verification, and it also increases the minimum key length size to those approved by the [Federal Information Processing Standard (140-2)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.140-2.pdf).
+
+For more information, see [Restrictions when running in FIPS mode](/docs/apim_administration/apigtw_admin/admin_fips).
+
+Reintroducing FIPS also resulted in changes to the `openssl.cnf` file. The `default_sect` and `legacy_sect` options are now disabled by default in the `INSTALL_DIR/apigateway/conf/openssl.cnf` file.
+
+{{< alert title="Note" color="primary" >}}Upgrading an existing API Gateway will overwrite the `conf/openssl.cnf` file with required FIPS changes. Any custom configuration must be backed up. For more information, see [Upgrade API Gateway](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion){{< /alert >}}
+
+The bundled XML Security Library does not contain the changes required to use the OpenSSL 3.0 FIPS module. As a consequence, XML encryption and signing are not guaranteed to be FIPS compliant.
+
+Hardware Security Module (HSM) usage is not supported in FIPS mode. It is intended that support will be introduced in a future release.
+
 ## Deprecated features
 
 As part of our software development life cycle, we constantly review our API Management offering. As part of this update, the following capabilities have been deprecated
