@@ -30,9 +30,9 @@ To upgrade configurations made with a [Technical Preview release](/docs/apim_rel
 
 You are now ready to run the `yamles upgrade` command. For more information, see [Upgrade YAML configuration](/docs/apim_yamles/apim_yamles_cli/yamles_cli_upgrade).
 
-## Policy Studio
+## Case sensitivity in YAML projects
 
-There is no support for YAML configurations in Policy Studio.
+When saving files that differ only by *case*, an UUID suffix is added to the file name on disk. To avoid issues during migration, for older YAML projects and fragments, ensure all files within your YAML entity store do not contain file conflicts and can be used across Linux and Windows.
 
 ## API Gateway Manager web UI
 

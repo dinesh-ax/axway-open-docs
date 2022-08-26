@@ -132,11 +132,20 @@ Examples:
 /System/Namespace Configuration/http://schemas.xmlsoap.org/ws/2002/12/secext
 ```
 
+In the following example there is another entity with the same name (`Main App`) at the same hierarchal level with a different type. The other entity would be, `/Policies/(FilterCircuit)Main App`.
+
 ```
 /Policies/(CircuitContainer)Main App
 ```
 
-This example implies that there is another entity with the same name (Main App) at the same hierarchal level with a different type. In this example the other entity would be: `/Policies/(FilterCircuit)Main App`.
+{{< alert title="Note">}}
+If you are using Git for your YAML configurations on a Windows operating system, ensure to set Git configuration setting `core.longpaths` to avoid the **Filename too long** error on checkout.
+
+```
+git config core.longpaths true
+```
+
+{{< /alert >}}
 
 #### Relative reference
 

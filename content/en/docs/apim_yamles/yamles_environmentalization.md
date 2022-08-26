@@ -6,9 +6,9 @@
 "description": "Learn how to environmentalize your YAML configuration."
 }
 
-The XML federated configuration provides different ways to environmentalize parts of the configuration. See [Environmentalize configuration](/docs/apigtw_devops/promotion_arch/#environmentalize-configuration) for details.
+The XML federated configuration provides different ways to environmentalize parts of API Gateway configuration. For more information, see [Environmentalize configuration](/docs/apigtw_devops/promotion_arch/#environmentalize-configuration).
 
-The YAML configuration format replaces environmentalization done via Policy Studio (using the *Earth* icon). The conversion process will look after the replacement of this type of environmentalization. Selectors such as `${environment.XYZ}` and `${env.XYZ}` will continue to work as before.
+The YAML configuration format replaces the environmentalization done via Policy Studio (using the *Earth* icon). The conversion process will look after the replacement of this type of environmentalization. Selectors such as `${environment.XYZ}` and `${env.XYZ}` will continue to work as before.
 
 YAML environmentalization capabilities can be applied to:
 
@@ -142,14 +142,14 @@ Expression can contain:
 * Nested properties: `{{foo.bar}}`
 * Indexed properties: `{{foo.bar.[0]}}`, or the equivalent `{{foo.bar.0}}`. This syntax is useful for multiple values of the field.
 
-{{< alert title="Note">}}`{{ expression }}`, with spaces, works but is not recommended as the parsing logic will change these expressions to `{{expression}}` at load time. Thus, when the YAML configuration is exported, it would create unexpected changes causing unwanted `diffs` in case the configuration is managed within Git.
+{{< alert title="Note">}}We do not recommend you to use `{{ expression }}` (with spaces) because the parsing logic changes them to `{{expression}}` (without spaces) at loading time. As a result, after the YAML configuration is exported, it creates unexpected changes, which cause unwanted `diffs` if the configuration is managed within Git.
 {{< /alert >}}
 
 #### Usage in YAML files
 
-All YAML files *must be parsable*.
+All YAML files must be parsable.
 
-As `{` is interpreted, the first character of a value must be quoted. Files are parsed and they might be written again (in case the entity store is modified, for example, change of passphrase), so it is wise to choose single quotation.
+Because the `{` character is interpreted, the first character of a value must always be quoted. Files are parsed and they might be written again (in case the entity store is modified, for example, change of passphrase), so it is recommended to use single quotation.
 
 ```yaml
 ---
@@ -178,7 +178,7 @@ fields:
 * YAML entity files.
 * `values.yaml` files.
 
-You can environmentalize any field or value by using system environment variables or JVM properties, `-Dxyz`, when starting a java process, such as the API Gateway.
+You can environmentalize any field or value by using system environment variables or JVM properties (`-Dxyz`) when starting a Java process, such as the API Gateway.
 
 * Environmentalize with no default value: `{{env "XYZ"}}` or `{{env 'XYZ'}}` (Not recommended, see [Usage in YAML files](#usage-in-yaml-files)).
 * Environmentalize with a default value: `{{env "XYZ" "The end of the alphabet"}}` or `{{env "XYZ" default="The end of the alphabet"}}`.
@@ -191,7 +191,7 @@ The value of `XYZ` is evaluated by the first true condition from this list:
 * The JVM was started with `-Dxyz` (lowercase).
 * A default value is set.
 
-If none of the above conditions are true, an error is raised in the logs when the API Gateway loads the YAML configuration.
+If none of the above conditions are true, an error is raised in the logs when API Gateway loads the YAML configuration.
 
 ### Base64 encoding
 
@@ -200,19 +200,17 @@ If none of the above conditions are true, an error is raised in the logs when th
 * `values.yaml` files.
 * YAML Entity files (not recommended).
 
-You can encode a string value in base64 using ```{{base64 "changeme"}}```.
+You can encode a string value in base64 using ```{{base64 "changeme"}}```. This is very useful for development or local environment, when your YAML configuration does not required to be encrypted. This does not work when your YAML configuration is encrypted, as recommended for production environments.
 
-This is very useful for development or local environment, when your YAML configuration does not required to be encrypted. This will not work when your YAML configuration is encrypted, as recommended for production environments.
-
-The placeholder will be replaced by an encrypted value in case a non-empty passphrase is set.
+The `placeholder` is replaced by an encrypted value in case a non-empty passphrase is set.
 
 ### Reserved words
 
 The following words are not allowed at the beginning of a `{{...}}` expression:
 
-* `null`
-* `true` and `false`
-* `undefined`
+* `null`.
+* `true` and `false`.
+* `undefined`.
 * Digits, as first characters. For example, `{{42_foo.bar}}`.
 
 Examples:
@@ -279,9 +277,11 @@ value: 'a message with ''''single quotation marks'''' '
 
 ## Environmentalization in values.yaml
 
+This section presents environmentalization options for you to use in your `values.yaml` file.
+
 ### Syntax
 
-As `{` is interpreted, the first character of a value must be quoted. Files are parsed and they might be written again (in case the entity store is modified, for example, change of passphrase), so it is wise to choose single quotation.
+Because the `{` character is interpreted, the first character of a value must always be quoted. Files are parsed and they might be written again (in case the entity store is modified, for example, change of passphrase), so it is recommended to use single quotation.
 
 ```yaml
 ---
@@ -304,7 +304,7 @@ db:
 
  ```
 
-In `values.yaml`, you can only use letters (including `_`) and digits (not at starting position).
+The `values.yaml` file only accepts letters (including `_`) and digits (not at starting position).
 
 ### Usage
 
@@ -316,7 +316,7 @@ db:
   host: '{{env "DB_HOST"}}' # set a value in an environment variable per environment
 ```
 
-If you want to set a fixed value that does not change between all environments, change the `values.yaml` to:
+To set a fixed value that does not change between all environments, change the `values.yaml` to:
 
 ```yaml
 ---
@@ -351,85 +351,4 @@ fields:
     host: '{{db.host}}'
 ```
 
-Refer to [Environmentalization example](/docs/apim_yamles/apim_yamles_references/yamles_environmentalization_example) for a complete example of the different capabilities offered by the YAML configuration environmentalization.
-
-## Convert Policy Studio environmentalization for XML federated configurations to YAML syntax
-
-You can environmentalize XML federated configurations in Policy Studio by clicking **Preferences > Environmentalization > Allow environmentalization**, and using the `{{env "XYZ"}}` syntax.
-
-When XML federated configurations that contain fields environmentalized via Policy Studio are converted to YAML format:
-
-* A `values.yaml` is created.
-* Each environmentalized field with a value yields an entry:
-    * In `values.yaml`, with the environmentalized values.
-    * In `values-original.yaml`, with the value of the field before being environmentalized in Policy Studio.
-* A placeholder replaces the value in entity YAML file. The naming follows the YamlPK logic with sanitization that is compliant with the environmentalization syntax.
-
-The following is an example for entity with an environmentalized URL, username, and password:
-
-**Entity in XML federated configuration**:
-
-* Type: `LdapDirectory` (LDAP Connection)
-* Name: `api-env LDAP`
-* Environmentalized fields: `url`, `userName`, `password`
-* Contained in `LDAP Connections`
-
-**YAML configuration after conversion**:
-
-```yaml
----
-type: LdapDirectory
-fields:
-  name: api-env LDAP
-  url: '{{LDAP_Connection.api_env_LDAP.url}}'
-  userName: '{{LDAP_Connection.api_env_LDAP.userName}}'
-  password: '{{LDAP_Connection.api_env_LDAP.password}}'
-```
-
-**Content of values.yaml**:
-
-```yaml
-LDAP_Connection:
-  api_env_LDAP:
-    url: ldap://api-env:389
-    userName: cn=Administrator,dc=demo.axway,dc=com
-    password: KLJH95dHS7djshkjas54sa45s4d==
-```
-
-The following is an example for an entity with an environmentalized certificate:
-
-**Entity in XML federated configuration**:
-
-* Type: `ConnectToURLFilter`
-* Name: `name: Connect to URL`
-* Environmentalized Fields: `sslUsers`
-* Contained in `Policies/YAML Demo/Connect with SSL`
-
-**YAML configuration after conversion**:
-
-```yaml
----
-type: FilterCircuit
-fields:
-  name: Connect with SSL
-  start: ./Connect to URL
-  description: ""
-children:
-- type: ConnectToURLFilter
-  fields:
-    name: Connect to URL
-    sslUsers: '{{YAML_Demo.Connect_with_SSL.Connect_to_URL.sslUsers}}'
-    url: https://localhost:5555/cert-verifier
-    name: Connect to URL
-# ...
-```
-
-**Content of values.yaml**:
-
-```yaml
----
-YAML_Demo:
-  Connect_with_SSL:
-    Connect_to_URL:
-      sslUsers: /Environment Configuration/Certificate Store/O=DEV,CN=localhost
-```
+For a complete example of the different capabilities offered by the YAML configuration environmentalization, see [Environmentalization example](/docs/apim_yamles/apim_yamles_references/yamles_environmentalization_example).

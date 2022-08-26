@@ -28,6 +28,10 @@ The following new features and enhancements are available in this update.
 
 placeholder
 
+### YAML and Policy Studio
+
+As part of our work to facilitate YAML configuration, with this update YAML is now supported in Policy Studio with specific enhancements made in Environmentalisation.
+
 ## Important changes
 
 It is important, especially when upgrading from an earlier version, to be aware of the following changes in the behavior or operation of the product in this update, which may impact your current installation.
