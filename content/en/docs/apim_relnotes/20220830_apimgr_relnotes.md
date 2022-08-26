@@ -38,17 +38,17 @@ It is important, especially when upgrading from an earlier version, to be aware 
 
 ### Policy Studio and Configuration Studio update process
 
-During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins. Any custom plugins added to this directory will be removed. It is not recommended to add custom plugins in this directory.
+During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins. Therefore, any custom plugins added to this directory is removed.
 
 For more information, see [Install a Policy Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-policy-studio-update) and [Install a Configuration Studio update](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion/#install-a-configuration-studio-update).
 
 ### HTTP cookie validation
 
-API Gateway validates HTTP cookies as per RFC 6265. A new `com.axway.apigw.cookie.validation.ignore` Java system property has been added to bypass cookie validation introduced in the 7.7.0.20210530 release. When the property is set to `true`, API Gateway skips cookie validation.
+API Gateway validates HTTP cookies as per RFC 6265. A new `com.axway.apigw.cookie.validation.ignore` Java system property has been added to bypass cookie validation introduced in [API Gateway May 2021](/docs/apim_relnotes/20210530_apimgr_relnotes/) release. When the property is set to `true`, API Gateway skips cookie validation.
 
 For more information, see [System property changes](/docs/apim_reference/system_props/).
 
-### HTTP Redirect and Connect to URL filters now fail URLs containing non-encoded characters
+### HTTP Redirect and Connect to URL filters fail URLs containing non-encoded characters
 
 The **HTTP Redirect** filter now fails URLs containing non-encoded CRLF characters with an `Internal Server Error` instead of passing with a `301 Moved Permanently` response with no location header.
 
@@ -60,33 +60,33 @@ For more information, see [HTTP redirect filter](/docs/apim_policydev/apigw_polr
 
 When Self-service API publishing is enabled, Organization administrators can access APIs for the organizations they are a member of or have been granted access to. Previously, when self-service was enabled, API Manager incorrectly allowed access to APIs in other organizations even when no API access was granted.
 
-Customer scripts or client applications might now fail to get APIs from other organizations if the Organization administrators have not been granted access to these APIs.
+Customer's scripts or client applications might now fail to get APIs from other organizations if the Organization administrators have not been granted access to these APIs.
 
 For more information, see [API Manager access control, Organization administrator](/docs/api_mgmt_overview/key_concepts/api_mgmt_orgs_roles/index.html#organizationadministrator).
 
-### API Gateway expession language resolver changed
+### API Gateway expression language resolver changed
 
-An internal issue was found for API Gateway, where the expression language resolver, which is used to resolve selector statements. In previous versions, multiple expression resolvers were loaded into the API Gateway instance, leading to unpredictable behaviour. This has been fixed to always use the JUEL API resolver.
+The expression language resolver, which is used to resolve selector statements, was loading multiple expression resolvers into the API Gateway instance, leading to unpredictable behavior. This has been fixed to always use the JUEL API resolver.
 
-### CSP Header updated
+### CSP header updated
 
-The default CSP header has been changed to improve security and remove references to unused Axway assets. If you have a customer CSP header defined, please see the new defaults.
+The default CSP header has been changed to improve security and remove references to unused Axway assets. If you have a custom CSP header defined, see the new defaults.
 
 For API Manager
 
-```
+```bash
 script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self'; frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self' https://*:8075 https://*:8065 https://portals-search-api.admin.axway.com; form-action 'self'; prefetch-src 'none'
 ```
 
 For API Gateway Manager
 
-```
+```bash
 script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self';frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self' https://portals-search-api.admin.axway.com; form-action 'self'; prefetch-src 'none'
 ```
 
-For Analytics
+For API Gateway Analytics
 
-```
+```bash
 script-src 'self' 'unsafe-eval'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data: blob:; object-src 'self'; media-src 'self'; frame-src 'self'; frame-ancestors 'none'; upgrade-insecure-requests; manifest-src 'none'; connect-src 'self'; form-action 'self'; prefetch-src 'none'
 ```
 
@@ -94,11 +94,11 @@ For more information, see [Define a restrictive Content Security Policy](/docs/a
 
 ### New Cassandra user script
 
-A new script has been added to help in creating new users in Cassandra. It is located in `apigateway/samples/cassandrauser/scripts/createuser.sh`. For more information, see [Create a new Cassandra database user](/docs/cass_admin/cassandra_config/#create-a-new-cassandra-database-user).
+A new script has been added to help in creating new users in Cassandra. It is located at `apigateway/samples/cassandrauser/scripts/createuser.sh`. For more information, see [Create a new Cassandra database user](/docs/cass_admin/cassandra_config/#create-a-new-cassandra-database-user).
 
-### Disable connection cache for LDAP authentication via auth repository
+### Disable connection cache for LDAP authentication using Auth Repository
 
-Setting the cache refresh interval of a LDAP authentication via auth repository will now disable the cache altogether. For more information, see [General settings in Policy Studio](/docs/apim_reference/general_settings/index.html)
+Setting the cache refresh interval of a LDAP authentication via Auth Repository will now disable the cache altogether. For more information, see [General settings in Policy Studio](/docs/apim_reference/general_settings/index.html)
 
 ### Federal Information Processing Standards (FIPS)
 
@@ -118,11 +118,7 @@ Hardware Security Module (HSM) usage is not supported in FIPS mode. It is intend
 
 ## Deprecated features
 
-As part of our software development life cycle, we constantly review our API Management offering. As part of this update, the following capabilities have been deprecated
-
-### placeholder 3
-
-placeholder 3
+No features have been deprecated in this update.
 
 ## End of support notices
 
@@ -138,9 +134,8 @@ No features have been removed in this update.
 
 This version of API Gateway and API Manager includes:
 
-* Fixes from all 7.5.3, 7.6.2, and 7.7 service packs released prior to this version. For details of all the service pack fixes included, see the corresponding *SP Readme* attached to each service pack on [Axway Support](https://support.axway.com).
 * Fixes from all 7.7 updates released prior to this version. For details of all the update fixes included, see the corresponding [Release note](/docs/apim_relnotes/) for each 7.7 update.
-* Additional fixes might be delivered as patches up to 15 months after the release date. You can find the list of patches available on top of this update on [Axway Support](https://support.axway.com/en/search/index/type/Downloads/q/20220530/ipp/100/product/324/product/464/version/3034/version/3035/subtype/8). If no patches were created for this release, the link will return "No search results found".
+* Additional fixes might be delivered as patches up to 15 months after the release date. You can find the list of patches available on top of this update on [Axway Support](https://support.axway.com/en/search/index/type/Downloads/q/20220830/ipp/100/product/324/product/464/version/3034/version/3035/subtype/8). If no patches were created for this release, the link will return "No search results found".
 
 ### Fixed security vulnerabilities
 
@@ -186,6 +181,12 @@ This version of API Gateway and API Manager includes:
 ## Known issues
 
 The following are known issues for this update.
+
+### EdDSA certificates are not currently supported
+
+TLS and PKI certificates using EdDSA signatures (`ed25519` and `ed448`) for authentication are not currently supported within API Gateway. Certificates cannot be imported into the `config` file, and connections are not be established with external endpoints that use EdDSA certificates.
+
+Related Issue: RDAPI-28033
 
 ### API Analytics PDF reports do not display chart contents
 
@@ -266,12 +267,6 @@ In API Manager, if a virtual host (global default, organization level, or for a 
 An issue only arises when a port is specified as part of the virtual host. API Manager blindly takes the specified virtual host and appends it to the supported schemes for the configured traffic ports. So if a virtual host of `myhost:9999` is set, then conflicting base paths of `https://myhost:9999` and `http://myhost:9999` are displayed in the API Catalog.
 
 Related Issue: RDAPI-23379
-
-### EdDSA certificates are not currently supported
-
-TLS and PKI certificates using EdDSA signatures (`ed25519` and `ed448`) for authentication are not currently supported within API Gateway. Certificates cannot be imported into the `config` file, and connections are not be established with external endpoints that use EdDSA certificates.
-
-Related Issue: RDAPI-28033
 
 ## Documentation
 
