@@ -13,8 +13,20 @@ You can find the release notes for all service packs on [Axway Support](https://
 ## Version 7.7 2022
 
 |Update |New features and enhancements        |Important Changes    |Deprecated/Removed/EOS  |
-|---  |---               |---                  |---                  |
-|[API Gateway and Manager 7.7.20220530](/docs/apim_relnotes/20220530_apimgr_relnotes/)  |Manage timeouts on Connection and ConnectToUrl filters |New redaction rules for API Gateway |Edge agent for API Gateway |
+|---    |---                                  |---                  |---                     |
+|[API Gateway and Manager 7.7.20220830](/docs/apim_relnotes/20220830_apimgr_relnotes/)|Configure a Node Manager Docker container to use a persisted volume for Node Manager configuration|Policy Studio and Configuration Studio update process  |-  |
+|    |YAML and Policy Studio|HTTP cookie validation |-        |-  |
+|    |HTTP Redirect and Connect to URL filters fail URLs containing non-encoded characters |-        |-  |
+|    |Organization administrator self-service API publishing |-        |-  |
+|    |API Gateway expression language resolver changed |-        |-  |
+|    |CSP header updated |-        |-  |
+|    |New Cassandra user script |-        |-  |
+|    |Disable connection cache for LDAP authentication using Auth Repository |-        |-  |
+|    |Federal Information Processing Standards (FIPS) |-        |-  |
+|**Update**       |**New features and enhancements**        | **Important Changes**   |**Deprecated/Removed/EOS**  |
+|[API Portal 7.7.20220830](/docs/apim_relnotes/20220830_apip_relnotes/)|API Manager lightweight APIs adoption in API Catalog  |-|API Portal Docker image. |
+|**Update**       |**New features and enhancements**        | **Important Changes**   |**Deprecated/Removed/EOS**  |
+|[API Gateway and Manager 7.7.20220530](/docs/apim_relnotes/20220530_apimgr_relnotes/)|Manage timeouts on Connection and ConnectToUrl filters |New redaction rules for API Gateway |Edge agent for API Gateway |
 | |Querystring passthrough per API |Support for Zulu OpenJDK and how to manually enable TLS algorithms|- |
 | |Policy Studio YAML performance improvements on Windows |OpenSSL upgrade to version 3.0.3|- |
 | |Install Discovery and Traceability agents  |New system property to propagate API Manager security Invoke Policy generated headers|- |
@@ -26,14 +38,17 @@ You can find the release notes for all service packs on [Axway Support](https://
 | |-  |Obs-folded values are forbidden in HTTP headers|- |
 | |-  |API Analytics PDF reports no longer display chart contents|- |
 |**Update**       |**New features and enhancements**        | **Important Changes**   |**Deprecated/Removed/EOS**  |
-|[API Gateway and Manager 7.7.20220228](/docs/apim_relnotes/20220228_apimgr_relnotes/)  |API Gateway Container use of Persisted Store |Distributed cache socket connect timeout |- |
+|[API Portal 7.7.20220530](/docs/apim_relnotes/20220530_apip_relnotes/)|Support for Joomla 4 |Joomla 4 upgrade| PHP 7.1 and PHP 7.2|
+| |Monitoring charts |- |- |
+|**Update**       |**New features and enhancements**        | **Important Changes**   |**Deprecated/Removed/EOS**  |
+|[API Gateway and Manager 7.7.20220228](/docs/apim_relnotes/20220228_apimgr_relnotes/)|API Gateway Container use of Persisted Store |Distributed cache socket connect timeout |- |
 | |Initial YAML Environmentalization Support in Policy Studio |WSDL Schema Validation|- |
 | |- |Axway Terms and Conditions Update|- |
 | |- |API Gateway password policy and passphrase validation|- |
 | |- |API Manager Proxy deprecation with a retirement date|- |
 | |- |Increased validation on API Manager Quota operations|- |
 |**Update**       |**New features and enhancements**        | **Important Changes**   |**Deprecated/Removed/EOS**  |
-|[API Portal 7.7.20220228](/docs/apim_relnotes/20220228_apip_relnotes/)  |Support for PHP 8.0 |-|PHP 7.1 and PHP 7.2 |
+|[API Portal 7.7.20220228](/docs/apim_relnotes/20220228_apip_relnotes/)|Support for PHP 8.0 |-|PHP 7.1 and PHP 7.2 |
 | |Support for MySql 8.0 |- |- |
 
 ## Version 7.7 2021
