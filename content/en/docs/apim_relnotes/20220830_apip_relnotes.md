@@ -106,6 +106,12 @@ This version of API Portal includes:
 
 The following are known issues for this update.
 
+### Two-factor authentication is not available with Joomla 4.2.0 in API Portal
+
+Joomla 4.2.0 includes changes around two(multi)-factor authentications. However, this functionality is not yet available in API Portal. For more information, see [Joomla 4.2 release notes](https://www.joomla.org/announcements/release-news/5865-joomla-4-2-release.html).
+
+Related Issue: IAP-5504
+
 ### Custom properties permissions per role are not respected in some scenarios
 
 Custom properties permissions per role will not be respected for the organization in the following scenarios:
