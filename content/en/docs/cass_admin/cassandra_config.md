@@ -110,12 +110,36 @@ From the command line, execute the following commands to create a new user:
   ```
   ./cqlsh <IP_NODE_1> -u cassandra -p cassandra
    ALTER KEYSPACE "system_auth" WITH REPLICATION = { 'class': 'SimpleStrategy', 'replication_factor': 3 };
-   CREATE USER <USERNAME> WITH PASSWORD '<PASSWORD>' SUPERUSER;
+   CREATE ROLE <USERNAME> WITH PASSWORD '<PASSWORD>' AND SUPERUSER = false AND LOGIN = true;
    QUIT;
   ./cqlsh <IP_NODE_1> -u <ADMIN_USERNAME> -p <PASSWORD>
-   ALTER USER cassandra WITH PASSWORD '<PASSWORD>' NOSUPERUSER;
+   GRANT CREATE ON ALL KEYSPACES TO <USERNAME>;
+   GRANT ALTER ON ALL KEYSPACES TO <USERNAME>;
+   GRANT DROP ON ALL KEYSPACES TO <USERNAME>;
+   GRANT SELECT ON ALL KEYSPACES TO <USERNAME>;
+   GRANT MODIFY ON ALL KEYSPACES TO <USERNAME>;
    QUIT
   ```
+
+Alternatively, run the create user script located at `INSTALL_DIR/apigateway/samples/cassandrauser`. To use the script, follow these steps:
+
+1. Copy the `cassandrauser` folder to your Cassandra node.
+2. Open the `/conf/apigw-create-user-tool.ini` file in the editor of your choice.
+3. Set the property `cqlsh_bin` with the path to Cqlsh, for example, `<CASSANDRA_HOME>/bin/cqlsh` and save your changes.
+4. Run the script `createuser.sh` by passing the username and password, and by setting non-superuser access and login access true. For example:
+
+    ```sql
+    ./createuser.sh -u <USERNAME> -p <PASSWORD> -s false -l true
+    ```
+
+By default, the script creates a user with privileges to CREATE, ALTER, DROP, SELECT, and MODIFY tables on all keyspaces. This subset of permissions is the minimum required for API Manager operations.
+
+The `createuser.sh` script accepts the following options:
+
+* `-s <true|false>`: Sets superuser access.
+* `-l <true|false>`: Sets login access.
+* `-k <KEYSPACE_NAME>`: Set privileges on a specific keyspace.
+* `-h`: Displays the help.
 
 ### Configure the Cassandra client connection
 
