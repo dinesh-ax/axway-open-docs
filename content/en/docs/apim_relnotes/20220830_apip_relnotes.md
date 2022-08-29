@@ -60,7 +60,11 @@ There are no major changes in this update.
 
 ## Deprecated features
 
-No features have been deprecated in this update.
+As part of our software development life cycle, we constantly review our API Portal offering. As part of this update, the following capabilities have been deprecated:
+
+### API Portal Docker image
+
+From next release, November 2022, the API Portal Docker image will no longer be available in a downloadable zip file, this was mainly provided for legacy reasons. The API Portal Docker image can still be pulled directly from the [Axway repository](https://repository.axway.com/) using standard Docker commands.
 
 ## End of support notices
 
