@@ -36,6 +36,22 @@ As part of our work to facilitate YAML configuration, with this update YAML is n
 
 It is important, especially when upgrading from an earlier version, to be aware of the following changes in the behavior or operation of the product in this update, which may impact your current installation.
 
+### Reintroduction of Federal Information Processing Standards (FIPS)
+
+FIPS capabilities have been reintroduced into API Gateway combined with an upgrade of OpenSSL 3.0.5.
+
+Enabling FIPS restricts cryptographic cipher options pertaining to message encryption and decryption and signature and verification, and it also increases the minimum key length size to those approved by the [Federal Information Processing Standard (140-2)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.140-2.pdf).
+
+For more information, see [Restrictions when running in FIPS mode](/docs/apim_administration/apigtw_admin/admin_fips).
+
+Reintroducing FIPS also resulted in changes to the `openssl.cnf` file. The `default_sect` and `legacy_sect` options are now disabled by default in the `INSTALL_DIR/apigateway/conf/openssl.cnf` file.
+
+{{< alert title="Note" color="primary" >}}Upgrading an existing API Gateway will overwrite the `conf/openssl.cnf` file with required FIPS changes. Any custom configuration must be backed up. For more information, see [Upgrade API Gateway](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion){{< /alert >}}
+
+The bundled XML Security Library does not contain the changes required to use the OpenSSL 3.0 FIPS module. As a consequence, XML encryption and signing are not guaranteed to be FIPS compliant.
+
+Hardware Security Module (HSM) usage is not supported in FIPS mode. It is intended that support will be introduced in a future release.
+
 ### Policy Studio and Configuration Studio update process
 
 During the Policy Studio and Configuration Studio update process, the `plugins` directory is deleted and then recreated with the new plugins. Therefore, any custom plugins added to this directory is removed.
@@ -99,22 +115,6 @@ A new script has been added to help in creating new users in Cassandra. It is lo
 ### Disable connection cache for LDAP authentication using Auth Repository
 
 Setting the cache refresh interval of a LDAP authentication via Auth Repository will now disable the cache altogether. For more information, see [General settings in Policy Studio](/docs/apim_reference/general_settings/index.html)
-
-### Federal Information Processing Standards (FIPS)
-
-FIPS capabilities have been reintroduced into API Gateway combined with an upgrade of OpenSSL 3.0.5.
-
-Enabling FIPS restricts cryptographic cipher options pertaining to message encryption and decryption and signature and verification, and it also increases the minimum key length size to those approved by the [Federal Information Processing Standard (140-2)](https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.140-2.pdf).
-
-For more information, see [Restrictions when running in FIPS mode](/docs/apim_administration/apigtw_admin/admin_fips).
-
-Reintroducing FIPS also resulted in changes to the `openssl.cnf` file. The `default_sect` and `legacy_sect` options are now disabled by default in the `INSTALL_DIR/apigateway/conf/openssl.cnf` file.
-
-{{< alert title="Note" color="primary" >}}Upgrading an existing API Gateway will overwrite the `conf/openssl.cnf` file with required FIPS changes. Any custom configuration must be backed up. For more information, see [Upgrade API Gateway](/docs/apim_installation/apigw_upgrade/upgrade_steps_oneversion){{< /alert >}}
-
-The bundled XML Security Library does not contain the changes required to use the OpenSSL 3.0 FIPS module. As a consequence, XML encryption and signing are not guaranteed to be FIPS compliant.
-
-Hardware Security Module (HSM) usage is not supported in FIPS mode. It is intended that support will be introduced in a future release.
 
 ## Deprecated features
 
