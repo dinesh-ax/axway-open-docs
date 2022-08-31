@@ -209,19 +209,6 @@ def invoke(msg):
 
 Related Issue: RDAPI-21363
 
-### When an API Gateway instance is started, Xerces SAXParserImpl writes warnings to the error console
-
-At API Gateway instance startup, the following warnings are logged to the error console, as opposed to the trace log:
-
-```
-Warning: org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser: Property 'http://javax.xml.XMLConstants/property/accessExternalDTD' is not recognized.
-Warning: org.apache.xerces.jaxp.SAXParserImpl$JAXPSAXParser: Property 'http://www.oracle.com/xml/jaxp/properties/entityExpansionLimit' is not recognized.
-```
-
-These new properties were added in JAXP 1.5 specification, which is supported by the embedded implementation in the JRE but not supported yet in Xerces-J Apache implementation. These are harmless warning messages, which are written to the error console instead of throwing an exception if a property is not supported by the Apache Xerces-J implementation.
-
-Related Issue: RDAPI-22218
-
 ### API Gateway web service WSDL schema validation failure
 
 If a web service is defined using multiple WSDLs, an error of 'Cannot find the declaration of element' might occur during the schema validation of a SOAP message. This might happen because of a duplication of the WSDLs types schema `targetNamespace`. To avoid this failure, you must change the types schema `targetNamespace` to be unique across the WSDLs.
