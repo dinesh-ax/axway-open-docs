@@ -30,11 +30,11 @@ The upgrade preserves any API Portal customizations stored in volumes or databas
 There is no support for downgrading an API Portal container deployment. Running an older API Portal container against a newer database schema will result in failure.
 {{% /alert %}}
 
-## Upgrade to API Portal May 2022 release
+## Upgrade from versions before May 2022 to latest release
 
-API Portal [May 2022](/docs/apim_relnotes/20220530_apip_relnotes/) release (7.7.20220530) is integrated with *Joomla 4*, which results in some backward incompatible changes. Attempting to upgrade directly from versions prior to [February 2022](/docs/apim_relnotes/20220228_apip_relnotes/) to May 22 will break database integrity.
+API Portal versions after [February 2022](/docs/apim_relnotes/20220228_apip_relnotes/) (7.7.20220228) is integrated with *Joomla 4*, which results in some backward incompatible changes. Attempting to upgrade directly from versions prior to [May 2022](/docs/apim_relnotes/20220530_apip_relnotes/) to latest will break database integrity. To upgrade from May 2022 to API Portal lates 2022 release, follow [General upgrade](#general-upgrade) section above in this page.
 
-To upgrade to API Portal May 2022 release, follow these steps:
+To upgrade from before May 2022 to API Portal latest 2022 release, follow these steps:
 
 1. Download the `APIPortal_7.7.20220530_ThirdPartyPackages.zip` upgrade package from [Axway Support](https://support.axway.com).
 2. If your API Portal version is lower than [February 2022](/docs/apim_relnotes/20220228_apip_relnotes/), you must first upgrade to February 2022 as described in the previous section.
@@ -60,12 +60,12 @@ To upgrade to API Portal May 2022 release, follow these steps:
 7. Click **Components > Joomla! Update > Upload & Update**, then apply *Joomla 4* by uploading the relevant file from third party package.
 8. Wait for the upgrade process to finish and log in to JAI again.
 9. Click **System > Install > Extensions > Upload Package File**, then apply the *T3 System* plugin by uploading the relevant file from third party package.
-10. Stop the `feb22` container and start a new one from the `May22` image with the old parameters, but without the mounted `apiportal.ini` file.
+10. Stop the `feb22` container and start a new one from the latest image with the old parameters, but without the mounted `apiportal.ini` file.
 
     ```shell
     docker container rm -f <feb22-container-name>
     docker container run \
-      <old-parameters-from-prior-to-may22-container> <may22-image>
+      <old-parameters-from-prior-to-latest-container> <latest-image>
     ```
 11. (Optional) If you have used MySQL SSL connection, you can change its value back to what was there before.
 

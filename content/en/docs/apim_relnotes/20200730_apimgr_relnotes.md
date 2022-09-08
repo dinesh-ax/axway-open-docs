@@ -71,7 +71,7 @@ The JRE included in API Gateway enables endpoint identification algorithms for L
 
 #### Connect to URL Filter
 
-If the Connect to URL filter Request Protocol Headers field is not configured correctly, a runtime exception (`unexpected IO error`) is thrown when the filter is executed. In earlier versions, this error did not appear in the logs.
+If the Connect to URL filter Request Protocol Headers field is not configured correctly (for example, headers are not ending with a blank line), a runtime exception (`unexpected IO error`) is thrown when the filter is executed. In earlier versions, this error did not appear in the logs.
 
 ### API Manager behavior
 
