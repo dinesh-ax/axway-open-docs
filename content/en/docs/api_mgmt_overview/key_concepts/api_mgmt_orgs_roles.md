@@ -113,7 +113,11 @@ The Organization administrator cannot demote another Organization administrator 
 
 By default, organization administrators require approval from an Administrator to publish APIs owned by users in their organization, and they are not allowed to unpublish APIs.
 
-By setting [`api.manager.orgadmin.selfservice.enabled`](/docs/apim_reference/system_props/) system property to `true`, the organization administrator will no longer require approval, and will be able to directly publish and unpublish APIs in their own organization. In addition, they will also be able to deprecate, undeprecate, retire, upgrade, grant access to APIs, monitor the grant access process by being able to see the organizations and applications using the APIs, and revoke access, in organizations in which they are an Organization administrator. With the enablement of this system property all Organization Administrators have view access to all organizations but will only be able to view APIs in organizations in which they are a member of or have been granted access.
+#### Self-service API publishing
+
+By setting [`api.manager.orgadmin.selfservice.enabled`](/docs/apim_reference/system_props/) system property to `true`, the organization administrator no longer requires approval to publish and unpublish APIs in their own organization.
+
+In addition, they can also deprecate, undeprecate, retire, upgrade, grant access to APIs, monitor the grant access process by being able to see the organizations and applications using the APIs, and revoke access in organizations in which they are an Organization administrator. With the enablement of this system property all Organization administrators have view access to all organizations, but they can only view APIs in organizations in which they are a member of or have been granted access.
 
 ### API consumer
 

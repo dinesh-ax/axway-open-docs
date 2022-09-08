@@ -13,7 +13,7 @@ You can use the [cumulative upgrade script](#upgrade-api-portal-using-the-cumula
 | 7.5.5  | [7.6.2](https://docs.axway.com/bundle/APIPortal_762_ReleaseNotes_allOS_en_HTML5/page/Content/ReleaseNotesPortal/APIPortal_ReleaseNotes_allOS_en.htm) | [7.5.5 to 7.6.2 Upgrade](https://support.axway.com/en/search/index/type/Downloads/sort/created%7Cdesc/ipp/10/product/545/version/2997/subtype/44) |
 | 7.6.2  | [7.7 GA](/docs/apim_relnotes/201904_release/apip_relnotes/)                                                                                          | [7.6.2 to 7.7 Upgrade](https://support.axway.com/en/downloads/download-details/id/1443352)   |
 | 7.7.x | February 22 ([7.7 20220228](/docs/apim_relnotes/20220228_apip_relnotes/)) Including all service packs                                                 | [7.7 x to 7.7 20220228](https://support.axway.com/en/search/index/type/Downloads/sort/created%7Cdesc/ipp/10/product/545/version/3036/subtype/90) |
-| 7.7 20220228 |May 22 ([7.7 20220530](/docs/apim_relnotes/20220530_apip_relnotes/))                                                                | [7.7 20220228 to 7.7 20220530](https://support.axway.com/en/search/index/type/Downloads/sort/created%7Cdesc/ipp/10/product/545/version/3036/subtype/90) |
+| 7.7 20220228 |Latest                                                               | [7.7 20220228 to Latest](https://support.axway.com/en/search/index/type/Downloads/sort/created%7Cdesc/ipp/10/product/545/version/3036/subtype/90) |
 
 {{< alert title="Note" color="primary" >}}This section does not describe how to upgrade API Gateway. For information on upgrading API Gateway, see [API Gateway Upgrade Guide](/docs/apim_installation/apigw_upgrade/).
  {{< /alert >}}
@@ -86,11 +86,11 @@ If you have a 7.7.x API Portal installation, you can upgrade to the latest versi
    sudo ./apiportal_upgrade.sh
    ```
 
-## Upgrade to API Portal May 2022 release
+## Upgrade to API Portal May 2022 or latest releases
 
 API Portal [May 2022](/docs/apim_relnotes/20220530_apip_relnotes/) release (7.7.20220530) is integrated with *Joomla 4*, which results in some backward incompatible changes. Attempting to upgrade directly from versions prior to [February 2022](/docs/apim_relnotes/20220228_apip_relnotes/) to May 22 will break database integrity.
 
-To upgrade to API Portal May 2022 release, follow these steps:
+To upgrade to API Portal May 2022 or latest releases, follow these steps:
 
 1. If your API Portal version is lower than [February 2022](/docs/apim_relnotes/20220228_apip_relnotes/), you must first upgrade to February 2022 as described in the previous sections.
 2. Establish an SSH connection to your API Portal server and locate the additional PHP settings directory:

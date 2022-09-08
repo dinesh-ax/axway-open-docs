@@ -319,7 +319,7 @@ Certificate files are placed in the following locations inside the container:
     └── mysql-client-key.pem
 ```
 
-The following example uses `APACHE_SSL_ON` and `MYSQL_SSL_ON` environment variables to instruct the container to enable SSL in Apache and MySQL, then it mounts the certificate files.
+The following example uses `APACHE_SSL_ON` and `MYSQL_SSL_ON` environment variables to instruct the container to enable SSL in Apache and MySQL; then, it mounts the certificate files.
 
 ```
 docker container run <some-options> \
@@ -356,7 +356,7 @@ ${HOME}/certs/
     └── mysql-client-key.pem
 ```
 
-Ensure that you named the files exactly as they are expected inside the container. Now, you can configure the container using certificates by mounting the whole `"${HOME}/certs` directory:
+Ensure that you named the files exactly as they are expected inside the container. Then, you can configure the container using certificates by mounting the whole `"${HOME}/certs` directory:
 
 ```
 docker container run <some-options> \
@@ -367,9 +367,11 @@ docker container run <some-options> \
 
 ## Create data volumes to persist data
 
-By default, API Portal container does not create volumes for data persistence. But, you might want to create Docker data volumes to persist API Portal customization data, prevent data loss when the container reboots or crashes, or when you are upgrading or setting up HA for an API Portal Docker deployment. If you are running API Portal in containers for a demo or test, there is no need to create data volumes.
+By default, API Portal container does not create volumes for data persistence, but you might want to create Docker data volumes to persist API Portal customization data, prevent data loss when the container reboots or crashes, or when you are upgrading or setting up HA for an API Portal Docker deployment. If you are running API Portal in containers for a demo or test, you do not need to create data volumes.
 
-The data volumes are stored in the Docker host machine, and as such they consume disk space. So, we recommend you to delete unused data volumes regularly.
+The data volumes are stored in the Docker host machine, and as such, they consume disk space. So, we recommend you to delete unused data volumes regularly.
+
+### Store assets to preserve customization
 
 The following list describes which API Portal assets you should store in a Docker volume to preserve the customizations during upgrade or HA setup of an API Portal Docker deployment:
 
@@ -382,12 +384,12 @@ The following list describes which API Portal assets you should store in a Dock
 * `/opt/axway/apiportal/htdoc/administrator/language` - Joomla! admin panel translations.
 * `/opt/axway/apiportal/htdoc/administrator/components/com_apiportal/assets/cert` - Certificates for API Manager.
 
-Do not modify the content of the following folders, as they will be overwritten during upgrade:
+Do not modify the content of the following folders because they will be overwritten on container restart or upgrade:
 
 * `/opt/axway/apiportal/htdoc/templates/purity_iii`
 * `/opt/axway/apiportal/htdoc/language/en-GB`
-* `/opt/axway/apiportal/htdoc/language/overrides`
-* `/opt/axway/apiportal/htdoc/administrator/language`
+* `/opt/axway/apiportal/htdoc/administrator/language/en-GB`
+* `/opt/axway/apiportal/htdoc/administrator/language/overrides`
 
 The following is an example of how you can create data volumes:
 

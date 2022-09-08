@@ -30,10 +30,10 @@ ldaps://145.123.0.28:636
 ```
 
 **Cache Timeout**:
-Specifies the timeout for cached LDAP connections. Any cached connection that is not used in this time period is discarded. Defaults to 300000 milliseconds (5 minutes). A cache timeout of 0 means that the LDAP connection is cached indefinitely and never times out.
+Specifies the timeout for cached LDAP connections. Any cached connection that is not used in this time period is discarded. Defaults to 300000 milliseconds (5 minutes). The minimum allowed value for cache timeout is 2000 millisecodes, any value less than this takes the default value.
 
 **Cache Size**:
-Specifies the number of cached LDAP connections. Defaults to 8 connections. A cache size of 0 means that no caching is performed.
+Specifies the number of cached LDAP connections. Defaults to 8 connections. The minimum allowed value for cache size is 1 connection, any value less than this takes the default value.
 
 ## Authentication configuration
 

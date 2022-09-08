@@ -214,6 +214,10 @@ filter enables you convert the contents of a message using these style sheets. F
 
 In the Policy Studio navigation tree, you can access the global style sheet library by selecting **Resources > Stylesheets**. Select a child node to view or edit its contents. To add a style sheet, right-click the **Stylesheets** node, and select **Add Stylesheet**.
 
+## Case sensitivity in YAML projects
+
+Linux and Windows operational systems differ on how they read filenames. As a result, we recommend you to ensure that all files within your YAML entity store do not contain file conflicts and can be used across Linux and Windows.
+
 ## References
 
 References can occur between API Gateway configurations items (for example, a policy might include a reference to an external connection to a database). You can view references between configuration items in Policy Studio by right-clicking an item, and selecting **Show All References**. References are displayed in a tab at the bottom of the window.

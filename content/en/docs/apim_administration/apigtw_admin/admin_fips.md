@@ -6,10 +6,6 @@
 "description": "Run an API Gateway instance or a Policy Studio client in FIPS mode."
 }
 
-{{< alert title="Note" color="primary" >}}
-Running API Gateway in FIPS mode is not supported in API Gateway 7.7 Mar20 update or later. In the Mar20 update OpenSSL has been upgraded to OpenSSL 1.1.1, as OpenSSL 1.0.2 is EOL. OpenSSL 1.1.1 does not support FIPS. OpenSSL 3.0 (when available) will support FIPS.
-{{< /alert >}}
-
 API Gateway supports Federal Information Processing Standards (FIPS). When running an API Gateway instance or a Policy Studio client in FIPS mode, the following FIPS-certified cryptographic modules are enabled and invoked for all FIPS-compliant cryptographic algorithms:
 
 | Cryptographic Module                                          | FIPS 140-2 Certificate Number |
@@ -37,16 +33,6 @@ Run the following commands:
 > ./togglefips --disable | -d
 ```
 
-### Enable or disable FIPS on Windows
-
-Run the following commands:
-
-```
-> cd apigateway\Win32\bin
-> togglefips.bat --enable | -e
-> togglefips.bat --disable | -d
-```
-
 ## Enable FIPS mode for Policy Studio
 
 You can also enable FIPS mode for a Policy Studio client application only. To enable or disable FIPS mode in Policy Studio, perform the following steps:
@@ -72,6 +58,10 @@ The following features cannot be run when the gateway is running in FIPS mode:
 
 For a complete list of non-FIPS compliant algorithms and cipher suites configured in all crypto-related filters and interfaces in Policy Studio, select **Tools > Check Security Constraints > FIPS**, and view the output on the pane on the right.
 
+### Engines are not supported in FIPS mode
+
+Since OpenSSL 3.0 has moved from Engines to Providers, `OPENSSL_ENGINES` are no longer supported in FIPS mode. For FIPS compliance, you must use Provider APIs.
+
 ## Further information
 
-For more details on FIPS, see <http://www.nist.gov/itl/fips.cfm>.
+For more details on FIPS, see [Federal Information Processing Standards Publications (FIPS PUBS)](http://www.nist.gov/itl/fips.cfm).

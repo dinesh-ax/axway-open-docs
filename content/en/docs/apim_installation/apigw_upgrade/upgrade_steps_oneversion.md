@@ -37,6 +37,7 @@ system/conf/apiportal/email
 system/conf
 samples/scripts/
 tools/filebeat-VERSION-PLATFORM
+conf
 ```
 
 When you are restoring the files, ensure that you merge any updated files instead of copying them back directly, to avoid any regex matching issues.
@@ -113,6 +114,7 @@ Running this script performs the following:
 
 * Back up your existing `INSTALL_DIR/policystudio` directory. The backup of the installation is created at `INSTALL_DIR/backups/policystudio/<date_time>`.
 * Remove old JRE versions by deleting the `INSTALL_DIR/policystudio/jre` directory.
+* Remove old plugins by deleting the `INSTALL_DIR/policystudio/plugins` directory.
 * Unzip and extract API Gateway 7.7 Policy Studio update over the `policystudio` directory in your existing API Gateway 7.7 installation directory.
 * Start Policy Studio with `policystudio -clean`.
 
@@ -126,10 +128,10 @@ tar -xzvf APIGateway_7.7.YYYYMMDD_PolicyStudio_linux-x86-64_BNnn.tar.gz -C 77upd
 * You must execute the update script using the same user who installed Policy Studio.
 * You must extract the tar.gz file into a new directory, and not into the existing API Gateway installation directory.
 
-Run the `update_policy_studio.sh` script from the directory into which you extracted the update file (for example, `77update`), and specify your API Gateway installation directory as an argument:
+Run the `update_policy_studio.sh` script from the directory into which you extracted the update file (for example, `77update`), and specify your API Gateway installation directory as an argument with the `--install_dir` flag:
 
 ```
-./update_policy_studio.sh $INSTALL_DIR
+./update_policy_studio.sh --install_dir $INSTALL_DIR
 ```
 
 `$INSTALL_DIR` is the base API Gateway 7.7 installation directory that contains the `policystudio` directory.
@@ -137,7 +139,7 @@ Run the `update_policy_studio.sh` script from the directory into which you extra
 For example:
 
 ```
-./update_policy_studio.sh /opt/Axway-7.7/
+./update_policy_studio.sh --install_dir /opt/Axway-7.7/
 ```
 
 If you had applied any modifications to the `policystudio.ini` file, you must reapply them after upgrade.
@@ -146,7 +148,11 @@ If you had applied any modifications to the `policystudio.ini` file, you must re
 
 For installations running on Windows 7, you must manually unzip the Policy Studio update.
 
-The `update_policy_studio.bat` update script is available for Windows. It is located in the API Gateway 7.7 Policy Studio Update pack (`.zip`) for Windows.
+The `update_policy_studio.bat` update script is available for Windows. It is located in the API Gateway 7.7 Policy Studio Update pack (`.zip`) for Windows. For example:
+
+```
+update_policy_studio.bat --install_dir $INSTALL_DIR
+```
 
 ## Install a Configuration Studio update
 
@@ -156,6 +162,7 @@ Running this script performs the following:
 
 * Back up your existing `INSTALL_DIR/configurationstudio` directory. The backup of the installation is created at `INSTALL_DIR/backups/configurationstudio/<date_time>`.
 * Remove old JRE versions by deleting the `INSTALL_DIR/configurationstudio/jre` directory.
+* Remove old plugins by deleting the `INSTALL_DIR/policystudio/plugins` directory.
 * Unzip and extract API Gateway 7.7 Configuration Studio Update over the `configurationstudio` directory in your existing API Gateway 7.7 installation directory.
 * Start Configuration Studio with `configurationstudio -clean`
 
@@ -169,10 +176,10 @@ tar -xzvf APIGateway_7.7.YYYYMMDD_ConfigurationStudio_linux-x86-64_BNnn.tar.gz -
 * You must execute the update script using the same user who installed Configuration Studio.
 * You must extract the file into a new directory and not into the existing API Gateway installation directory.
 
-Run the `update_configuration_studio.sh` script from the directory into which you extracted the Update file (for example, `77update`), and specify your API Gateway installation directory as an argument:
+Run the `update_configuration_studio.sh` script from the directory into which you extracted the Update file (for example, `77update`), and specify your API Gateway installation directory as an argument with the *--install_dir* flag:
 
 ```
-./update_configuration_studio.sh $INSTALL_DIR
+./update_configuration_studio.sh --install_dir $INSTALL_DIR
 ```
 
 `$INSTALL_DIR` is the base API Gateway 7.7 installation directory that contains the `configurationstudio` directory.
@@ -180,7 +187,7 @@ Run the `update_configuration_studio.sh` script from the directory into which yo
 For example:
 
 ```
-./update_configuration_studio.sh /opt/Axway-7.7/
+./update_configuration_studio.sh --install_dir /opt/Axway-7.7/
 ```
 
 If you had applied any modifications to the `configurationstudio.ini` file, you must reapply them after upgrade.
@@ -190,6 +197,10 @@ If you had applied any modifications to the `configurationstudio.ini` file, you 
 For installations running on Windows 7, you must manually unzip the Configuration Studio update.
 
 The `update_configuration_studio.bat` update script is available for Windows. It is located in the API Gateway 7.7 Configuration Studio update pack (`.zip`) for Windows.
+
+```
+update_configuration_studio.bat --install_dir $INSTALL_DIR
+```
 
 ## Install an API Gateway Analytics update
 

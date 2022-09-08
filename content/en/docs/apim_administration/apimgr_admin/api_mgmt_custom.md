@@ -552,27 +552,27 @@ ${kps.PortalVirtualizedAPI[alert.apiIdList].customProperties.internalId}
 
 ## Customize API Manager password validation
 
-API Manager enables you to perform custom password validation based on a specified regular expression. For example, you can test for a mix of lowercase, uppercase, and special characters for the API Manager user registration and change password features. If the password characters validate, this returns `true`. Otherwise, this returns a specified error message, or `false`.
+API Manager enables you to perform custom password validation based on a specified regular expression. For example, you can test for a mix of lowercase, uppercase, and special characters for the API Manager user registration and change password flows. If the password characters validate, this returns `true`. Otherwise, this returns a specified error message, or `false`.
 
-### Validate password for user registration and change password features
+You can customize password validation for the API Manager user registration and change password flows by editing the following files:
 
-You can customize password validation for the API Manager user registration and change password features by editing the following files:
+* To customize password validation for user registration, you must edit the following file:
 
-* User registration:
-
-    ```
+    ```none
     INSTALL_DIR/apigateway/webapps/apiportal/vordel/apiportal/app-login/app.config
     ```
 
-* Change password:
+    {{< alert title="Note" color="primary" >}}API Portal complies only with the rules set in `/app-login/app.config` file for all flows where the user is forced to change their password.{{< /alert >}}
 
-    ```
+* To customize password validation for password changing, you must edit the following file:
+
+    ```none
     INSTALL_DIR/apigateway/webapps/apiportal/vordel/apiportal/app/app.config
     ```
 
-#### Configuration steps
+### Configuration steps
 
-In each of these `app.config` files, perform the following steps:
+In each of the `app.config` files, perform the following steps:
 
 1. Specify a custom regular expression in the `validatePassword` method. For example:
 
@@ -594,7 +594,7 @@ In each of these `app.config` files, perform the following steps:
     https://localhost:8075
     ```
 
-4. Press **Ctrl-F5** to refresh, and log in to API Manager.
+4. Press **Ctrl-F5** to refresh the page, then log in to API Manager.
 
 ## Customize API Gateway Manager URL for testing
 

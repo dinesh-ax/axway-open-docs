@@ -15,7 +15,7 @@ This example illustrates the following aspects of the environmentalization:
 * Conservation of other environmentalization methods.
 * An unresolved placeholder.
 
-In the following example snippet, we assume that `ES_DB_PASSWORD` is set with a value encrypted by a passphrase, and `ES_DB_HOST` is not set.
+In the following example snippet, we assume that `ES_DB_PASSWORD` is set with a value encrypted by a passphrase and `ES_DB_HOST` is not set.
 
 ```yaml
 # A YAML Entity
