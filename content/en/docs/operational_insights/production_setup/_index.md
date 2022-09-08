@@ -9,7 +9,7 @@ description: Configure a basic setup for Operational Insights to test Elasticsea
 
 This section covers advanced configuration topics that are required for a production environment.
 
-##### Kubernetes Networking
+#### Kubernetes Networking
 
 In kubernetes, containers are run inside pods. A typical pod may run more than one container but it is common to configure a pod to run only one container, unless the second is a helper or side-car container.
 
@@ -24,8 +24,8 @@ This allows control of traffic coming from other pods, other namespaces or from 
 
 There are three kinds of policies that can be applied:
 
-* Drop communication by default.
-* Allow connection to an application from specific namespaces.
+* Drop communication by default
+* Allow connection to an application from specific namespaces
 * Allow connection to pods from certain applications
 
 Different policies can apply to different pods in your application. For more information refer to kubernetes documentation [here:](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
@@ -34,22 +34,9 @@ Different policies can apply to different pods in your application. For more inf
 
 In order for a network policy to be enforced we need a Network Policy Agent such as Calico or Weaveworks to be installed. Note: on some managed kubernetes services such as AKS (Azure Kubernetes Service) you can avail of the built-in Azure Network Policy Manager if you don't wish to install a 3rd party agent such as Calico.
 
-##### Default Networking in helm chart
+##### Default Networking in AAOI helm chart
 
 By default the AAOI helm chart does not use network policies but directly enables ingress traffic on the elasticsearch and kibana pods to allow inbound communication to take place. For the other pods ingress is either disabled or not configure which means that no inbound traffic is allowed into these pods.
-
-
-##### RBAC permission
-
-RBAC permission is a secure mechanism to manage authorization inside Kubernetes. It's recommended to set people or application permissions to manage resources:
-
-* Allow Helm to manage resources
-* Allow worker nodes autoscaling
-* Allow specific users to view pods, to deploy pods, to access Kubernetes Dashboard
-* Allow cert-manager to pull and encrypt certificate
-* Allow Kubernetes to provide cloud resources, like storage or load balancer
-
-This is a minimal configuration and you can define more specific permissions with cluster roles or binding in the cluster.
 
 {{< alert title="Note" >}}
 It is assumed that you have already familiarized yourself with Operational Insights component by using its [basic setup](/docs/operational_insights/basic_setup/).
