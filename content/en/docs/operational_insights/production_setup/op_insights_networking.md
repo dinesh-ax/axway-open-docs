@@ -28,7 +28,7 @@ In summary network policies work by:
 
 Network policies cannot be enforced without a CNI Plugin. If running kubernetes on a managed service such as AKS (Azure Kubernetes Service) you can avail of the built-in Azure CNI. Otherwise you can install a 3rd party plugin such as Calico or Weaveworks.
 
-For more information on kubernetes networking, including sample network policies, please refer to the Kubernetes documentation [here:](https://kubernetes.io/docs/concepts/services-networking/network-policies) or the Calico documentation [here:](https://projectcalico.docs.tigera.io/about/about-network-policy)
+For more information on kubernetes network policies, including sample policies, please refer to the Elastic docs [here:](https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-network-policies.html), the Kubernetes documentation [here:](https://kubernetes.io/docs/concepts/services-networking/network-policies) and the Calico documentation [here:](https://projectcalico.docs.tigera.io/about/about-network-policy)
 
 #### Default Networking in AAOI helm chart
 
