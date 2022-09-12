@@ -29,13 +29,16 @@ set -e
 
 DEBUG=${DEBUG:-false}
 MODE=dev
-while getopts ":np" opt; do
+# The "nelify" and "nelify-preview" are deprecated.
+while getopts ":m:np" opt; do
     case ${opt} in
-        n ) MODE=nelify
+        m ) MODE=$OPTARG
+             ;;
+		n ) MODE=nelify
              ;;
         p ) MODE=nelify-preview
              ;;
-        * ) exit 1
+        * ) echo "[ERROR] Invalid option [${OPTARG}]!!";exit 1
             ;;
     esac
 done
@@ -64,7 +67,7 @@ function fCheckoutSubmodule() {
         exit 1
     fi
     # the npm packages doesn't seem to be needed on the netify build server...this is just for developers
-    if [[ "${MODE}" == "dev" ]];then
+    #if [[ "${MODE}" == "dev" ]];then
         echo "[INFO] Install npm packages required by docsy."
     	if [[ ! -d "node_modules" ]];then
             if [[ -f "package.json" ]];then
@@ -75,7 +78,7 @@ function fCheckoutSubmodule() {
     		    npm install -D --save postcss-cli
             fi
     	fi
-    fi
+    #fi
 }
 
 # fMergeContent:
@@ -151,21 +154,29 @@ function fMergeContent() {
 
 function fRunHugo() {
     cd ${BUILD_DIR}
+    # The modes "nelify" and nelify-preview
     mkdir public
     case "${MODE}" in
-        "dev") 
-            hugo server
-            ;;
-        "nelify") 
-            hugo
-            # Moving the "publish" directory to the ROOT of the workspace. Netlify can't publish a
-            # different directory even if the "Publish directory" is changed to specify a different directory.
-            mv -f ${BUILD_DIR}/public ${PROJECT_DIR}
-            ;;
-        "nelify-preview") 
-            hugo -b $DEPLOY_PRIME_URL
-            mv -f ${BUILD_DIR}/public ${PROJECT_DIR}
-            ;;
+      "dev") 
+          hugo server
+          ;;
+      "ci")
+          hugo
+          ;;
+      "nelify") 
+          hugo
+          # Moving the "publish" directory to the ROOT of the workspace. Netlify can't publish a
+          # different directory even if the "Publish directory" is changed to specify a different directory.
+          mv -f ${BUILD_DIR}/public ${PROJECT_DIR}
+          ;;
+      "nelify-preview") 
+          hugo -b $DEPLOY_PRIME_URL
+          mv -f ${BUILD_DIR}/public ${PROJECT_DIR}
+          ;;
+      *)
+          echo "[ERROR] Build MODE [${MODE}] is invalid!!"
+          exit 1
+          ;;
     esac
 }
 
