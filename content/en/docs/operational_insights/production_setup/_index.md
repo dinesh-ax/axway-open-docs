@@ -13,6 +13,12 @@ This section covers advanced configuration topics that are required for a produc
 It is assumed that you have already familiarized yourself with Operational Insights component by using its [basic setup](/docs/operational_insights/basic_setup/).
 {{< /alert >}}
 
+## Securing a kubernetes cluster
+
+For a general overview of how to secure a production cluster please consult the kubernetes documentation [here:](https://kubernetes.io/docs/tasks/administer-cluster/securing-a-cluster/). 
+
+In this page we will also highlight 3 specific areas of security - network policies, secrets and encryption in transit
+
 ## Kubernetes Networking
 
 In kubernetes, containers are run inside pods. A typical pod may run more than one container but it is common to configure a pod to run only one container, unless the second is a helper or side-car container.
@@ -51,3 +57,14 @@ Kubernetes secrets provide a further layer of security. They are stored as key-v
 In a production environment we recommend that you store your passwords using kubernetes secrets that are backed by a secrets manager such as Hashicorp Vault, AWS Secret Manager or Azure Vault. Access to secrets should also be restricted using RBAC (role-based access control) rules
 
 For more information on kubernetes secrets please consult the kubernetes documentatiion [here:](https://kubernetes.io/docs/concepts/configuration/secret/)
+
+## Elasticsearch encryption in transit
+
+By default all data sent between nodes in the Elasticsearch cluster is sent in clear text. This may be acceptable if the cluster itself is sufficiently secured. However in a production environment we recommend that traffic between nodes is encrypted. 
+
+To do this first locate the file *elasticsearch.yml* and follow the instructions [here:](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-basic-setup.html#encrypt-internode-communication) 
+
+If your cluster is running in a managed service such as on Azure Kubernetes Service (AKS) then you will have built-in security options such as enabling TLS which come as part of the service
+
+For more details on encryption in transit see the following docs [Elastic:](https://www.elastic.co/guide/en/elasticsearch/reference/current/security-basic-setup.html#security-basic-setup) and [Azure:](https://docs.microsoft.com/en-us/azure/security/fundamentals/encryption-overview#encryption-of-data-in-transit)
+
