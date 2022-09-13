@@ -21,28 +21,28 @@ In this page we will also highlight 3 specific areas of security - network polic
 
 ## Kubernetes Networking
 
-In kubernetes, containers are run inside pods. A typical pod may run more than one container but it is common to configure a pod to run only one container, unless the second is a helper or side-car container.
+In kubernetes, containers run inside pods. A typical pod will run only one container but it is also common to run more than one container in a pod if the other containers are helper or side-car containers.
 
-In a kubernetes cluster, each pod gets its own ip address and this ip address is unique throughout the cluster. There is no isolation between the pods and this means that all pods within a cluster can communicate with each other without Network Address Translation. This applies to pods running in different namespaces and/or on different nodes.
+In a kubernetes cluster, each pod gets its own ip address and this ip address is unique throughout the cluster. Each container within a pod uses the same ip address. There is no isolation between the pods and this means that all pods within a cluster can communicate with each other without Network Address Translation. This applies to pods running in different namespaces and/or on different nodes.
 
-If you want to restrict access from some pods to others - especially in a multi-tenancy cluster - then you need to configure network policies
+If you want to restrict access from some pods to others - especially in a multi-tenancy cluster - you need to configure network policies
 
 ### Network Policies
 
-Network policies are similar to firewalls. With network policies in place you can control traffic flow between pods at the ip address or port level (OSI Layer 3/4).
-This allows control of traffic coming from other pods, other namespaces or from the outside world. This incoming traffic (ingress) can be controlled by use of a network policy. Outgoing traffic from the pods to the outside world (egress) which, by default is allowed can also be controlled as part of a network policy.
+Network policies are similar to firewalls. With network policies in place you can control traffic flow between pods at the ip address or port level.
+This allows control of traffic coming from other pods, other namespaces or from the outside world. This incoming traffic (ingress), which by default is disabled, can be opened up and controlled by use of a network policy. Outgoing traffic from the pods to the outside world (egress) which, by default is enabled, can also be controlled as part of a network policy.
 
-There are three kinds of policies that can be applied:
+In summary network policies work by:
 
-* Drop communication by default
-* Allow connection to an application from specific namespaces
-* Allow connection to pods from certain applications
+* Controlling access from pod to pod
+* Granting or denying pods access from or to a namespace
+* Using IP CIDR blocks to restrict access to pods
 
-Different policies can apply to different pods in your application. For more information refer to kubernetes documentation [here:](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+### Container Network Interface (CNI) Plugins
 
-### Network Policy Agents
+Network policies cannot be enforced without a CNI Plugin. If running kubernetes on a managed service such as AKS (Azure Kubernetes Service) you can avail of the built-in Azure CNI. Otherwise you can install a 3rd party plugin such as Calico or Weaveworks.
 
-In order for a network policy to be enforced we need a Network Policy Agent such as Calico or Weaveworks to be installed. Note: on some managed kubernetes services such as AKS (Azure Kubernetes Service) you can avail of the built-in Azure Network Policy Manager if you don't wish to install a 3rd party agent such as Calico.
+For more information on kubernetes networking, including sample network policies, please refer to the Kubernetes documentation [here:](https://kubernetes.io/docs/concepts/services-networking/network-policies) or the Calico documentation [here:](https://projectcalico.docs.tigera.io/about/about-network-policy)
 
 ### Default Networking in AAOI helm chart
 
@@ -52,7 +52,7 @@ By default the AAOI helm chart does not use network policies but directly enable
 
 In the current AAOI solution, passwords such as those for API Manager, kibana, logstash and elasticsearch are stored in clear text in environment variables. This makes them easily accessible to anyone who has access to the kubernetes cluster. 
 
-Kubernetes secrets provide a further layer of security. They are stored as key-value pairs and can be created outside of the application code and referred to from within the code. The secrets are base-64 encoded and so are still accessible to anyone who has the credentials to query elements in the cluster.
+Kubernetes secrets provide a further layer of security. They are stored as key-value pairs and can be created outside of the application code and referenced from within the code. Secrets are base-64 encoded and so are still accessible to anyone who has the credentials to query elements in the cluster.
 
 In a production environment we recommend that you store your passwords using kubernetes secrets that are backed by a secrets manager such as Hashicorp Vault, AWS Secret Manager or Azure Vault. Access to secrets should also be restricted using RBAC (role-based access control) rules
 
