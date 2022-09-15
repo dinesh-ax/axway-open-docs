@@ -14,6 +14,24 @@ description: API Gateway and API Manager updates are cumulative, comprising new
 * For more details on supported platforms for software installation, see [System requirements](/docs/apim_installation/apigtw_install/system_requirements/).
 * For a summary of the system requirements for a Docker deployment, see [Set up Docker environment](/docs/apim_installation/apigw_containers/docker_scripts_prereqs/).
 
+### Remove unused Cassandra module libraries
+
+If you are updating from version **7.7 March 2021**, you must manually remove the following jars from your `apigateway` directory.
+
+```bash
+rm ./system/lib/plugins/cassandra-datastax-impl-4.1.0-6.jar
+rm ./system/lib/plugins/cassandra-factory-4.1.0-6.jar
+rm ./system/lib/plugins/cassandra-api-4.1.0-6.jar
+```
+
+If you are updating from version **7.7 May 2021**, you must manually remove the following jars from your `apigateway` directory.
+
+```bash
+rm ./system/lib/plugins/cassandra-datastax-impl-4.1.0-7.jar
+rm ./system/lib/plugins/cassandra-factory-4.1.0-7.jar
+rm ./system/lib/plugins/cassandra-api-4.1.0-7.jar
+```
+
 ### Update a container deployment
 
 Any custom `.fed` files deployed to a container must be upgraded using [upgradeconfig](/docs/apim_installation/apigw_upgrade/upgrade_analytics#upgradeconfig-options) or [projupgrade](/docs/apim_reference/devopstools_ref#projupgrade-command-options). They must be upgraded the same way, regardless of whether they are API Manager enabled or not. The `.fed` files contain the updates for the API Manager configuration and can be used to build containers.
