@@ -185,7 +185,7 @@ Request {"method":"GET","url":"/api/elk/v1/api/router/service/instance-1/ops/sea
 Response {"statusCode":200,"headers":{"server":"API Builder/4.25.0","request-id":"35fb859d-00b0-404b-97e6-b549db17f84c","x-xss-protection":"1; mode=block","x-frame-options":"DENY","surrogate-control":"no-store","cache-control":"no-store, no-cache, must-revalidate, proxy-revalidate","pragma":"no-cache","expires":"0","x-content-type-options":"nosniff","start-time":"1584692477587","content-type":"application/json; charset=utf-8","response-time":"408","content-md5":"e306ea2d930a3b80f0e91a29131d520b","content-length":"267","etag":"W/\"10b-2N+JsHuxDxMVKhJR1A8GuNGnKDQ\"","vary":"Accept-Encoding"}}
 ```
 
-If you do not see any requests arriving in the API builder, the ANM may not be able to reach the API builder listen socket. It is important to know that traffic information will still appear in this case, because in this case the OPSDB will be used. You should therefore check the ANM trace log.
+If you do not see any requests arriving in the API builder, the ANM may not be able to reach the API builder listen socket. It is important to know that traffic information will still appear in this case, because in this case the OpsDB will be used. You should therefore check the ANM trace log.
 
 ```bash
 tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc

@@ -4,7 +4,7 @@ linkTitle: Production setup
 weight: 40
 no_list: true
 date: 2022-07-20
-description: Configure a basic setup for Operational Insights to test Elasticsearch in a single instance.
+description: Configure Operational Insights to test Elastic search in a production environment
 ---
 
 This section covers advanced configuration topics that are required for a production environment.

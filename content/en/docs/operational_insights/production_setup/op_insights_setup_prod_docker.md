@@ -13,65 +13,6 @@ This section covers advanced configuration topics that are required for a produc
 * Ensure that you have all [prerequisites](/docs/amplify_analytics/op_insights_prerequisites/) in place.
 * Ensure that you have applied the [basic configuration](link) for general frameworks.
 
-## Configure traffic payload
-
-The payload belonging to an API request is not written directly to the open traffic event log and therefore not stored in Elasticsearch.
-
-To clarify what is meant by payload at this point the following example screenshot.
-
-<!-- I replaced the screenshot with the actual text -->
-
-```bash
-HTTP/1.1 200 OK
-Date:Wed, 13 Jan 2021 23:08:58GMT
-CSRF-Token:62325BA818F8203917CB61AE883346D7F7A206E564E26008CAC3ED37386B1B7B
-Content-type:application/json
-Cache-Control:no-cache,no-store,must-revalidate
-Pragma:no-cache
-Expires:0
-X-Frame-Options:DENY
-X-Content-Type-Options:nosniff
-X-XSS-Protection:0
-Server:Gateway
-Connection:close
-X-CorrelationID:Id-8a7dff5f6612be6b4aa9d851 0
-
-{"id":"1eb19f0c-810a-4ab1-94c6-bf85833754a8","organizationId":"2b4a2c5a-827c-4be7-8dc9-ffbd5f086144,ou=organizations,ou=APIPortal","lastSeen":1610579331159,"changePassword":false}
-```
-
-This payload, if not configured as explained below, will only be displayed as long as it is in the OBSDB. After that, NO DATA is displayed instead of the payload.
-
-Configure the payload as follows:
-
-### Export the payload from API Gateway
-
-In order to also make the payload available in the Traffic Monitor via the solution, this must also be exported from the API gateway to the runtime.
-To do this, go to the Server Settings Open Traffic Event Log configuration (**placeholder** - where's it, in PS?) and enable the payload export:
-
-(**placeholder** - instead of adding an image, complete the sentence "and enable the payload export by ??? configuring something? )
-
-You need to repeat this step for each API gateway group for which you want to make the payload available. You can change the export path if necessary, for example to write the payload to an NFS volume.
-
-### Make the payload available
-
-The saved payload must be made available to the API-Builder Docker container as a mount under `/var/log/payloads`. You can find an example in the docker-compose.yml:
-`${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads` shared volume into the API Builder container.
-
-### Make the payload available per region
-
-If you are using the region feature (**placeholder**, see Setup API-Manager > Different Topologies/Domains), that is, collecting API Gateways of different Admin Node Manager domains into a central Elasticsearch instance, then you also need to make the payload available to the API builder regionally separated. For example, if you have defined the region like, `REGION=US-DC1`, all traffic payload from these API Gateways must be made available to the API Builder as follows:
-
-```bash
-/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>
-```
-
-So you need to make the existing structure available in a regional folder. For this, the region must be in lower case. And you have to configure each Admin-Node-Manager with the correct region (**placeholder**, see Setup API-Manager > Different Topologies/Domains).
-
-Note:
-
-* Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter `PAYLOAD_HANDLING_ENABLED=false` if you do not need this.
-* Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the Save option.
-
 ## Setup Elasticsearch multi-node
 
 For a production environment Elasticsearch must run a multi-node Elasticsearch cluster environment. Indices are configured so that available nodes are automatically used for primary and replica shards. If you use only one Elasticsearch node, the replica shards cannot be assigned to any node, which causes the cluster to remain in the Yellow state. This in turn leads to tasks not being performed by Elasticsearch. For example, lifecycle management of the indexes.

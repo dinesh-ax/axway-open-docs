@@ -48,11 +48,11 @@ Used to visualize the indexed data in dashboards. Operational Insights provides 
 
 ### Traffic Monitor
 
-The standard Traffic Monitor, which is shipped with API Gateway, is based on a REST API that is provided by the Admin Node Manager. By default, the traffic information is loaded from the OBSDB running on each API Gateway instance.
+The standard Traffic Monitor, which is shipped with API Gateway, is based on a REST API that is provided by the Admin Node Manager. By default, the traffic information is loaded from the OpsDB running on each API Gateway instance.
 
-API Builder is partly reimplementing this REST API, which allows the Traffic Monitor to use data from ElasticSearch instead of the internal OBSDB. That means, you can use the same tooling as of today, but the underlying implementation of the Traffic Monitor is now pointing to Elasticsearch instead of the internal OPSDB hosted by each API Gateway instance. This improves performance dramatically, as Elasticsearch can scale across multiple machines if required.
+API Builder is partly reimplementing this REST API, which allows the Traffic Monitor to use data from ElasticSearch instead of the internal OBSDB. That means, you can use the same tooling as of today, but the underlying implementation of the Traffic Monitor is now pointing to Elasticsearch instead of the internal OpsDB hosted by each API Gateway instance. This improves performance dramatically, as Elasticsearch can scale across multiple machines if required.
 
-The link between Elasticsearch and the API-Gateway Traffic Monitor is an API Builder project, that is exposing the same Traffic Monitor API, but it is implemented using Elasticsearch instead of the OPSDB. API Builder is available as a ready-to-use Docker image and pre-configured in the `docker-compose` file.
+The link between Elasticsearch and the API-Gateway Traffic Monitor is an API Builder project, that is exposing the same Traffic Monitor API, but it is implemented using Elasticsearch instead of the OpsDB. API Builder is available as a ready-to-use Docker image and pre-configured in the `docker-compose` file.
 
 ## Architecture using Docker Compose
 

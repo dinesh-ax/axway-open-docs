@@ -10,10 +10,10 @@ Deploying Operational Insights requires knowledge of the Axway API Management so
 
 You have two options to deploy Operational Insights:
 
-* On a Docker orchestration platform, such as Kubernetes or OpenShift cluster, by using the provided Helm chart.
-* On virtual machines with Docker installed, by using Docker Compose.
+* On a container orchestration platform, such as Kubernetes or OpenShift cluster, by using the provided Helm chart.
+* On servers or virtual machines (VMs) with Docker installed, by using Docker Compose.
 
-This page covers the prerequisites for both virtual machine based and Docker orchestration platform deployments.
+This page covers the prerequisites for both of these options
 
 ## General prerequisites
 
@@ -31,9 +31,72 @@ Operational Insights has been tested with Elasticsearch >7.10.x version.
 
 ### API Gateway and API Manager
 
-Operational Insights is designed to work with classical and EMT API Management deployment models. Because it is mainly based on events given in the [Open Traffic Event Log](/docs/apim_reference/monitor_traffic_events_metrics/#open-traffic-event-log-settings), you must ensure that this setting is enabled. Also, event logs are indexed and stored in Elasticsearch, which allows for system-monitoring information and to highlight annotations based on [governance alerts](/docs/apim_administration/apimgr_admin/api_mgmt_alerts/#alert-descriptions) in API Manager.
+Operational Insights is designed to work with Classic and EMT API Management deployment models. Because it is mainly based on events given in the [Open Traffic Event Log](/docs/apim_reference/monitor_traffic_events_metrics/#open-traffic-event-log-settings), you must ensure that this setting is enabled. Further details on payload settings below. 
 
 Operational Insights works only with API Management 7.7 [January 2020](/docs/apim_relnotes/) onwards. Because of `Dateformat` changes in the open traffic format, older versions of API Gateway will display errors in the Logstash processing.
+
+#### Configure traffic payload
+
+The payload part of an API request is not written directly to the open traffic event log and therefore not is not stored in Elasticsearch.
+
+Here is an example of what a payload might look like:
+
+
+```bash
+HTTP/1.1 200 OK
+Date:Wed, 13 Jan 2021 23:08:58GMT
+CSRF-Token:62325BA818F8203917CB61AE883346D7F7A206E564E26008CAC3ED37386B1B7B
+Content-type:application/json
+Cache-Control:no-cache,no-store,must-revalidate
+Pragma:no-cache
+Expires:0
+X-Frame-Options:DENY
+X-Content-Type-Options:nosniff
+X-XSS-Protection:0
+Server:Gateway
+Connection:close
+X-CorrelationID:Id-8a7dff5f6612be6b4aa9d851 0
+
+{"id":"1eb19f0c-810a-4ab1-94c6-bf85833754a8","organizationId":"2b4a2c5a-827c-4be7-8dc9-ffbd5f086144,ou=organizations,ou=APIPortal","lastSeen":1610579331159,"changePassword":false}
+```
+
+This payload, if not configured as explained below, will only be displayed as long as it remains in the OpsDB. After that, there will be no payload data available.
+
+#### Configure the payload
+
+In order to make the payload available in the Traffic Monitor via the solution, it must be exported from the API gateway to the runtime.
+
+1. In the Policy Studio tree, select **Server Settings** > **Logging** > **Open Traffic Event Log**.
+1. Select **Enable Open Traffic Event Log**.
+1. Specify the required settings (for example, directory, max disk space, etc).
+1. Under **Payload Settings** select **Use filesystem** (change the **Filesystem directory** value if you wish).
+1. Click **Save** at the bottom right.
+1. Click **Deploy** in the toolbar to deploy your settings to the API Gateway.
+
+Repeat this step for each API gateway group for which you want to make the payload available. You may change the **Filesystem directory** path if required, for example to write the payload to an NFS volume.
+
+#### Make the payload available
+
+The saved payload must be made available to the API-Builder Docker container as a mount under `/var/log/payloads`. You can find an example in the docker-compose.yml:
+`${APIGATEWAY_PAYLOADS_FOLDER}:/var/log/payloads` shared volume into the API Builder container.
+
+#### Make the payload available per region
+
+If you are using the region feature (**placeholder**, see Setup API-Manager > Different Topologies/Domains), that is, collecting API Gateways of different Admin Node Manager domains into a central Elasticsearch instance, then you also need to make the payload available to the API builder regionally separated. For example, if you have defined the region like, `REGION=US-DC1`, all traffic payload from these API Gateways must be made available to the API Builder as follows:
+
+```bash
+/var/log/payloads/us-dc1/<YYY-MM-DD>/<HH.MI>/<payloadfile>
+```
+
+So you need to make the existing structure available in a regional folder. For this, the region must be in lower case. And you have to configure each Admin-Node-Manager with the correct region (**placeholder**, see Setup API-Manager > Different Topologies/Domains).
+
+Note:
+
+* Payload handling is enabled by default. So it is assumed that you provide the payload to the API Builder container. Set the parameter `PAYLOAD_HANDLING_ENABLED=false` if you do not need this.
+* Payload shown in the Traffic-Monitor UI is limited to 20 KB by default. If required the payload can be downloaded completely using the Save option.
+
+
+Also, event logs are indexed and stored in Elasticsearch, which allows for system-monitoring information and to highlight annotations based on [governance alerts](/docs/apim_administration/apimgr_admin/api_mgmt_alerts/#alert-descriptions) in API Manager.
 
 ## Helm prerequisites
 
@@ -57,7 +120,7 @@ Even though the Helm chart facilitates the deploy, extensive knowledge about the
 
 ## Docker Compose prerequisites
 
-The following are the requirements to deploy Operational Insights specifically using Docker Compose on virtual machines with Docker installed.
+The following are the requirements to deploy Operational Insights specifically using Docker Compose on physical servers or VMs with Docker installed.
 
 ### Docker
 
@@ -65,7 +128,7 @@ Components such as API Builder are supposed to run as a Docker container. The El
 
 ### Docker Compose
 
-Your virtual machines must have Docker Compose installed and executable.
+Your server or VMs must have Docker Compose installed and executable.
 
 ### Elastic stack for Docker Compose
 

@@ -20,7 +20,7 @@ The following image shows how the policy looks like:
 
 ## Extract query parameters into attributes
 
-This **Extract REST Request Attributes** filter is used to extract given REST API query parameters into attributes, which is required to get the optional parameter, `useOpsdb` which can be used to skip Elasticsearch and use the internal OPSDB.
+This **Extract REST Request Attributes** filter is used to extract given REST API query parameters into attributes, which is required to get the optional parameter, `useOpsdb` which can be used to skip Elasticsearch and use the internal OpsDB.
 
 ## Skip Elasticsearch
 
@@ -32,7 +32,7 @@ To make use of this optional parameter, you must configure it in your `<apigatew
 "ops_get_messages" : { "path" : "/ops/search?protocol=&format=&from=&count=&order=&rorder=&ago=&field=&value=&op=&jmsPropertyName=&jmsPropertyValue=&useOpsdb=" },
 ```
 
-After enabling the parameter and force the use of OPSDB, you must send a request to the ANM Traffic Monitor. For example:
+After enabling the parameter and force the use of OpsDB, you must send a request to the ANM Traffic Monitor. For example:
 
 ```bash
 https://admin-nodemanaget:8090/api/router/service/instance-1/ops/search?useOpsdb=true
@@ -95,7 +95,7 @@ Sample: `${env.API_BUILDER_URL}/api/elk/v1${http.request.rawURI}`
 
 ## Is not implemented
 
-If a given protocol, such as `Directory` for instance, is not implemented, API Builder will return a `501` error to indicate the request should be handled by the OPSDB.
+If a given protocol, such as `Directory` for instance, is not implemented, API Builder will return a `501` error to indicate the request should be handled by the OpsDB.
 
 The following image shows how the **Compare attribute** filter looks like:
 
