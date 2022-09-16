@@ -256,6 +256,13 @@ API_WHITELIST_CONFIGURED=0
 API_WHITELIST=
 
 #####
+# For reference see "Secure API Portal"
+# page in API Portal docs
+#####
+SESSION_HIJACK_PREVENTION_CONFIGURED=0
+SESSION_HIJACK_PREVENTION_ENABLED=1
+
+#####
 # JAI admin management.
 # Works only at first run.
 #####
