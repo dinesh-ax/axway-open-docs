@@ -58,5 +58,5 @@ When the API Builder is started, to validate the configuration, a login to each 
 
 If you use the solution with multiple regions and different domains, all events/documents are stored in ONE Elasticsearch. Therefore you also need to tell the Admin-Node-Manager in each region, which data (indices) to use. If you don't do that, the Admin-Node-Manager will show the entire traffic from all regions which may not be desired but is also possible.
 To do this, you need to store the appropriate region, which is also specified in the Filebeats for the API gateways, in the conf/envSettings.props file and restart the node manager. Example: REGION=US
-This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the Admin-Node-Manager configuration [here:](/docs/operational_insights/op_insights_configANM.md)
+This way the Admin-Node-Manager will only select data from these regional indexes. Learn more about the Admin-Node-Manager configuration [here:](/docs/operational_insights/op_insights_configanm/)
 
