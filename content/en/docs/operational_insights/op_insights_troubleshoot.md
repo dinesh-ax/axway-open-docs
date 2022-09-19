@@ -191,9 +191,9 @@ If you do not see any requests arriving in the API builder, the ANM may not be a
 tail -f /opt/Axway/APIM/apigateway/trace/nodemanageronapi-env_20200813000000.trc
 ```
 
-## Check queries send to ElasticSearch
+## Check queries sent to ElasticSearch
 
-In oder to see queries that are send to ElasticSearch by API-Builder you need to run the Docker-Container with LOG_LEVEL=debug. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:
+In oder to see queries that are sent to ElasticSearch by API-Builder you need to run the Docker-Container with LOG_LEVEL=debug. You can activate debug in the docker-compose.yml. This gives you in the console of the API-Builder the following output:
 
 ```bash
 Using elastic search query body: {"index":"logstash-openlog","body":{"query":{"bool":{"must":[{"range":{"timestampOriginal":{"gt":1587541496568}}},{"term":{"processInfo.serviceId":"instance-1"}}]}}},"size":"1000","sort":""}

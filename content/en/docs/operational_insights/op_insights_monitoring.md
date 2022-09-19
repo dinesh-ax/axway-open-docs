@@ -10,7 +10,7 @@ It is important that the Operational Insights is monitored appropriately and by 
 
 ## Enable Metricbeat
 
-In the default configuration, Operational Insights uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, and son on independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated. Metricbeat should be used instead.
+In the default configuration, Operational Insights uses the so-called self-monitoring. This means that components such as Logstash, Kibana, Filebeat, and so on independently send monitoring information (metrics) to Elasticsearch. However, this approach is not recommended by Elastic and is deprecated. Metricbeat should be used instead.
 
 Because Operational Insights cannot easily be delivered with a pre-configured Metricbeat, because this depends too much on the deployment, you must set some parameters in the `.env` file and then start Operational Insights.
 
