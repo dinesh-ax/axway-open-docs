@@ -652,30 +652,19 @@ button.
 
 ### Configure MIME types
 
-The **MIME Settings**
-dialog enables you to configure new and existing MIME types. When a type is added, you can configure the API Gateway to accept or block multipart messages with parts of this type.
+The **MIME Settings** dialog enables you to configure new and existing MIME types. When a type is added, you can configure the API Gateway to accept or block multipart messages with parts of this type.
 
-Click the **Add**
-button to add a new MIME type, or highlight a type in the table, and select the **Edit**
-button to edit an existing type. To delete an existing type, select that type in the list, and click the **Remove**
-button. You can edit or add types using the **Configure MIME Type**
-dialog.
+Click the **Add** button to add a new MIME type, or highlight a type in the table, and select the **Edit** button to edit an existing type. To delete an existing type, select that type in the list, and click the **Remove** button. You can edit or add types using the **Configure MIME Type** dialog.
 
-Enter a name for the new type in the **MIME Type**
-field, and the corresponding file extension in the **Extension**
-field.
+Enter a name for the new type in the **MIME Type** field, and the corresponding file extension in the **Extension** field. You can optionally select from a list of body factories, in the **Body Factory** drop-down, to describe how the MIME type should be handled.
 
 ## Schema validation filter
 
 API Gateway can check that XML messages conform to the structure or format expected by the web service by validating those requests against XML schemas. An XML schema precisely defines the elements and attributes that constitute an instance of an XML document. It also specifies the data types of these elements to ensure that only appropriate data is allowed through to the web service.
 
-For example, an XML schema might stipulate that all requests to a particular web service must contain a `<name>`
-element, which contains at most a ten character string. If the API Gateway receives a message with an improperly formed `<name>`
-element, it rejects the message.
+For example, an XML schema might stipulate that all requests to a particular web service must contain a `<name>` element, which contains at most a ten character string. If the API Gateway receives a message with an improperly formed `<name>` element, it rejects the message.
 
-You can find the **Schema Validation**
-filter in the **Content Filtering**
-category of filters in Policy Studio. Drag and drop the filter on to a policy to perform schema validation.
+You can find the **Schema Validation** filter in the **Content Filtering** category of filters in Policy Studio. Drag and drop the filter on to a policy to perform schema validation.
 
 ### Select the schema
 
@@ -970,7 +959,7 @@ message attributes configured in the **Regular Expression**
 table above. If the expression matches *any*
 attribute values, the filter fails.
 
-If any regular expressions are configured in [Configure selector-based regular expressions](#configure-selector-based-regular-expressions), these expressions are run *before*
+If any regular expressions are configured in [Configure selector-based regular expressions](#configure-selector-regular-expressions), these expressions are run *before*
 the threatening content regular expressions. For example, if you have already configured a regular expression to extract the Base64-decoded attribute value, the threatening content regular expression is run against this value instead of the attribute value stored in the message.
 
 Click **Add**

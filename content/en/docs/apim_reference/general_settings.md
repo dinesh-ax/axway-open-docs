@@ -85,9 +85,9 @@ The file extensions are used to set the `Content-Type` headers returned by a [St
 
 To configure the MIME settings, in the Policy Studio main menu, select **Tasks > Manage Gateway Settings > General > MIME**. Alternatively, in the Policy Studio tree, select the **Environment Configuration > Server Settings** node, and click **General > MIME**. To confirm updates to these settings, click **Apply changes** at the bottom right of the screen.
 
-The MIME settings screen lists the actual MIME types on the left column of the table, together with their corresponding file extensions (where applicable) in the right column.
+The MIME settings screen lists the actual *MIME types* on the left column of the table, the corresponding file *Extensions* (where applicable) in the middle column, and the optional *Body Factories* in the right column.
 
-To add a new MIME type, click the **Add** button. In the **Configure MIME Type** dialog, enter the new content type in the **MIME Type** field. If the new type has a corresponding file extension, enter this extension in the **Extension** field. Click the **OK** button when finished.
+To add a new MIME type, click the **Add** button. In the **Configure MIME Type** dialog, enter the new content type in the **MIME Type** field. If the new type has a corresponding file extension, enter this extension in the **Extension** field. If a body factory is required to better describe how the MIME Type should be handled, it can be selected from the **Body Factory** drop-down list. Click the **OK** button when finished.
 
 Similarly, you can edit or delete existing types using the **Edit** and **Delete** buttons.
 
