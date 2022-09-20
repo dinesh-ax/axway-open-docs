@@ -1,7 +1,7 @@
 ---
 title: Multiple API Managers
 linkTitle: Multiple API Managers
-weight: 55
+weight: 54
 date: 2022-09-19
 description: Configure multiple API Managers
 ---
