@@ -75,38 +75,6 @@ To give API Manager users an restricted access to the API Gateway Traffic-Monito
 Additionally you need to know, that by default, all API-Gateway Traffic-Monitor users get unrestricted access only if one of their roles includes the permission: `adminusers_modify`. But typically, only a full API-Administrator has this right and therefore only these users can see the entire traffic. All other users get a restricted view of the API traffic and will be authorized according to the configured authorization configuration described below.
 However, with the parameter: UNRESTRICTED_PERMISSIONS you can configure which right(s) a user must have to get unrestricted access.
 
-### Customize user authorization
-
-By default, the organization(s) of the API-Manager user is used for authorization to the Traffic-Monitor. This means that the user only sees traffic from his the organization(s) he belongs in API-Manager. From a technical point of view, an additional filter clause is added to the Elasticsearch query, which results in a restricted result set. An example: `{ term: { "serviceContext.apiOrg": "Org-A" }}`.
-
-Since version 2.0.0, it is alternatively possible to use an external HTTP service for authorization instead of the API Manager organizations, to restrict the Elasticsearch result based on other criterias.
-
-To customize user authorization, you need to configure an appropriate configuration file as described here:
-
-```bash
-# Copy the provided example 
-cp ./config/authorization-config-sample.js ./config/my-authorization-config.js
-# Customize your configuration file as needed
-vi ./config/my-authorization-config.js
-# Setup your .env file to use your authorization config file
-vi .env
-AUTHZ_CONFIG=./config/my-authorization-config.js
-# Recreate the API-Builder container
-docker stop apibuilder4elastic
-docker-compose up -d
-```
-
-In this configuration, which also contains corresponding Javascript code, necessary parameters and code is stored, for example to parse the response and to adjust the Elasticsearch query. The example: <https://github.com/Axway-API-Management-Plus/apigateway-openlogging-elk/blob/develop/config/authorization-config-sample.js> contains all required documentation.
-
-Once this configuration is stored, the API Manager Organization based authorization will be replaced.
-
-Note:
-
-* Besides the API-Manager Organization autorization only `externalHTTP` is currently supported.
-* Only 1 authorization method can be enabled
-* It is also possible to disable user authorization completely. To do this, set the parameter: `enableUserAuthorization`: false.
-* If you have further use-cases please create an issue describing the use-case/requirements.
-
 ## Next steps
 
 This section covers the basic setup for any framework you with to use. To continue your basic configuration in specific frameworks, see:

@@ -109,6 +109,10 @@ The following are the requirements specific to deploy Operational Insights on Do
 * [Required resources](/docs/operational_insights/op_insights_updatehelm/#required-resources).
 * [Ingress controller](https://kubernetes.io/docs/concepts/services-networking/ingress-controllers/) already installed.
 
+{{< alert title="Note for helm users" >}}
+To access sample files referred to throughout this documentation for user customizations, please follow the instructions, in the [docker compose section](/docs/operational_insights/basic_setup/op_insights_setup_basic_docker/#download-and-extract-the-release-package) to download the released package 
+{{< /alert >}}
+
 ### Kubernetes and OpenShift knowledge
 
 Even though the Helm chart facilitates the deploy, extensive knowledge about these platforms and Helm is required:
@@ -164,4 +168,4 @@ The following table assumes that the same user should also be used for stack mon
 
 ## Next steps
 
-After you ensured that you have all prerequisites in place, you can [setup a basic environment](/docs/amplify_analytics/op_insights_config_elastic_singlenode) to run tests in a development environment.
+After you ensured that you have all prerequisites in place, you can [setup a basic environment](/docs/operational_insights/basic_setup/) to run tests in a development environment.

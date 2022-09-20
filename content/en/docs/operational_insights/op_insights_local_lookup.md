@@ -28,18 +28,20 @@ To enable the local lookup, you must perform the following steps:
     cp config/api-lookup-sample.json config/api-lookup.json
     ```
 
-2. Activate the config file. In your .env file you must then enable the configuration file to be used by the API-Builder. To do this, configure or enable the following environment variable:
+2. Activate the config file. In your .env file you must then enable the configuration file to be used by the API-Builder. To do this, configure or enable the following environment variable restart
 
     ```bash
+For docker-compose use case set the env variable and restart:
     API_BUILDER_LOCAL_API_LOOKUP_FILE=./config/api-lookup.json
+    docker stop apibuilder4elastic
+    docker-compose up -d
     ```
 
-3. Restart API-Builder:
-
-```bash
-docker stop apibuilder4elastic
-docker-compose up -d
-```
+    ```bash
+For helm use case expose variable localAPILookup in **myvalues.yaml** file and run helm upgrade:
+    localAPILookup: "./config/api-lookup.json"
+    helm upgrade -n apim-elk -f myvalues.yaml axway-elk axway/aaoi-helm-prod
+    ```
 
 If an event is to be indexed, the API builder will try to read this file and will acknowledge this with the following error if the file cannot be found:
 
