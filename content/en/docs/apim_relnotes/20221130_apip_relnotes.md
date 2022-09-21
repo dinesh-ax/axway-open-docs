@@ -16,13 +16,6 @@ API Portal is available as a software installation or a virtualized deployment i
 
 * If you are installing API Portal for the first time using this update, see [Install API Portal](/docs/apim_installation/apiportal_install/).
 * If you are already using API Portal (7.5.x, 7.6.x, 7.7.x) and want to install this update, see [Upgrade API Portal](/docs/apim_installation/apiportal_install/upgrade_automatic/).
-* If you are using API Portal 7.7.x with an applied patch and you want to install this update, you need to execute one manual step. See [Upgrade API Portal prerequisites](/docs/apim_installation/apiportal_install/upgrade_automatic/#api-portal-with-applied-patches).
-* You can use the [cumulative upgrade script](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-api-portal-using-the-cumulative-upgrade-script) to upgrade directly from earlier versions (for example, 7.5.5, 7.6.2) to API Portal [7.7 November 2020](/docs/apim_relnotes/20201130_apip_relnotes/), then you must apply API Portal 7.7 **February 22** update, and then you can apply the **August 22** update package.
-* See [API Portal single version upgrade](/docs/apim_installation/apiportal_install/upgrade_automatic/#upgrade-from-api-portal-7-6-2) to upgrade versions incrementally.
-
-{{< alert title="Note" color="primary" >}}
-We highly recommend following the update flow as outlined above to avoid any incorrect behaviour of the product.
-{{< /alert >}}
 
 ### Docker containers
 

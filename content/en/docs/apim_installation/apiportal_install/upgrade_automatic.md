@@ -3,10 +3,10 @@
   "linkTitle": "Upgrade API Portal",
   "weight": "110",
   "date": "2019-08-09",
-  "description": "Upgrade your existing API Portal to 7.7."
+  "description": "Upgrade your existing API Portal to version 7.7."
 }
 
-You can use the [cumulative upgrade script](#upgrade-api-portal-using-the-cumulative-upgrade-script) to upgrade your 7.5.5 or 7.6.2 API Portal installation (including all service packs) directly to [7.7 November 2020](/docs/apim_relnotes/20201130_apip_relnotes/), or you can upgrade versions incrementally:
+You can use the [cumulative upgrade script](#upgrade-using-the-cumulative-upgrade-script) to upgrade your 7.5.5 or 7.6.2 API Portal installation (including all service packs) directly to [7.7 November 2020](/docs/apim_relnotes/20201130_apip_relnotes/), or you can upgrade versions incrementally:
 
 | From   | To    | Download Package         |
 | ------ | ----- | -------------------------|
@@ -26,7 +26,7 @@ Before you upgrade your API Portal, complete the following prerequisites. These 
 * Stop and back up the existing API Portal files and database. There is no option to roll back after you start the upgrade.
 * Perform a back up of your API Portal software installation by taking a snapshot of your environment. Ensure that you have a file system backup and database export.
 
-### API Portal with applied patches
+## API Portal with applied patches
 
 If you are using API Portal with applied patches, you must change the ownership of the installation path before applying an update:
 
