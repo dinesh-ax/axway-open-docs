@@ -198,7 +198,7 @@ For example, on Cassandra node 1 in DC1, perform the following steps:
 4. Run `nodetool repair` on each node as follows:
 
     ```
-    ./nodetool repair system_auth
+    ./nodetool repair -pr system_auth
     ```
 
 5. Change the default Cassandra user. For more information, see [Configuring authentication](https://docs.datastax.com/en/cassandra-oss/3.x/cassandra/configuration/secureConfigNativeAuth.html) documentation.
@@ -264,7 +264,7 @@ Perform the following steps:
     ALTER KEYSPACE "KEYSPACE_NAME" WITH REPLICATION = {'class' : 'NetworkTopologyStrategy', 'DC1' : 3, 'DC2' : 3};
     ```
 
-4. On each node, run `nodetool repair`.
+4. On each node, run `nodetool repair -pr`.
 
     {{< alert title="Tip" color="primary" >}}In a production environment, you should schedule weekly node repairs as a best practice.{{< /alert >}}
 

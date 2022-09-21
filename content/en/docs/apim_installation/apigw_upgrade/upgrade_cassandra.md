@@ -155,7 +155,7 @@ After you upgrade Cassandra in all nodes, run the following commands to repair a
 
    ```
    $cd /home/cassandra-2219/cassandra/bin
-   $./nodetool repair
+   $./nodetool repair -pr
    ```
 2. Rewrite SSTables that are not on the current version and upgrade them to the 2.2.19 version:
 
