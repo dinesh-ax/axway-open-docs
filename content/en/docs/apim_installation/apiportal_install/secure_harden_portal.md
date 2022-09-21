@@ -278,9 +278,11 @@ The following options are available from the **Authentication method** list:
 
 ## Enable Session Hijack Prevention
 
+**[Session Hijack](https://en.wikipedia.org/wiki/Session_hijacking) Prevention** feature prevents the exploitation of the web session. It's desirable to keep it enabled (default), unless your infrastructure requires it disabled.
+
 1. Log in to JAI.
 2. Select **Components > API Portal > Additional Settings**.
-3. Under **Session Hijack Prevention** section select **Yes** for **Enabled**.
+3. Ensure under **Session Hijack Prevention** section **Enabled** is set **Yes**.
 4. Click **Save**.
 
 ## Enable scanning of uploaded files
