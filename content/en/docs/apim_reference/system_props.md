@@ -478,3 +478,11 @@ Axway-defined Java system properties introduced in the 7.7 20220830 release
 | System Property                                  | Context     | Description   |
 | ------------------------------------------------ | ----------- | ------------- |
 | com.axway.apigw.cookie.validation.ignore | API Gateway | Allow HTTP Cookie related filters to not enforce cookie validation as per RFC 6265. Default value: 'false' |
+
+## 7.7 November 2022
+
+Axway-defined Java system properties introduced in the 7.7 20221130 release
+
+| System Property                                  | Context     | Description   |
+| ------------------------------------------------ | ----------- | ------------- |
+| com.axway.api.runtime.broker.contentType.formUrlEncoded.preserve | API Manager | If set to 'true' the API Manager preserves attributes of the 'application/x-www-form-urlencoded' Content-Type header of user request messages to API Manager. Default value: 'false' |
