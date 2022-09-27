@@ -14,12 +14,12 @@ The upgrade process differs according to your environment:
 
 ## Before you start
 
-* You must upgrade your API Gateway to the [August 2021](/docs/apim_relnotes/20210830_apimgr_relnotes/) release or later one prior to upgrading your Cassandra environment to 3.11.11. This is because in this release we've implemented changes to the Cassandra client driver configuration to facilitate the upgrade process.
+* You must upgrade your API Gateway to the [August 2021](/docs/apim_relnotes/20210830_apimgr_relnotes/) or a later release prior to upgrading your Cassandra environment to 3.11.11. This is because in this release we've implemented changes to the Cassandra client driver configuration to facilitate the upgrade process.
 * In multi-datacenter clusters:
 
-  * Upgrade every node in one datacenter before upgrading another datacenter.
-  * Upgrade and restart the nodes one at a time.
-  * Other nodes in the cluster continue to operate at the earlier version until all nodes are upgraded.
+    * Upgrade every node in one datacenter before upgrading another datacenter.
+    * Upgrade and restart the nodes one at a time.
+    * Other nodes in the cluster continue to operate at the earlier version until all nodes are upgraded.
 * When upgrading a cluster on a single-datacenter or multi-datacenter setup, you must avoid any schema changes until the entire cluster has been upgraded to the same version.
 * Running `nodetool repair` on a Cassandra node affects performance on a system running live traffic. We recommend that you perform the Cassandra upgrade in the evening or during a maintenance window when the load is minimal.
 
