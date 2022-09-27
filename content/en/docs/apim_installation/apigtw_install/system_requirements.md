@@ -91,7 +91,7 @@ For more details, see [Install and configure a metrics database](/docs/apim_inst
 
 ### Apache Cassandra
 
-API Gateway and API Manager support Apache Cassandra version 2.2.12, 2.2.19 and, since August 2021 release, 3.11.11,  for internal data storage. For more details, see [Install an Apache Cassandra database](/docs/apim_installation/apigtw_install/cassandra_install).
+API Gateway and API Manager support Apache Cassandra version 3.11.11 for internal data storage. For more details, see [Install an Apache Cassandra database](/docs/apim_installation/apigtw_install/cassandra_install).
 
 ## Web browsers
 
@@ -124,10 +124,10 @@ This section describes requirements for specific API Gateway components.
 * **API Gateway Manager** is a web-based client and supports the web browsers listed in [Web browsers](#web-browsers).
 * **API Gateway Analytics** is a server component that has the same [operating system and hardware](#operating-systems-and-hardware) requirements as API Gateway. Its browser-based client component supports the same [browsers](#web-browsers) as API Gateway Manager. API Gateway Analytics also requires a [database](#databases), and the following packages:
 
-  * libXext
-  * libXrender
-  * xorg-x11-fonts-Type1
-  * xorg-x11-fonts-75dpi
+    * libXext
+    * libXrender
+    * xorg-x11-fonts-Type1
+    * xorg-x11-fonts-75dpi
 * **API Manager** is a browser-based client and supports the same [browsers](#web-browsers) as API Gateway Manager.
 
 ## Default ports
